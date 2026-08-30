@@ -11,6 +11,7 @@ import { SectionHeading, Section } from '@/components/ui/section'
 import { ButtonLink } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { RecentlyViewedRow } from '@/components/product/recently-viewed-row'
+import { CategoryIcon } from '@/components/layout/category-icon'
 import { formatNumber } from '@/lib/money'
 import { SMOKE_METHOD_LABELS, FOOD_TYPE_LABELS } from '@/lib/domain/enums'
 
@@ -379,18 +380,4 @@ function FeatureCard({
       </span>
     </Link>
   )
-}
-
-function CategoryIcon({ name }: { name: string | null }) {
-  switch (name) {
-    case 'ruler':
-      return <Ruler className="size-5" aria-hidden="true" />
-    case 'compass':
-      return <Compass className="size-5" aria-hidden="true" />
-    case 'sparkles':
-      return <Sparkles className="size-5" aria-hidden="true" />
-    case 'flame':
-    default:
-      return <Flame className="size-5" aria-hidden="true" />
-  }
 }

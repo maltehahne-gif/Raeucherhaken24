@@ -1,5 +1,5 @@
 import { cookies, headers } from 'next/headers'
-import { generateToken, safeEqual } from '@/lib/server/crypto'
+import { safeEqual } from '@/lib/server/crypto'
 
 /**
  * CSRF-Schutz nach dem Double-Submit-Verfahren, ergaenzt um eine
@@ -13,21 +13,18 @@ import { generateToken, safeEqual } from '@/lib/server/crypto'
 export const CSRF_COOKIE = 'rh24_csrf'
 export const CSRF_HEADER = 'x-csrf-token'
 
-/** Liest den vorhandenen Token oder erzeugt einen neuen (Server Component). */
+/**
+ * Liest das CSRF-Token fuer die Ausgabe im Markup.
+ *
+ * Erzeugt wird das Token in der Middleware (src/middleware.ts) — Server
+ * Components duerfen in Next.js keine Cookies schreiben. Kommt hier
+ * ausnahmsweise nichts an (etwa weil die Middleware fuer den Pfad nicht
+ * greift), liefert die Funktion einen leeren String; die Pruefung im Server
+ * lehnt die Anfrage dann sauber ab, statt sie unbemerkt durchzulassen.
+ */
 export async function ensureCsrfToken(): Promise<string> {
   const store = await cookies()
-  const existing = store.get(CSRF_COOKIE)?.value
-  if (existing && existing.length >= 32) return existing
-
-  const token = generateToken(32)
-  store.set(CSRF_COOKIE, token, {
-    httpOnly: false,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
-    maxAge: 60 * 60 * 12,
-  })
-  return token
+  return store.get(CSRF_COOKIE)?.value ?? ''
 }
 
 export async function getCsrfToken(): Promise<string | null> {

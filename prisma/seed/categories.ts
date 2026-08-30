@@ -15,7 +15,7 @@ export const CATEGORIES: CategorySeed[] = [
   {
     slug: 'raeucherhaken',
     name: 'Räucherhaken',
-    icon: 'flame',
+    icon: 'hook',
     sortOrder: 10,
     teaser: 'Sechs Grundmodelle in V2A und V4A – vom feinen Fischhaken bis zur Aufhängeschiene.',
     description:
@@ -27,7 +27,7 @@ export const CATEGORIES: CategorySeed[] = [
   {
     slug: 'fleischerhaken',
     name: 'Fleischerhaken',
-    icon: 'flame',
+    icon: 'beef',
     sortOrder: 20,
     teaser: 'Schwere Haken für Fleischerei, Wildkammer und Rohrbahn.',
     description:
@@ -51,7 +51,7 @@ export const CATEGORIES: CategorySeed[] = [
   {
     slug: 'raeucherlaugen',
     name: 'Räucherlaugen',
-    icon: 'compass',
+    icon: 'droplets',
     sortOrder: 40,
     teaser: 'Fertige Gewürzmischungen zum Ansetzen der Lake – für Fisch, Fleisch und Wurst.',
     description:
@@ -63,7 +63,7 @@ export const CATEGORIES: CategorySeed[] = [
   {
     slug: 'naturgewuerze',
     name: 'Naturgewürze',
-    icon: 'sparkles',
+    icon: 'leaf',
     sortOrder: 50,
     teaser: 'Über einhundert Einzelgewürze, Kräuter, Mischungen und Salze.',
     description:
@@ -75,7 +75,7 @@ export const CATEGORIES: CategorySeed[] = [
       {
         slug: 'gewuerze-einzeln',
         name: 'Einzelgewürze',
-        icon: 'sparkles',
+        icon: 'leaf',
         sortOrder: 10,
         teaser: 'Pfeffer, Paprika, Koriander, Kümmel und die anderen Grundlagen.',
         description:
@@ -87,7 +87,7 @@ export const CATEGORIES: CategorySeed[] = [
       {
         slug: 'kraeuter',
         name: 'Kräuter',
-        icon: 'sparkles',
+        icon: 'sprout',
         sortOrder: 20,
         teaser: 'Getrocknete Blattgewürze für Lake, Wurstbrät und Marinade.',
         description:
@@ -99,7 +99,7 @@ export const CATEGORIES: CategorySeed[] = [
       {
         slug: 'gewuerzmischungen',
         name: 'Würzmischungen',
-        icon: 'sparkles',
+        icon: 'blend',
         sortOrder: 30,
         teaser: 'Abgestimmte Mischungen für Bratwurst, Schinken, Fisch und Wild.',
         description:
@@ -111,7 +111,7 @@ export const CATEGORIES: CategorySeed[] = [
       {
         slug: 'salze',
         name: 'Salze',
-        icon: 'sparkles',
+        icon: 'salt',
         sortOrder: 40,
         teaser: 'Meersalz, Steinsalz, Räuchersalz und gewürzte Salze.',
         description:

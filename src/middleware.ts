@@ -1,6 +1,22 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
 /**
+ * Name des CSRF-Cookies. Bewusst hier dupliziert statt importiert:
+ * Die Middleware laeuft in der Edge-Runtime und darf keine Module ziehen,
+ * die auf Node-APIs angewiesen sind.
+ */
+const CSRF_COOKIE = 'rh24_csrf'
+
+/** URL-tauglicher Zufallstoken ueber die Web-Crypto-API. */
+function generateCsrfToken(): string {
+  const bytes = new Uint8Array(32)
+  crypto.getRandomValues(bytes)
+  let binary = ''
+  for (const byte of bytes) binary += String.fromCharCode(byte)
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
+/**
  * Sicherheits-Header fuer jede Antwort.
  *
  * Die Content Security Policy arbeitet mit einer pro Anfrage erzeugten Nonce.
@@ -40,6 +56,24 @@ export function middleware(request: NextRequest) {
 
   const response = NextResponse.next({ request: { headers: requestHeaders } })
 
+  /*
+   * CSRF-Token setzen, falls noch keines vorliegt.
+   * Server Components duerfen keine Cookies schreiben — die Middleware ist die
+   * einzige Stelle, an der das Token vor dem ersten Seitenaufbau entstehen kann.
+   * Das Cookie ist absichtlich nicht HttpOnly: Der Browser muss den Wert lesen
+   * koennen, um ihn als Header mitzuschicken (Double-Submit). Ein fremder
+   * Origin kann ihn wegen der Same-Origin-Policy nicht auslesen.
+   */
+  if (!request.cookies.has(CSRF_COOKIE)) {
+    response.cookies.set(CSRF_COOKIE, generateCsrfToken(), {
+      httpOnly: false,
+      sameSite: 'lax',
+      secure: !isDev,
+      path: '/',
+      maxAge: 60 * 60 * 12,
+    })
+  }
+
   response.headers.set('content-security-policy', csp)
   // frame-ancestors 'none' ersetzt X-Frame-Options in modernen Browsern;
   // der Header bleibt fuer aeltere Clients als zweite Ebene bestehen.
@@ -69,15 +103,9 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Alle Pfade ausser statischen Next-Assets und Bilddateien —
-     * fuer die bringt ein CSP-Header keinen Mehrwert und kostet nur Latenz.
+     * Alle Pfade ausser statischen Next-Assets und Bilddateien — fuer die
+     * bringt ein CSP-Header keinen Mehrwert und kostet nur Latenz.
      */
-    {
-      source: '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|ico|woff2?)$).*)',
-      missing: [
-        { type: 'header', key: 'next-router-prefetch' },
-        { type: 'header', key: 'purpose', value: 'prefetch' },
-      ],
-    },
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|ico|woff2?)$).*)',
   ],
 }

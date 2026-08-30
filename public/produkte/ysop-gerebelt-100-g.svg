@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img">
+  <defs>
+    <radialGradient id="g" cx="56%" cy="28%" r="85%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="58%" stop-color="#eff0f0"/>
+      <stop offset="100%" stop-color="#e0e3e4"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#g)"/>
+  <g opacity="0.055" stroke="#3a434b" stroke-width="1">
+    <path d="M0 200 H800 M0 400 H800 M0 600 H800 M200 0 V800 M400 0 V800 M600 0 V800"/>
+  </g>
+  
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(400 420) rotate(-70.4)">
+      <path d="M0 0 V -196" stroke="#3a434b" stroke-width="7"/>
+      <path d="M0 -121 q -34 -26 0 -70 q 34 26 0 70 Z" fill="#8d4520" opacity="0.26" stroke="#3a434b" stroke-width="5"/>
+    </g>
+    <g transform="translate(400 420) rotate(-53.9)">
+      <path d="M0 0 V -185" stroke="#3a434b" stroke-width="7"/>
+      <path d="M0 -115 q -34 -26 0 -67 q 34 26 0 67 Z" fill="#8d4520" opacity="0.54" stroke="#3a434b" stroke-width="5"/>
+    </g>
+    <g transform="translate(400 420) rotate(-37.8)">
+      <path d="M0 0 V -176" stroke="#3a434b" stroke-width="7"/>
+      <path d="M0 -109 q -34 -26 0 -63 q 34 26 0 63 Z" fill="#8d4520" opacity="0.35" stroke="#3a434b" stroke-width="5"/>
+    </g>
+    <g transform="translate(400 420) rotate(-21.3)">
+      <path d="M0 0 V -222" stroke="#3a434b" stroke-width="7"/>
+      <path d="M0 -137 q -34 -26 0 -80 q 34 26 0 80 Z" fill="#8d4520" opacity="0.37" stroke="#3a434b" stroke-width="5"/>
+    </g>
+    <g transform="translate(400 420) rotate(0.2)">
+      <path d="M0 0 V -192" stroke="#3a434b" stroke-width="7"/>
+      <path d="M0 -119 q -34 -26 0 -69 q 34 26 0 69 Z" fill="#8d4520" opacity="0.40" stroke="#3a434b" stroke-width="5"/>
+    </g>
+    <g transform="translate(400 420) rotate(14.5)">
+      <path d="M0 0 V -176" stroke="#3a434b" stroke-width="7"/>
+      <path d="M0 -109 q -34 -26 0 -64 q 34 26 0 64 Z" fill="#8d4520" opacity="0.28" stroke="#3a434b" stroke-width="5"/>
+    </g>
+    <g transform="translate(400 420) rotate(34.7)">
+      <path d="M0 0 V -200" stroke="#3a434b" stroke-width="7"/>
+      <path d="M0 -124 q -34 -26 0 -72 q 34 26 0 72 Z" fill="#8d4520" opacity="0.45" stroke="#3a434b" stroke-width="5"/>
+    </g>
+    <g transform="translate(400 420) rotate(55.4)">
+      <path d="M0 0 V -195" stroke="#3a434b" stroke-width="7"/>
+      <path d="M0 -121 q -34 -26 0 -70 q 34 26 0 70 Z" fill="#8d4520" opacity="0.54" stroke="#3a434b" stroke-width="5"/>
+    </g>
+    <g transform="translate(400 420) rotate(67.1)">
+      <path d="M0 0 V -187" stroke="#3a434b" stroke-width="7"/>
+      <path d="M0 -116 q -34 -26 0 -67 q 34 26 0 67 Z" fill="#8d4520" opacity="0.22" stroke="#3a434b" stroke-width="5"/>
+    </g>
+    <path d="M340 424 h 120 v 74 a 20 20 0 0 1 -20 20 h -80 a 20 20 0 0 1 -20 -20 Z" stroke="#3a434b" stroke-width="12"/>
+    <path d="M336 452 h 128 M336 484 h 128" stroke="#8d4520" stroke-width="8" opacity="0.55"/>
+  </g>
+</svg>

@@ -36,24 +36,37 @@ export function buildSku(prefix: string, index: number, ...parts: Array<string |
 }
 
 /**
- * Wählt die passende Bildvorlage anhand von Kategorie und Produktname.
- * Der Name entscheidet feiner als die Kategorie – ein „Pfeffer ganz“ soll
- * anders aussehen als ein „Paprika gemahlen“.
+ * Wählt die passende Bildvorlage.
+ *
+ * Ausgewertet wird nicht nur der Produktname — die Modelle heißen wie
+ * Eigennamen („Zwiesel D 190“) und verraten die Bauform nicht. Erst der
+ * Untertitel und die Kurzbeschreibung nennen sie („Doppelhaken mit zwei
+ * Zinken“). Deshalb geht der gesamte Beschreibungstext in die Auswahl ein.
  */
-export function pickArchetype(categorySlug: string, name: string): Archetype {
-  const n = name.toLowerCase()
+export function pickArchetype(categorySlug: string, ...text: Array<string | undefined | null>): Archetype {
+  const n = text
+    .filter((t): t is string => typeof t === 'string')
+    .join(' ')
+    .toLowerCase()
 
   if (categorySlug === 'raeucherhaken') {
-    if (n.includes('leiste') || n.includes('schiene') || n.includes('system')) return 'hook-rail'
-    if (n.includes('vier') || n.includes('kamm') || n.includes('zinker')) return 'hook-four'
-    if (n.includes('doppel') || n.includes('zwei')) return 'hook-double'
-    if (n.includes('spieß') || n.includes('spiess') || n.includes('stech') || n.includes('aal')) return 'hook-spear'
-    if (n.includes('schinken') || n.includes('schwer') || n.includes('groß')) return 'hook-heavy'
+    /*
+     * Reihenfolge ist bedeutsam. Zuerst die eindeutigen Bauformen, zuletzt die
+     * Sammelbegriffe: Nahezu jede Hakenbeschreibung enthält irgendwo das Wort
+     * „aufhängen“ — als Signal für eine Aufhängeschiene taugt es deshalb nicht.
+     * Die Schiene wird nur an Begriffen erkannt, die ausschließlich sie meinen.
+     */
+    if (/vierzink|vier zink|kamm|mehrzink|vier dornen/.test(n)) return 'hook-four'
+    if (/doppelhaken|zweizink|zwei zinken|zwei schenkel/.test(n)) return 'hook-double'
+    if (/spie(ß|ss)|stechhaken|gerader haken|widerhaken|f(ü|u)r aal/.test(n)) return 'hook-spear'
+    if (/hakenleiste|leiste|schiene|traverse|aufh(ä|a)ngesystem|rohrbahn/.test(n)) return 'hook-rail'
+    if (/schinken|schwer|gro(ß|ss)e fleischst(ü|u)cke|5,5 mm|6 mm/.test(n)) return 'hook-heavy'
     return 'hook-s'
   }
 
   if (categorySlug === 'fleischerhaken') {
-    if (n.includes('rohr') || n.includes('bahn')) return 'hook-rail'
+    if (/rohr|bahn|leiste|schiene/.test(n)) return 'hook-rail'
+    if (/kopfhaken|doppel/.test(n)) return 'hook-double'
     return 'hook-butcher'
   }
 
@@ -62,31 +75,18 @@ export function pickArchetype(categorySlug: string, name: string): Archetype {
   if (categorySlug === 'sonderanfertigungen') return 'special'
 
   // Gewürzbereich
-  if (n.includes('salz')) return 'salt'
+  if (/salz/.test(n)) return 'salt'
   if (
-    n.includes('kraut') ||
-    n.includes('kräuter') ||
-    n.includes('thymian') ||
-    n.includes('rosmarin') ||
-    n.includes('lorbeer') ||
-    n.includes('majoran') ||
-    n.includes('oregano') ||
-    n.includes('salbei') ||
-    n.includes('basilikum') ||
-    n.includes('dill') ||
-    n.includes('petersilie') ||
-    n.includes('estragon') ||
-    n.includes('minze') ||
-    n.includes('melisse')
+    /kraut|kr(ä|a)uter|thymian|rosmarin|lorbeer|majoran|oregano|salbei|basilikum|dill|petersilie|estragon|minze|melisse|bohnenkraut|beifu(ß|ss)|ysop|kerbel|schnittlauch|liebst(ö|o)ckel|provence/.test(
+      n,
+    )
   ) {
     return 'herb'
   }
-  if (n.includes('mischung') || n.includes('gewürz für') || n.includes('wurstgewürz') || n.includes('grillgewürz')) {
+  if (/mischung|gew(ü|u)rz f(ü|u)r|wurstgew(ü|u)rz|grillgew(ü|u)rz|steakpfeffer|br(ü|u)he|suppengr(ü|u)n/.test(n)) {
     return 'spice-blend'
   }
-  if (n.includes('gemahlen') || n.includes('pulver') || n.includes('mehl') || n.includes('granuliert')) {
-    return 'spice-ground'
-  }
+  if (/gemahlen|pulver|granuliert|fein gemahlen|mehl/.test(n)) return 'spice-ground'
   return 'spice-whole'
 }
 
