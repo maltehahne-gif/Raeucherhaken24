@@ -36,8 +36,11 @@ const DEFAULT_PATHS = [
   '/beratung',
   '/sonderanfertigung',
   '/rezepte',
+  '/rezepte/heissgeraeucherte-forelle-aus-der-salzlake',
   '/wissen',
+  '/wissen/edelstahl-v2a-v4a',
   '/kontakt',
+  '/sonderanfertigung/P-2026-101',
   '/suche?q=raeucherhaken',
   '/suche?q=xyzunfug',
   '/warenkorb',
@@ -46,6 +49,32 @@ const DEFAULT_PATHS = [
   '/impressum',
   '/datenschutz',
 ]
+
+type Send = (method: string, params?: Record<string, unknown>) => Promise<{
+  result?: { result?: { value?: unknown } }
+}>
+
+/**
+ * Wartet, bis das Dokument geladen ist und einen Inhaltsbereich besitzt.
+ * Liefert false, wenn das innerhalb der Frist nicht eintritt.
+ */
+async function waitForPage(send: Send, timeoutMs = 25_000): Promise<boolean> {
+  const deadline = Date.now() + timeoutMs
+  while (Date.now() < deadline) {
+    const probe = await send('Runtime.evaluate', {
+      returnByValue: true,
+      expression:
+        "document.readyState === 'complete' && Boolean(document.querySelector('main, [role=\"main\"]'))",
+    })
+    if (probe.result?.result?.value === true) {
+      // Kurz nachlaufen lassen: React haengt Teile erst nach dem Laden ein.
+      await new Promise((resolve) => setTimeout(resolve, 400))
+      return true
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250))
+  }
+  return false
+}
 
 interface Problem {
   rule: string
@@ -179,7 +208,23 @@ async function main() {
       .catch(() => 0)
 
     await send('Page.navigate', { url: BASE + path })
-    await new Promise((resolve) => setTimeout(resolve, 2200))
+
+    /*
+     * Auf die fertige Seite warten statt fest zu schlafen.
+     *
+     * Eine feste Wartezeit ist entweder zu kurz oder zu lang: Beim ersten
+     * Aufruf uebersetzt der Entwicklungsserver die Seite noch, danach steht
+     * sie in Millisekunden. Zu frueh gemessen, meldet die Pruefung fehlende
+     * Ueberschriften und Landmarken auf Seiten, die beides haben — also
+     * Befunde, die es nicht gibt.
+     */
+    const ready = await waitForPage(send)
+    if (!ready) {
+      console.log(`  1 Befund(e)  ${path}`)
+      console.log('        seite nicht geladen: Zeitüberschreitung beim Rendern')
+      total += 1
+      continue
+    }
 
     const response = await send('Runtime.evaluate', { returnByValue: true, expression: CHECK_SCRIPT })
     const problems = (response.result?.result?.value ?? []) as Problem[]

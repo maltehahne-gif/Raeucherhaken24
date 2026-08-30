@@ -46,7 +46,9 @@ async function loadRecipe(slug: string) {
       steps: { orderBy: { position: 'asc' } },
       products: { orderBy: { sortOrder: 'asc' } },
       ratings: {
-        where: { comment: { not: null } },
+        // Nur gesichtete Kommentare. Ohne diese Bedingung stuende jeder
+        // anonym eingereichte Text sofort auf einer oeffentlichen Seite.
+        where: { comment: { not: null }, commentApproved: true },
         orderBy: { createdAt: 'desc' },
         take: 12,
         select: { id: true, stars: true, comment: true, authorName: true, createdAt: true },

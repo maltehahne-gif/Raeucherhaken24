@@ -11,6 +11,7 @@ import {
   LifeBuoy,
   LogOut,
   Menu,
+  MessageSquare,
   Package,
   Palette,
   Ruler,
@@ -70,6 +71,7 @@ const NAV: Array<{ group: string; items: NavItem[] }> = [
     items: [
       { href: '/admin/support', label: 'Support', icon: LifeBuoy, permission: 'support:read' },
       { href: '/admin/projekte', label: 'Sonderanfertigungen', icon: Ruler, permission: 'projects:read' },
+      { href: '/admin/bewertungen', label: 'Bewertungen', icon: MessageSquare, permission: 'content:write' },
     ],
   },
   {

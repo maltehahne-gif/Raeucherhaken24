@@ -15,6 +15,38 @@ function absorb(res: Response) {
     jar.set(pair.slice(0, idx).trim(), pair.slice(idx + 1).trim())
   }
 }
+/**
+ * Antwort als JSON lesen, ohne am Fehlerfall zu zerbrechen.
+ *
+ * Der Entwicklungsserver von Next liefert bei einem Fehler eine HTML-Seite
+ * statt JSON. `res.json()` wuerfe dort eine Ausnahme und der Prueflauf braeche
+ * mitten im Ablauf ab — statt die betroffene Pruefung als fehlgeschlagen zu
+ * melden und weiterzulaufen.
+ */
+interface CartPayload {
+  itemCount?: number
+  error?: string
+  pricing?: {
+    subtotalCents?: number
+    discountCents?: number
+    totalCents?: number
+  }
+}
+
+interface OrderPayload {
+  orderNumber?: string
+  error?: string
+}
+
+async function body<T extends object>(res: Response): Promise<T> {
+  try {
+    const value: unknown = await res.json()
+    return typeof value === 'object' && value !== null ? (value as T) : ({} as T)
+  } catch {
+    return {} as T
+  }
+}
+
 async function call(path: string, init: RequestInit = {}) {
   const res = await fetch(B + path, {
     ...init,
@@ -79,7 +111,7 @@ async function main() {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ productId: product.id, quantity: 3 }),
   })
-  let cart = await res.json()
+  let cart = await body<CartPayload>(res)
   check('Artikel in den Warenkorb', res.ok && cart.itemCount === 3, `Summe ${cart.pricing?.subtotalCents}`)
   check(
     'Zwischensumme serverseitig korrekt',
@@ -122,11 +154,11 @@ async function main() {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ code: 'RAUCHSTART10' }),
   })
-  cart = await res.json()
+  cart = await body<CartPayload>(res)
   const expectedDiscount = Math.round((product.priceCents * 3 * 1000) / 10000)
   check(
     'Gutschein RAUCHSTART10 wirkt',
-    res.ok && cart.pricing.discountCents === expectedDiscount,
+    res.ok && cart.pricing?.discountCents === expectedDiscount,
     `Rabatt ${cart.pricing?.discountCents} erwartet ${expectedDiscount}`,
   )
 
@@ -145,11 +177,21 @@ async function main() {
   check('Ausgeschöpfter Gutschein abgelehnt', exhausted.status === 422, `Status ${exhausted.status}`)
 
   // --- Checkout ---
-  const idem = `co_test_${Date.now()}`
+  /*
+   * Jeder Lauf bestellt unter einer eigenen Adresse.
+   *
+   * Der Gutschein RAUCHSTART10 ist auf eine Einloesung je Kunde begrenzt. Mit
+   * einer festen Adresse liefe der Prueflauf genau einmal durch und schluege
+   * danach an einer Regel fehl, die richtig arbeitet. Am Ende raeumt der Lauf
+   * seine Spuren wieder ab (siehe unten).
+   */
+  const runId = `${Date.now().toString(36)}`
+  const testEmail = `ablauf.test+${runId}@example.com`
+  const idem = `co_test_${runId}`
   const payload = {
     firstName: 'Testkunde',
     lastName: 'Ablauf',
-    email: 'ablauf.test@example.com',
+    email: testEmail,
     street: 'Räucherweg 1',
     postalCode: '24376',
     city: 'Kappeln',
@@ -158,6 +200,10 @@ async function main() {
     website: '',
     idempotencyKey: idem,
   }
+
+  const couponUsageBefore = (
+    await prisma.coupon.findUniqueOrThrow({ where: { code: 'RAUCHSTART10' } })
+  ).usageCount
 
   const stockBefore = await prisma.product.findUniqueOrThrow({
     where: { id: product.id },
@@ -169,7 +215,7 @@ async function main() {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(payload),
   })
-  const order = await res.json()
+  const order = await body<OrderPayload>(res)
   check('Bestellung angelegt', res.ok && Boolean(order.orderNumber), order.orderNumber ?? order.error)
 
   const dbOrder = order.orderNumber
@@ -177,8 +223,8 @@ async function main() {
     : null
   check(
     'Bestellsumme entspricht Serverberechnung',
-    dbOrder?.totalCents === cart.pricing.totalCents,
-    `${dbOrder?.totalCents} statt ${cart.pricing.totalCents}`,
+    dbOrder?.totalCents === cart.pricing?.totalCents,
+    `${dbOrder?.totalCents} statt ${cart.pricing?.totalCents}`,
   )
   check('Gutschein in Bestellung übernommen', dbOrder?.couponCode === 'RAUCHSTART10')
   check(
@@ -197,9 +243,9 @@ async function main() {
     `${stockBefore.stock} -> ${stockAfter.stock}`,
   )
 
-  const movement = await prisma.inventoryMovement.findFirst({
-    where: { reference: order.orderNumber },
-  })
+  const movement = order.orderNumber
+    ? await prisma.inventoryMovement.findFirst({ where: { reference: order.orderNumber } })
+    : null
   check('Lagerbewegung protokolliert', movement?.delta === -3, `delta ${movement?.delta}`)
 
   // Doppelklick: identischer Idempotenzschlüssel darf keine zweite Bestellung erzeugen
@@ -208,7 +254,7 @@ async function main() {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(payload),
   })
-  const dupOrder = await dup.json()
+  const dupOrder = await body<OrderPayload>(dup)
   check(
     'Doppelte Bestellung verhindert (Idempotenz)',
     dupOrder.orderNumber === order.orderNumber,
@@ -217,9 +263,14 @@ async function main() {
   const orderCount = await prisma.order.count({ where: { idempotencyKey: idem } })
   check('Nur eine Bestellung in der Datenbank', orderCount === 1, `${orderCount}`)
 
-  // Gutscheinnutzung wurde gezählt
+  // Gutscheinnutzung wurde gezählt — relativ zum Stand vor dem Lauf, damit die
+  // Prüfung auch auf einer Datenbank stimmt, in der schon eingelöst wurde.
   const coupon = await prisma.coupon.findUniqueOrThrow({ where: { code: 'RAUCHSTART10' } })
-  check('Gutscheinnutzung gezählt', coupon.usageCount === 1, `${coupon.usageCount}`)
+  check(
+    'Gutscheinnutzung gezählt',
+    coupon.usageCount === couponUsageBefore + 1,
+    `${couponUsageBefore} -> ${coupon.usageCount}`,
+  )
 
   // Gutschein mit perCustomerLimit=1 darf derselbe Kunde nicht erneut nutzen
   await call('/api/cart', {
@@ -240,8 +291,12 @@ async function main() {
 
   // --- Warenkorb ist geleert ---
   res = await call('/api/cart')
-  cart = await res.json()
-  check('Warenkorb nach Bestellung geleert bzw. neu befüllt', cart.itemCount <= 1, `${cart.itemCount}`)
+  cart = await body<CartPayload>(res)
+  check(
+    'Warenkorb nach Bestellung geleert bzw. neu befüllt',
+    (cart.itemCount ?? 0) <= 1,
+    `${cart.itemCount}`,
+  )
 
   // --- Anmeldung ---
   const badLogin = await call('/api/admin/auth', {
@@ -265,6 +320,53 @@ async function main() {
   check('CSP mit Nonce', csp.includes("'nonce-") && csp.includes("frame-ancestors 'none'"))
   check('X-Content-Type-Options', headRes.headers.get('x-content-type-options') === 'nosniff')
   check('Referrer-Policy', headRes.headers.get('referrer-policy') === 'strict-origin-when-cross-origin')
+
+  /*
+   * Aufräumen.
+   *
+   * Der Prüflauf legt eine echte Bestellung an — mit Bestandsabgang,
+   * Lagerbewegung, Kundendatensatz und Gutscheineinlösung. Bliebe das stehen,
+   * verfälschte jeder Lauf die Kennzahlen im Dashboard und der nächste Lauf
+   * liefe gegen eine andere Ausgangslage.
+   *
+   * Rückgebaut wird in der umgekehrten Reihenfolge des Entstehens; der
+   * Bestand wird auf den gemerkten Ausgangswert zurückgesetzt statt
+   * hochgerechnet, damit ein abgebrochener Lauf keine Differenz hinterlässt.
+   */
+  const testCustomer = await prisma.customer.findUnique({ where: { email: testEmail } })
+  const testOrders = await prisma.order.findMany({
+    where: { email: testEmail },
+    select: { id: true, orderNumber: true },
+  })
+  const orderIds = testOrders.map((o) => o.id)
+
+  if (orderIds.length > 0) {
+    // Lagerbewegungen tragen die Bestellnummer als Referenz, nicht die Id.
+    await prisma.inventoryMovement.deleteMany({
+      where: { reference: { in: testOrders.map((o) => o.orderNumber) } },
+    })
+    await prisma.couponRedemption.deleteMany({ where: { orderId: { in: orderIds } } })
+    await prisma.order.deleteMany({ where: { id: { in: orderIds } } })
+  }
+  await prisma.coupon.update({
+    where: { code: 'RAUCHSTART10' },
+    data: { usageCount: couponUsageBefore },
+  })
+  await prisma.product.update({
+    where: { id: product.id },
+    data: { stock: stockBefore.stock },
+  })
+  if (testCustomer) await prisma.customer.delete({ where: { id: testCustomer.id } })
+
+  const stockAfterCleanup = await prisma.product.findUniqueOrThrow({
+    where: { id: product.id },
+    select: { stock: true },
+  })
+  check(
+    'Ausgangszustand wiederhergestellt',
+    stockAfterCleanup.stock === stockBefore.stock &&
+      (await prisma.order.count({ where: { email: testEmail } })) === 0,
+  )
 
   console.log(`\n${fails === 0 ? 'Alle Prüfungen bestanden.' : `${fails} Prüfung(en) fehlgeschlagen.`}`)
   await prisma.$disconnect()

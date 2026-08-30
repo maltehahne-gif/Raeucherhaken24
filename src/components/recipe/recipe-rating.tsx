@@ -177,7 +177,7 @@ export function RecipeRating({ slug }: { slug: string }) {
             label="Ihre Erfahrung"
             hint="Optional"
             error={errors.comment}
-            description="Erscheint öffentlich unter dem Rezept. Was hat gut funktioniert, was würden Sie anders machen?"
+            description="Was hat gut funktioniert, was würden Sie anders machen? Ihr Text erscheint nach einer kurzen Sichtung unter dem Rezept; Ihre Sterne zählen sofort."
           >
             <Textarea
               value={comment}

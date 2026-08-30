@@ -84,6 +84,14 @@ describe('scoreToken', () => {
     expect(prefix).toBeGreaterThan(inner)
   })
 
+  it('bewertet ein ganzes Wort höher als einen bloßen Wortanfang', () => {
+    // Wer „Pfeffer“ sucht, meint Pfeffer und nicht Pfefferminze — auch dann,
+    // wenn die Minze zufällig am Anfang des Namens steht.
+    const wholeWord = scoreToken('pfeffer', 'schwarzer pfeffer ganz 250 g', 10)
+    const wordPrefix = scoreToken('pfeffer', 'pfefferminze gerebelt 250 g', 10)
+    expect(wholeWord).toBeGreaterThan(wordPrefix)
+  })
+
   it('bewertet Wortanfänge höher als Treffer im Wortinneren', () => {
     const wordStart = scoreToken('haken', 'fleischer haken', 10)
     const insideWord = scoreToken('haken', 'fleischerhaken', 10)

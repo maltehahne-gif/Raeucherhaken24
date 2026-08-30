@@ -26,7 +26,8 @@
     "check:pages": "tsx scripts/check-pages.ts",
     "check:flow": "tsx scripts/smoke-test.ts",
     "check:a11y": "tsx scripts/check-a11y.ts",
-    "check:admin": "tsx scripts/check-admin-api.ts"
+    "check:admin": "tsx scripts/check-admin-api.ts",
+    "check:public": "tsx scripts/check-public-api.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -394,6 +394,95 @@ async function main() {
     check('Unbekannte Berechtigung abgewiesen', !bogus.ok, `Status ${bogus.status}`)
   }
 
+  // --- Rezeptbewertungen: Sichtung -------------------------------------------
+  console.log('\nBewertungen')
+  const recipe = await prisma.recipe.findFirstOrThrow({
+    where: { published: true },
+    select: { id: true, slug: true, title: true, ratingSum: true, ratingCount: true },
+  })
+
+  // Einen Kommentar wie ein Besucher einreichen. Der eigene Cookie-Token des
+  // Prueflaufs sorgt dafuer, dass es eine eigene Bewertung wird.
+  const submitted = await call(`/api/rezepte/${recipe.slug}/bewertung`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      stars: 5,
+      comment: 'Prüflauf: Dieser Kommentar wird gleich wieder entfernt.',
+      authorName: 'Prüflauf',
+    }),
+  })
+  check('Bewertung mit Kommentar angenommen', submitted.ok, `Status ${submitted.status}`)
+
+  const pending = await prisma.recipeRating.findFirst({
+    where: { recipeId: recipe.id, authorName: 'Prüflauf' },
+    select: { id: true, commentApproved: true, stars: true },
+  })
+  check('Kommentar wartet auf Sichtung', pending?.commentApproved === false)
+
+  const pageBefore = await fetch(`${SERVER}/rezepte/${recipe.slug}`).then((r) => r.text())
+  check('Ungesichteter Kommentar steht nicht im Shop', !pageBefore.includes('Prüflauf: Dieser Kommentar'))
+
+  if (pending) {
+    const anonymousModeration = await fetch(`${SERVER}/api/admin/bewertungen/${pending.id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json', Origin: SERVER },
+      body: JSON.stringify({ action: 'approve' }),
+    })
+    check(
+      'Sichtung ohne Anmeldung abgewiesen',
+      anonymousModeration.status === 401 || anonymousModeration.status === 403,
+      `Status ${anonymousModeration.status}`,
+    )
+
+    const approve = await call(`/api/admin/bewertungen/${pending.id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ action: 'approve' }),
+    })
+    check('Freigabe angenommen', approve.ok, `Status ${approve.status}`)
+
+    const pageAfter = await fetch(`${SERVER}/rezepte/${recipe.slug}`).then((r) => r.text())
+    check('Freigegebener Kommentar steht im Shop', pageAfter.includes('Prüflauf: Dieser Kommentar'))
+
+    const removed = await call(`/api/admin/bewertungen/${pending.id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ action: 'remove_comment' }),
+    })
+    check('Text entfernen angenommen', removed.ok, `Status ${removed.status}`)
+
+    const afterRemoval = await prisma.recipeRating.findUnique({ where: { id: pending.id } })
+    check('Text entfernt, Sterne geblieben', afterRemoval?.comment === null && afterRemoval?.stars === 5)
+
+    // Vollstaendig loeschen und pruefen, dass der Durchschnitt stimmt.
+    const beforeDelete = await prisma.recipe.findUniqueOrThrow({
+      where: { id: recipe.id },
+      select: { ratingSum: true, ratingCount: true },
+    })
+    const deleted = await call(`/api/admin/bewertungen/${pending.id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ action: 'delete' }),
+    })
+    check('Bewertung gelöscht', deleted.ok, `Status ${deleted.status}`)
+
+    const afterDelete = await prisma.recipe.findUniqueOrThrow({
+      where: { id: recipe.id },
+      select: { ratingSum: true, ratingCount: true },
+    })
+    check(
+      'Durchschnitt nach dem Löschen korrigiert',
+      afterDelete.ratingCount === beforeDelete.ratingCount - 1 &&
+        afterDelete.ratingSum === beforeDelete.ratingSum - 5,
+      `${beforeDelete.ratingSum}/${beforeDelete.ratingCount} -> ${afterDelete.ratingSum}/${afterDelete.ratingCount}`,
+    )
+    check(
+      'Ausgangszustand wiederhergestellt',
+      afterDelete.ratingSum === recipe.ratingSum && afterDelete.ratingCount === recipe.ratingCount,
+    )
+  }
+
   // --- Abmeldung -------------------------------------------------------------
   console.log('\nAbmeldung')
   const logout = await call('/api/admin/auth', { method: 'DELETE' })
