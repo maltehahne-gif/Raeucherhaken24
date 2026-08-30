@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+  "name": "Raeucherhaken24",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+
+  // Einmalig nach dem Erzeugen: Abhaengigkeiten, .env, Datenbank und Seed.
+  // Ohne diesen Schritt startet zwar der Server, aber es gibt weder einen
+  // erzeugten Prisma-Client noch eine Datenbank — jede Seite liefe auf einen
+  // Fehler.
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Räucherhaken24",
+      "onAutoForward": "openPreview"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "Prisma.prisma"
+      ],
+      "settings": {
+        "editor.formatOnSave": false,
+        "typescript.tsdk": "node_modules/typescript/lib"
+      }
+    }
+  }
+}
