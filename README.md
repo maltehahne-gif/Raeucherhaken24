@@ -148,7 +148,7 @@ die Beratung fällt nie aus.
 
 ```
 prisma/
-  schema.prisma          Datenmodell (30 Entitäten)
+  schema.prisma          Datenmodell (40 Entitäten)
   seed.ts                Seed-Einstieg
   seed/                  Kategorien, Konfigurator, Marketing, Hilfsfunktionen
   seed-data/             Redaktionelle Inhalte als JSON (austauschbar)
