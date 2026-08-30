@@ -15,9 +15,9 @@ import { beforeAll, afterAll } from 'vitest'
 const TEST_DB = join(process.cwd(), 'prisma', 'test.db')
 
 process.env.DATABASE_URL = `file:${TEST_DB}`
-process.env.NODE_ENV = 'test'
 // Fester Pepper, damit Hashes im Test reproduzierbar sind.
 process.env.IP_HASH_SECRET = 'test-pepper-nicht-fuer-produktion'
+// NODE_ENV setzt Vitest selbst auf 'test'; ein erneutes Zuweisen ist nicht erlaubt.
 
 function removeTestDb() {
   for (const suffix of ['', '-journal', '-wal', '-shm']) {
