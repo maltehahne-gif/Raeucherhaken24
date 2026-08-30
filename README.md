@@ -155,7 +155,12 @@ prisma/
 scripts/
   create-admin.ts        Verwaltungskonto anlegen
   generate-product-images.ts  Erzeugt die Produktabbildungen
-  smoke-test.ts          Ablaufprüfung gegen den laufenden Server
+  smoke-test.ts          Bestellablauf gegen den laufenden Server
+  check-admin-api.ts     Verwaltungs-Schnittstellen inkl. Zugriffsschutz
+  check-public-api.ts    Kontakt und Sonderanfertigung inkl. Spam-Abwehr
+  check-pages.ts         Erreichbarkeit aller Seiten
+  check-a11y.ts          Barrierefreiheits-Stichproben im echten Browser
+  set-season.ts          Saisonmodus von der Kommandozeile setzen
 src/
   app/
     (shop)/              Storefront
@@ -300,9 +305,14 @@ Wirkung — nicht nur, ob eine Antwort kommt:
 npm run dev            # in einem Terminal
 npm run check:flow     # Warenkorb → Gutschein → Bestellung, CSRF, Header
 npm run check:admin    # Verwaltungs-Schnittstellen inkl. Zugriffsschutz
+npm run check:public   # Kontakt und Sonderanfertigung inkl. Spam-Abwehr
 npm run check:pages    # Erreichbarkeit aller Seiten
 npm run check:a11y     # Barrierefreiheits-Stichproben (benötigt Chromium)
 ```
+
+Alle vier Skripte sind wiederholbar: Sie treten je Lauf unter eigener Kennung
+auf, damit Ratenbegrenzung und Gutscheinlimits nicht über Läufe hinweg
+zählen, und stellen den Ausgangszustand am Ende wieder her.
 
 `npm run check:a11y` erwartet einen Chromium mit offenem Debug-Port:
 
@@ -360,7 +370,10 @@ API, nicht in der ausgeblendeten Navigation.
 | CSP | Nonce je Anfrage, `strict-dynamic`, `frame-ancestors 'none'`, `object-src 'none'` |
 | Weitere Header | HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy` |
 | Uploads | Prüfung am Dateiinhalt (magische Bytes), nicht am gemeldeten MIME-Typ; serverseitig vergebener Dateiname; Ablage außerhalb von `public/`; Download nur als `attachment` mit neutralem Content-Type |
-| Protokoll | Sicherheitsrelevante Admin-Aktionen landen im Audit-Log; IP-Adressen nur pseudonymisiert |
+| Öffentliche Formulare | Kontakt und Sonderanfertigung zusätzlich mit Honeypot-Feld; die Abweisung sieht aus wie ein Eingabefehler und verrät den Mechanismus nicht |
+| Erratbare Nummern | Bestellnummern und Projektnummern sind fortlaufend. Die Bestellansicht zeigt deshalb keine vollständige Anschrift; die technischen Angaben einer Sonderanfertigung gibt es erst gegen die E-Mail-Adresse der Anfrage, und die Antwort unterscheidet nicht zwischen unbekannter Nummer und falscher Adresse |
+| Selbstaussperrung | Niemand deaktiviert, löscht oder stuft das eigene Konto um; das letzte aktive Konto mit `users:write` bleibt bestehen; die Rolle „Inhaber“ behält immer alle Rechte |
+| Protokoll | Sicherheitsrelevante Admin-Aktionen landen im Audit-Log; IP-Adressen nur pseudonymisiert; Nachrichten- und Notiztexte bleiben draußen |
 | Fehlerausgabe | Endnutzer sehen ausschließlich verständliche Meldungen, technische Details bleiben im Serverlog |
 
 ### Bekannte Einschränkung
@@ -369,6 +382,15 @@ Für Styles enthält die CSP derzeit `'unsafe-inline'`. Next.js und die
 Schriftoptimierung erzeugen Inline-Styles ohne Nonce. Das ist die übliche
 Einschränkung und deutlich weniger kritisch als bei Skripten — für Skripte
 kommt die Anwendung ohne `'unsafe-inline'` aus.
+
+Die Ratenbegrenzung für öffentliche Endpunkte liegt im Prozessspeicher. Bei
+mehreren Instanzen zählt jede für sich; wirksam bleibt sie trotzdem, nur mit
+entsprechend höherem Gesamtbudget. Für einen Mehrinstanzbetrieb gehört sie in
+einen gemeinsamen Speicher (Redis oder eine Tabelle wie beim Login).
+
+`prisma generate` warnt, dass die Konfiguration über `package.json#prisma` mit
+Prisma 7 entfällt. Der Umstieg auf `prisma.config.ts` steht an, ändert aber
+nichts an der Funktion; die Warnung ist derzeit ohne Auswirkung.
 
 ---
 
