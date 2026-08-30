@@ -136,14 +136,31 @@ export function scoreToken(token: string, haystack: string, weight: number): num
   if (haystack.length === 0) return 0
 
   if (haystack === token) return weight * 3
-  if (haystack.startsWith(`${token} `)) return weight * 2.4
 
-  const index = haystack.indexOf(token)
-  if (index === 0) return weight * 2
-  if (index > 0) {
-    // Wortanfang wiegt schwerer als ein Treffer mitten im Wort.
-    return haystack[index - 1] === ' ' ? weight * 1.6 : weight * 0.9
+  /*
+   * Ein Treffer, der ein ganzes Wort ausfuellt, wiegt schwerer als einer, der
+   * nur dessen Anfang trifft — und zwar unabhaengig davon, wo im Text er steht.
+   *
+   * Ohne diese Reihenfolge gewinnt die Position ueber die Genauigkeit: Zu
+   * „Pfeffer“ stuende „Pfefferminze gerebelt“ vor „Schwarzer Pfeffer ganz“,
+   * weil der Treffer dort zufaellig am Anfang liegt.
+   */
+  let literal = 0
+  for (let index = haystack.indexOf(token); index !== -1; index = haystack.indexOf(token, index + 1)) {
+    const atStart = index === 0
+    const startsWord = atStart || haystack[index - 1] === ' '
+    const end = index + token.length
+    const endsWord = end === haystack.length || haystack[end] === ' '
+
+    let factor: number
+    if (startsWord && endsWord) factor = atStart ? 2.4 : 2 // ganzes Wort
+    else if (startsWord) factor = atStart ? 1.6 : 1.3 // nur der Wortanfang
+    else factor = 0.9 // mitten im Wort
+
+    if (factor > literal) literal = factor
+    if (literal === 2.4) break // besser wird es nicht mehr
   }
+  if (literal > 0) return weight * literal
 
   // Fuzzy: nur gegen einzelne Woerter, nicht gegen den gesamten Text.
   const tolerance = toleranceFor(token)
