@@ -1,0 +1,955 @@
+// Raeucherhaken24 - Datenmodell
+//
+// Konventionen:
+//  * Geldbetraege werden ausnahmslos als ganzzahlige Cent-Werte (Int) gespeichert.
+//    Es gibt keine Float-Arithmetik auf Geld. Siehe src/lib/money.ts.
+//  * Gewichte in Gramm (Int), Laengen in Millimetern (Int).
+//  * Status-/Typfelder sind String, weil der Dev-Provider SQLite keine Prisma-Enums
+//    unterstuetzt. Die erlaubten Werte sind in src/lib/domain/enums.ts als
+//    TypeScript-Union + Zod-Schema zentral definiert und werden dort validiert.
+//    Bei einem Wechsel auf PostgreSQL koennen diese Felder 1:1 in echte Enums
+//    ueberfuehrt werden (siehe README, Abschnitt "PostgreSQL").
+//  * Alle Fremdschluessel besitzen ein explizites onDelete-Verhalten.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Katalog
+// ---------------------------------------------------------------------------
+
+model Category {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  name        String
+  description String?
+  /// Kurzer Teaser fuer Kategoriekacheln
+  teaser      String?
+  imageUrl    String?
+  /// Icon-Key aus src/lib/domain/category-icons.ts
+  icon        String?
+  sortOrder   Int     @default(0)
+  active      Boolean @default(true)
+
+  /// SEO
+  metaTitle       String?
+  metaDescription String?
+
+  parentId String?
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children Category[] @relation("CategoryTree")
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([parentId, sortOrder])
+  @@index([active])
+}
+
+model Product {
+  id   String @id @default(cuid())
+  slug String @unique
+  sku  String @unique
+  /// Vom Betrieb vergebene Artikelnummer (abweichend von der internen SKU)
+  articleNumber String @unique
+
+  name      String
+  /// Verkaufsstarker Einzeiler unter dem Produktnamen
+  subtitle  String?
+  /// Kurzbeschreibung fuer Karten und Suchergebnisse
+  shortDescription String?
+  /// Volltext (Markdown-artiges Plaintext, wird escaped gerendert)
+  description      String
+
+  /// Produkttyp: 'simple' | 'configurable' | 'custom'
+  type String @default("simple")
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  /// Bruttopreis in Cent (deutsche Endkundenpreise inkl. USt.)
+  priceCents Int
+  /// Umsatzsteuersatz in Basispunkten (1900 = 19,00 %)
+  taxRateBp  Int @default(1900)
+
+  /// Grundpreisangabe nach PAngV: Inhalt + Einheit (z. B. 500 g -> Preis je 1 kg)
+  baseUnit         String? // 'kg' | 'l' | 'stk'
+  baseUnitAmount   Int? // Inhalt in Gramm / Milliliter / Stueck
+  /// Referenzmenge fuer die Grundpreisangabe (z. B. 1000 g)
+  baseUnitReference Int?
+
+  /// Logistik
+  weightGrams         Int? // Produktgewicht
+  shippingWeightGrams Int? // Versandgewicht inkl. Verpackung
+  packagingUnit       Int  @default(1) // Stueck je Verpackungseinheit
+  lengthMm            Int?
+  widthMm             Int?
+  heightMm            Int?
+  wireDiameterMm      Int? // in Zehntelmillimetern gespeichert (12 = 1,2 mm)
+  loadCapacityGrams   Int? // Belastbarkeit
+
+  material    String? // 'V2A' | 'V4A' | 'VA' | 'Holz' | ...
+  usage       String? // Einsatzgebiet, z. B. 'Fisch'
+  tipFinish   String? // Spitzenausfuehrung
+  /// Lieferzeit in Werktagen (Untergrenze/Obergrenze)
+  deliveryDaysMin Int @default(2)
+  deliveryDaysMax Int @default(4)
+
+  /// Lager
+  stock             Int @default(0)
+  /// Durch offene Bestellungen reservierte Menge
+  reservedStock     Int @default(0)
+  lowStockThreshold Int @default(5)
+  /// Verkauf ohne Bestand zulassen (z. B. Sonderanfertigungen)
+  allowBackorder    Boolean @default(false)
+
+  /// Sichtbarkeit / Merchandising
+  active     Boolean @default(true)
+  visible    Boolean @default(true)
+  bestseller Boolean @default(false)
+  popularity Int     @default(0)
+  sortOrder  Int     @default(0)
+
+  /// SEO
+  metaTitle       String?
+  metaDescription String?
+
+  images     ProductImage[]
+  specs      ProductSpec[]
+  promotions Promotion[]
+  variants   ProductVariant[]
+  priceTiers PriceTier[]
+  optionGroups ConfigOptionGroup[]
+  orderItems OrderItem[]
+  cartItems  CartItem[]
+  movements  InventoryMovement[]
+
+  relatedFrom ProductRelation[] @relation("RelationSource")
+  relatedTo   ProductRelation[] @relation("RelationTarget")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId, active, visible])
+  @@index([active, visible, bestseller])
+  @@index([active, visible, popularity])
+  @@index([priceCents])
+  @@index([material])
+  @@index([usage])
+  @@index([slug])
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String
+  width     Int     @default(1200)
+  height    Int     @default(1200)
+  sortOrder Int     @default(0)
+
+  @@index([productId, sortOrder])
+}
+
+/// Frei definierbare technische Daten fuer PDP-Tabelle und Produktvergleich.
+model ProductSpec {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  /// Stabiler Schluessel fuer den Vergleich, z. B. 'laenge'
+  key       String
+  label     String
+  value     String
+  /// Gruppierung in der PDP-Tabelle, z. B. 'Abmessungen'
+  group     String  @default("Allgemein")
+  sortOrder Int     @default(0)
+
+  @@unique([productId, key])
+  @@index([productId, sortOrder])
+}
+
+/// Varianten eines konfigurierbaren Produktes bzw. fixe Groessen/Gebinde.
+model ProductVariant {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sku       String  @unique
+  name      String
+  /// Preisaufschlag gegenueber dem Produktbasispreis in Cent (darf negativ sein)
+  priceDeltaCents Int @default(0)
+  /// Absoluter Preis in Cent; ueberschreibt Basispreis + Delta, wenn gesetzt
+  priceCents      Int?
+  weightGrams     Int?
+  lengthMm        Int?
+  material        String?
+  stock           Int     @default(0)
+  reservedStock   Int     @default(0)
+  active          Boolean @default(true)
+  sortOrder       Int     @default(0)
+
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+  movements  InventoryMovement[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId, active, sortOrder])
+}
+
+/// Mengenstaffel: ab minQty gilt ein Rabatt in Basispunkten.
+model PriceTier {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  minQty    Int
+  /// Rabatt in Basispunkten (500 = 5,00 %)
+  discountBp Int
+
+  @@unique([productId, minQty])
+  @@index([productId, minQty])
+}
+
+/// Zeitgesteuerte Aktionspreise.
+model Promotion {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String
+  /// Aktionspreis in Cent (absolut). Alternativ discountBp.
+  salePriceCents Int?
+  discountBp     Int?
+  startsAt  DateTime
+  endsAt    DateTime
+  active    Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId, active, startsAt, endsAt])
+}
+
+/// Cross-Selling / verwandte Produkte.
+model ProductRelation {
+  id        String  @id @default(cuid())
+  sourceId  String
+  source    Product @relation("RelationSource", fields: [sourceId], references: [id], onDelete: Cascade)
+  targetId  String
+  target    Product @relation("RelationTarget", fields: [targetId], references: [id], onDelete: Cascade)
+  /// 'related' | 'cross-sell' | 'accessory'
+  kind      String  @default("related")
+  sortOrder Int     @default(0)
+
+  @@unique([sourceId, targetId, kind])
+  @@index([sourceId, kind])
+}
+
+// ---------------------------------------------------------------------------
+// Konfigurator
+// ---------------------------------------------------------------------------
+
+model ConfigOptionGroup {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  /// Stabiler Schluessel, z. B. 'material' | 'laenge' | 'spitze' | 'bearbeitung'
+  key       String
+  label     String
+  helpText  String?
+  /// 'single' | 'multi'
+  selection String  @default("single")
+  required  Boolean @default(true)
+  sortOrder Int     @default(0)
+
+  options ConfigOption[]
+
+  @@unique([productId, key])
+  @@index([productId, sortOrder])
+}
+
+model ConfigOption {
+  id      String            @id @default(cuid())
+  groupId String
+  group   ConfigOptionGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  key     String
+  label   String
+  description String?
+  /// Aufpreis in Cent je Stueck
+  priceDeltaCents Int @default(0)
+  /// Alternativ prozentualer Aufschlag auf den Stueckpreis in Basispunkten
+  priceDeltaBp    Int @default(0)
+  /// Zusaetzliches Gewicht je Stueck in Gramm
+  weightDeltaGrams Int @default(0)
+  /// Optionale Sachdaten fuer Anzeige/Validierung, z. B. Laenge in mm
+  numericValue Int?
+  sku       String?
+  active    Boolean @default(true)
+  isDefault Boolean @default(false)
+  sortOrder Int     @default(0)
+
+  @@unique([groupId, key])
+  @@index([groupId, sortOrder])
+}
+
+// ---------------------------------------------------------------------------
+// Lager
+// ---------------------------------------------------------------------------
+
+/// Vollstaendiges Bestandsjournal. Jede Bestandsaenderung erzeugt genau einen Eintrag.
+model InventoryMovement {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variantId String?
+  variant   ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+  /// Positive Werte = Zugang, negative = Abgang
+  delta     Int
+  stockAfter Int
+  /// 'order' | 'cancellation' | 'refund' | 'manual' | 'correction' | 'seed'
+  reason    String
+  reference String? // z. B. Bestellnummer
+  note      String?
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([productId, createdAt])
+  @@index([reference])
+}
+
+// ---------------------------------------------------------------------------
+// Gutscheine
+// ---------------------------------------------------------------------------
+
+model Coupon {
+  id   String @id @default(cuid())
+  code String @unique
+  description String?
+  /// 'percent' | 'fixed' | 'free_shipping'
+  type String
+  /// Prozentwert in Basispunkten (1000 = 10 %) bzw. fester Betrag in Cent
+  value Int @default(0)
+  minOrderValueCents Int @default(0)
+  /// Maximaler Rabattbetrag in Cent (0 = unbegrenzt), nur fuer type='percent'
+  maxDiscountCents Int @default(0)
+  startsAt DateTime?
+  endsAt   DateTime?
+  /// 0 = unbegrenzt
+  usageLimit    Int @default(0)
+  usageCount    Int @default(0)
+  /// Limit je Kunde (0 = unbegrenzt)
+  perCustomerLimit Int @default(0)
+  active Boolean @default(true)
+
+  redemptions CouponRedemption[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([active, code])
+}
+
+model CouponRedemption {
+  id       String @id @default(cuid())
+  couponId String
+  coupon   Coupon @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  orderId  String @unique
+  order    Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  customerEmail String
+  discountCents Int
+  createdAt DateTime @default(now())
+
+  @@index([couponId, customerEmail])
+}
+
+// ---------------------------------------------------------------------------
+// Warenkorb
+// ---------------------------------------------------------------------------
+
+model Cart {
+  id        String   @id @default(cuid())
+  /// Opaker Token im HttpOnly-Cookie
+  token     String   @unique
+  couponCode String?
+  items     CartItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
+
+model CartItem {
+  id     String @id @default(cuid())
+  cartId String
+  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variantId String?
+  variant   ProductVariant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  quantity Int
+
+  /// Konfiguration als JSON-String: { groupKey: optionKey | optionKey[] }
+  configuration String?
+  /// Stabiler Hash aus productId+variantId+configuration zur Deduplizierung
+  configHash String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, configHash])
+  @@index([cartId])
+}
+
+// ---------------------------------------------------------------------------
+// Kunden (CRM)
+// ---------------------------------------------------------------------------
+
+model Customer {
+  id             String  @id @default(cuid())
+  customerNumber String  @unique
+  email          String  @unique
+  firstName      String
+  lastName       String
+  company        String?
+  phone          String?
+  /// Interne Notizen (nur Admin)
+  notes          String?
+  /// Kommaseparierte Tags
+  tags           String  @default("")
+  /// Denormalisierte Kennzahlen, transaktional mit Bestellungen gepflegt
+  orderCount     Int     @default(0)
+  totalSpentCents Int    @default(0)
+  lastOrderAt    DateTime?
+
+  addresses Address[]
+  orders    Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([lastName, firstName])
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  /// 'shipping' | 'billing'
+  kind       String   @default("shipping")
+  firstName  String
+  lastName   String
+  company    String?
+  street     String
+  postalCode String
+  city       String
+  country    String   @default("DE")
+  isDefault  Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([customerId, kind])
+}
+
+// ---------------------------------------------------------------------------
+// Bestellungen
+// ---------------------------------------------------------------------------
+
+model Order {
+  id          String @id @default(cuid())
+  orderNumber String @unique
+
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  /// Kontaktdaten redundant gespeichert (Bestellung ist ein Dokument)
+  email      String
+  firstName  String
+  lastName   String
+  company    String?
+  phone      String?
+  street     String
+  postalCode String
+  city       String
+  country    String  @default("DE")
+  note       String?
+
+  /// Betraege in Cent, allesamt serverseitig berechnet
+  subtotalCents  Int
+  discountCents  Int @default(0)
+  shippingCents  Int @default(0)
+  totalCents     Int
+  /// Enthaltene Umsatzsteuer in Cent
+  taxCents       Int @default(0)
+
+  couponCode String?
+
+  /// 'pending' | 'paid' | 'refunded' | 'partially_refunded' | 'failed'
+  paymentStatus String @default("pending")
+  /// 'new' | 'confirmed' | 'picking' | 'packed' | 'shipped' | 'delivered' | 'cancelled'
+  status        String @default("new")
+  /// 'invoice' | 'prepayment'
+  paymentMethod String @default("prepayment")
+
+  trackingNumber String?
+  carrier        String?
+  shippedAt      DateTime?
+  deliveredAt    DateTime?
+  cancelledAt    DateTime?
+  refundedCents  Int @default(0)
+
+  /// Verhindert doppelte Bestellungen bei Mehrfachklick / Netzwerk-Retry
+  idempotencyKey String? @unique
+
+  items         OrderItem[]
+  statusHistory OrderStatusHistory[]
+  redemption    CouponRedemption?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([paymentStatus])
+  @@index([email])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  variantId String?
+  variant   ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  /// Snapshot: Bestellung bleibt lesbar, auch wenn das Produkt spaeter geaendert wird
+  name          String
+  sku           String
+  articleNumber String
+  configuration String? // JSON-String
+  configSummary String? // Menschenlesbare Zusammenfassung
+
+  quantity        Int
+  unitPriceCents  Int // Effektiver Stueckpreis nach Optionen/Staffel/Aktion
+  listPriceCents  Int // Ungerabatteter Stueckpreis (fuer Streichpreis)
+  lineTotalCents  Int
+  taxRateBp       Int @default(1900)
+  weightGrams     Int @default(0)
+
+  /// Bereits zurueckgebuchte Menge (Storno/Retoure)
+  restockedQty Int @default(0)
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model OrderStatusHistory {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  /// 'status' | 'payment'
+  field     String @default("status")
+  fromValue String?
+  toValue   String
+  note      String?
+  userId    String?
+  user      User?  @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+
+  @@index([orderId, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Mitarbeiter, Rollen, Sessions (RBAC)
+// ---------------------------------------------------------------------------
+
+model User {
+  id        String  @id @default(cuid())
+  email     String  @unique
+  firstName String
+  lastName  String
+  /// scrypt-Hash im Format scrypt$N$r$p$salt$hash - niemals Klartext
+  passwordHash String
+  active    Boolean @default(true)
+
+  roleId String
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Restrict)
+
+  lastLoginAt DateTime?
+  sessions    Session[]
+  auditLogs   AuditLog[]
+  movements   InventoryMovement[]
+  statusChanges OrderStatusHistory[]
+  supportNotes  SupportMessage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+}
+
+model Role {
+  id          String @id @default(cuid())
+  key         String @unique // 'owner' | 'admin' | 'manager' | 'staff' | 'support'
+  name        String
+  description String?
+  /// Systemrollen koennen nicht geloescht werden
+  system      Boolean @default(false)
+
+  permissions RolePermission[]
+  users       User[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Permission {
+  id          String @id @default(cuid())
+  key         String @unique // z. B. 'products:write'
+  name        String
+  group       String @default("Allgemein")
+
+  roles RolePermission[]
+}
+
+model RolePermission {
+  roleId       String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permissionId String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@index([permissionId])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  /// SHA-256-Hash des Session-Tokens; das Klartext-Token existiert nur im Cookie
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// CSRF-Token dieser Session (Double-Submit)
+  csrfToken String
+  userAgent String?
+  ipHash    String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+/// Rate-Limiting fuer Login und andere sensible Endpunkte.
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  /// Schluessel = Bucket-Kennung (z. B. 'login:ip:<hash>' oder 'login:user:<email>')
+  key       String
+  success   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}
+
+model AuditLog {
+  id     String  @id @default(cuid())
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action String  // 'order.status_changed'
+  entity String  // 'Order'
+  entityId String?
+  detail String? // JSON-String
+  ipHash String?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Support
+// ---------------------------------------------------------------------------
+
+model SupportRequest {
+  id            String @id @default(cuid())
+  ticketNumber  String @unique
+  name          String
+  email         String
+  phone         String?
+  company       String?
+  subject       String
+  message       String
+  /// 'general' | 'order' | 'product' | 'custom' | 'complaint'
+  topic         String @default("general")
+  orderNumber   String?
+  /// 'new' | 'in_progress' | 'waiting' | 'resolved' | 'closed'
+  status        String @default("new")
+  /// 'low' | 'normal' | 'high'
+  priority      String @default("normal")
+
+  messages SupportMessage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email])
+}
+
+model SupportMessage {
+  id        String @id @default(cuid())
+  requestId String
+  request   SupportRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  /// 'internal' = interne Notiz, 'reply' = Antwort an den Kunden
+  kind      String @default("internal")
+  body      String
+  userId    String?
+  user      User?  @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+
+  @@index([requestId, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Rezepte & Community
+// ---------------------------------------------------------------------------
+
+model Recipe {
+  id    String @id @default(cuid())
+  slug  String @unique
+  title String
+  teaser String
+  /// Volltext-Einleitung
+  intro String
+  imageUrl String?
+  imageAlt String?
+
+  /// 'kalt' | 'warm' | 'heiss'
+  method     String
+  /// 'fisch' | 'fleisch' | 'schinken' | 'gefluegel' | 'wurst' | 'kaese' | 'vegetarisch'
+  foodType   String
+  /// 'mild' | 'kraeftig' | 'wuerzig' | 'suess-rauchig' | 'klassisch'
+  flavor     String
+  /// 'buche' | 'erle' | 'eiche' | 'kirsche' | 'apfel' | 'wacholder' | 'mix'
+  woodType   String
+  /// 'einsteiger' | 'fortgeschritten' | 'profi'
+  difficulty String @default("einsteiger")
+
+  prepMinutes  Int
+  brineHours   Int @default(0)
+  smokeMinutes Int
+  servings     Int @default(4)
+
+  /// Von der Redaktion gepflegt oder aus der Community
+  source    String  @default("editorial") // 'editorial' | 'community'
+  authorName String?
+  published Boolean @default(true)
+
+  /// Denormalisierte Bewertungskennzahlen (transaktional gepflegt)
+  ratingSum   Int @default(0)
+  ratingCount Int @default(0)
+
+  metaTitle       String?
+  metaDescription String?
+
+  ingredients RecipeIngredient[]
+  steps       RecipeStep[]
+  ratings     RecipeRating[]
+  products    RecipeProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, method])
+  @@index([published, foodType])
+  @@index([published, createdAt])
+}
+
+model RecipeIngredient {
+  id       String @id @default(cuid())
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  label    String
+  amount   String?
+  group    String @default("Zutaten")
+  sortOrder Int   @default(0)
+
+  @@index([recipeId, sortOrder])
+}
+
+model RecipeStep {
+  id       String @id @default(cuid())
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  position Int
+  title    String
+  body     String
+  /// Optionale Dauer des Schritts in Minuten
+  durationMinutes Int?
+
+  @@unique([recipeId, position])
+}
+
+model RecipeProduct {
+  id        String @id @default(cuid())
+  recipeId  String
+  recipe    Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  /// Verweis ueber den Slug, damit Rezepte auch ohne Produkt bestehen bleiben
+  productSlug String
+  note      String?
+  sortOrder Int @default(0)
+
+  @@unique([recipeId, productSlug])
+}
+
+model RecipeRating {
+  id       String @id @default(cuid())
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  /// Anonyme Kennung des Bewertenden (Hash aus Cookie-Token)
+  voterKey String
+  stars    Int
+  comment  String?
+  authorName String?
+  createdAt DateTime @default(now())
+
+  @@unique([recipeId, voterKey])
+  @@index([recipeId, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Sonderanfertigungen
+// ---------------------------------------------------------------------------
+
+model CustomProject {
+  id            String @id @default(cuid())
+  projectNumber String @unique
+  projectName   String
+
+  contactName  String
+  company      String?
+  email        String
+  phone        String?
+
+  /// Anwendung
+  foodType     String
+  purpose      String
+  targetLoadGrams Int?
+  goalDescription String
+
+  /// Technische Spezifikation (Laengen in Zehntelmillimetern fuer 0,1-mm-Genauigkeit)
+  totalLengthMm      Int?
+  wireDiameterTenthMm Int?
+  prongCount         Int?
+  prongLengthMm      Int?
+  openingWidthMm     Int?
+  shape              String?
+  additionalDimensions String?
+
+  material    String  @default("V4A")
+  tipFinish   String?
+  surface     String?
+  quantity    Int     @default(1)
+
+  wantsConsultation Boolean @default(false)
+  /// Freigabe zur Aufnahme ins Standardsortiment
+  allowCatalogRelease Boolean @default(false)
+  /// Bestaetigung der technischen Angaben
+  specConfirmed Boolean @default(false)
+
+  /// 'new' | 'in_review' | 'quoted' | 'accepted' | 'in_production' | 'delivered' | 'rejected'
+  status String @default("new")
+  internalNote String?
+
+  attachments ProjectAttachment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email])
+}
+
+model ProjectAttachment {
+  id        String @id @default(cuid())
+  projectId String
+  project   CustomProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  /// Vom Server vergebener, sicherer Dateiname auf der Platte
+  storedName   String @unique
+  /// Originalname, nur zur Anzeige (escaped)
+  originalName String
+  mimeType     String
+  sizeBytes    Int
+  /// SHA-256 des Inhalts
+  checksum     String
+  createdAt    DateTime @default(now())
+
+  @@index([projectId])
+}
+
+// ---------------------------------------------------------------------------
+// Konfiguration / Marketing
+// ---------------------------------------------------------------------------
+
+/// Generischer Key-Value-Store fuer Betriebseinstellungen (Saisonmodus, Versand ...).
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model SeasonalTheme {
+  id          String  @id @default(cuid())
+  key         String  @unique // 'normal' | 'advent' | 'nikolaus' | ...
+  name        String
+  description String?
+  /// Optionaler Hinweisbanner im Storefront-Header
+  bannerText  String?
+  bannerLink  String?
+  active      Boolean @default(false)
+  /// Optionale automatische Aktivierung
+  startsAt    DateTime?
+  endsAt      DateTime?
+  sortOrder   Int     @default(0)
+
+  updatedAt DateTime @updatedAt
+}
+
+/// Erweiterbare Synonymliste fuer die Produktsuche.
+model SearchSynonym {
+  id      String @id @default(cuid())
+  /// Normalisierter Begriff (lowercase, ohne Umlaute)
+  term    String
+  /// Kanonischer Zielbegriff
+  canonical String
+  createdAt DateTime @default(now())
+
+  @@unique([term, canonical])
+  @@index([term])
+}
+
+/// Aggregierte Suchanfragen fuer Ranking und Auswertung.
+model SearchQueryLog {
+  id        String   @id @default(cuid())
+  query     String
+  hits      Int
+  createdAt DateTime @default(now())
+
+  @@index([query])
+  @@index([createdAt])
+}
