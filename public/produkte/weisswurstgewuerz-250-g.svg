@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img">
   <defs>
-    <radialGradient id="g" cx="36%" cy="31%" r="85%">
+    <radialGradient id="g" cx="36%" cy="27%" r="85%">
       <stop offset="0%" stop-color="#ffffff"/>
       <stop offset="58%" stop-color="#f5f1ea"/>
       <stop offset="100%" stop-color="#eae2d6"/>
@@ -11,44 +11,13 @@
     <path d="M0 200 H800 M0 400 H800 M0 600 H800 M200 0 V800 M400 0 V800 M600 0 V800"/>
   </g>
   
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <g transform="translate(400 420) rotate(-77.2)">
-      <path d="M0 0 V -207" stroke="#454039" stroke-width="7"/>
-      <path d="M0 -128 q -34 -26 0 -74 q 34 26 0 74 Z" fill="#9c5124" opacity="0.39" stroke="#454039" stroke-width="5"/>
-    </g>
-    <g transform="translate(400 420) rotate(-53.5)">
-      <path d="M0 0 V -234" stroke="#454039" stroke-width="7"/>
-      <path d="M0 -145 q -34 -26 0 -84 q 34 26 0 84 Z" fill="#9c5124" opacity="0.54" stroke="#454039" stroke-width="5"/>
-    </g>
-    <g transform="translate(400 420) rotate(-36.4)">
-      <path d="M0 0 V -163" stroke="#454039" stroke-width="7"/>
-      <path d="M0 -101 q -34 -26 0 -59 q 34 26 0 59 Z" fill="#9c5124" opacity="0.44" stroke="#454039" stroke-width="5"/>
-    </g>
-    <g transform="translate(400 420) rotate(-19.1)">
-      <path d="M0 0 V -154" stroke="#454039" stroke-width="7"/>
-      <path d="M0 -96 q -34 -26 0 -56 q 34 26 0 56 Z" fill="#9c5124" opacity="0.48" stroke="#454039" stroke-width="5"/>
-    </g>
-    <g transform="translate(400 420) rotate(0.1)">
-      <path d="M0 0 V -235" stroke="#454039" stroke-width="7"/>
-      <path d="M0 -146 q -34 -26 0 -85 q 34 26 0 85 Z" fill="#9c5124" opacity="0.29" stroke="#454039" stroke-width="5"/>
-    </g>
-    <g transform="translate(400 420) rotate(16.0)">
-      <path d="M0 0 V -172" stroke="#454039" stroke-width="7"/>
-      <path d="M0 -107 q -34 -26 0 -62 q 34 26 0 62 Z" fill="#9c5124" opacity="0.52" stroke="#454039" stroke-width="5"/>
-    </g>
-    <g transform="translate(400 420) rotate(31.2)">
-      <path d="M0 0 V -184" stroke="#454039" stroke-width="7"/>
-      <path d="M0 -114 q -34 -26 0 -66 q 34 26 0 66 Z" fill="#9c5124" opacity="0.28" stroke="#454039" stroke-width="5"/>
-    </g>
-    <g transform="translate(400 420) rotate(50.8)">
-      <path d="M0 0 V -205" stroke="#454039" stroke-width="7"/>
-      <path d="M0 -127 q -34 -26 0 -74 q 34 26 0 74 Z" fill="#9c5124" opacity="0.35" stroke="#454039" stroke-width="5"/>
-    </g>
-    <g transform="translate(400 420) rotate(73.5)">
-      <path d="M0 0 V -203" stroke="#454039" stroke-width="7"/>
-      <path d="M0 -126 q -34 -26 0 -73 q 34 26 0 73 Z" fill="#9c5124" opacity="0.43" stroke="#454039" stroke-width="5"/>
-    </g>
-    <path d="M340 424 h 120 v 74 a 20 20 0 0 1 -20 20 h -80 a 20 20 0 0 1 -20 -20 Z" stroke="#454039" stroke-width="12"/>
-    <path d="M336 452 h 128 M336 484 h 128" stroke="#9c5124" stroke-width="8" opacity="0.55"/>
+  <g fill="none" stroke="#454039" stroke-width="12" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M336 168 h 128 v 44 h -128 z" stroke-width="11"/>
+    <rect x="318" y="212" width="164" height="52" rx="10" stroke-width="11"/>
+    <path d="M300 264 h 200 a 12 12 0 0 1 12 12 v 300 a 36 36 0 0 1 -36 36 H 324 a 36 36 0 0 1 -36 -36 V 276 a 12 12 0 0 1 12 -12 Z"/>
+    <path d="M310 392 h 180 v 58 h -180 z" fill="#9c5124" opacity="0.34" stroke="none"/>
+    <path d="M310 450 h 180 v 54 h -180 z" fill="#454039" opacity="0.18" stroke="none"/>
+    <path d="M310 504 h 180 v 62 a 12 12 0 0 1 -12 12 H 322 a 12 12 0 0 1 -12 -12 Z" fill="#9c5124" opacity="0.2" stroke="none"/>
+    <path d="M348 296 h 104" stroke-width="7" opacity="0.3"/>
   </g>
 </svg>

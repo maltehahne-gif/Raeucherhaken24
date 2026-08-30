@@ -74,19 +74,23 @@ export function pickArchetype(categorySlug: string, ...text: Array<string | unde
   if (categorySlug === 'raeucherlaugen') return 'brine'
   if (categorySlug === 'sonderanfertigungen') return 'special'
 
-  // Gewürzbereich
+  /*
+   * Gewürzbereich: Zuerst die physische Form, dann die botanische Familie.
+   * Ein gemahlener Majoran ist zwar ein Kraut, sieht aber wie Pulver aus —
+   * eine Zeichnung mit Kräuterbund wäre irreführend.
+   */
   if (/salz/.test(n)) return 'salt'
+  if (/mischung|gew(ü|u)rz f(ü|u)r|wurstgew(ü|u)rz|grillgew(ü|u)rz|steakpfeffer|br(ü|u)he|suppengr(ü|u)n|kr(ä|a)uter der provence/.test(n)) {
+    return 'spice-blend'
+  }
+  if (/gemahlen|pulver|granuliert|gerieben|mehl\b/.test(n)) return 'spice-ground'
   if (
-    /kraut|kr(ä|a)uter|thymian|rosmarin|lorbeer|majoran|oregano|salbei|basilikum|dill|petersilie|estragon|minze|melisse|bohnenkraut|beifu(ß|ss)|ysop|kerbel|schnittlauch|liebst(ö|o)ckel|provence/.test(
+    /kraut|kr(ä|a)uter|thymian|rosmarin|lorbeer|majoran|oregano|salbei|basilikum|dill|petersilie|estragon|minze|melisse|bohnenkraut|beifu(ß|ss)|ysop|kerbel|schnittlauch|liebst(ö|o)ckel|b(ä|a)rlauch/.test(
       n,
     )
   ) {
     return 'herb'
   }
-  if (/mischung|gew(ü|u)rz f(ü|u)r|wurstgew(ü|u)rz|grillgew(ü|u)rz|steakpfeffer|br(ü|u)he|suppengr(ü|u)n/.test(n)) {
-    return 'spice-blend'
-  }
-  if (/gemahlen|pulver|granuliert|fein gemahlen|mehl/.test(n)) return 'spice-ground'
   return 'spice-whole'
 }
 
