@@ -267,6 +267,134 @@ async function main() {
     check('Gutschein in der Datenbank', false, 'nicht gefunden')
   }
 
+  // --- Saisonmodus -----------------------------------------------------------
+  console.log('\nSaison')
+  const previousTheme = (await prisma.setting.findUnique({ where: { key: 'shop:seasonal_theme' } }))?.value ?? 'normal'
+
+  const season = await call('/api/admin/saison', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ theme: 'advent', bannerText: '', bannerLink: '', bannerActive: false }),
+  })
+  check('Saisonmodus umgestellt', season.ok, `Status ${season.status}`)
+
+  const storedTheme = await prisma.setting.findUnique({ where: { key: 'shop:seasonal_theme' } })
+  check('Saisonmodus in der Datenbank', storedTheme?.value === 'advent', `${storedTheme?.value}`)
+
+  const shopHtml = await fetch(SERVER + '/').then((res) => res.text())
+  check('Saisonmodus wirkt sofort auf die Startseite', shopHtml.includes('data-season="advent"'))
+
+  const unknownTheme = await call('/api/admin/saison', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ theme: 'karneval', bannerText: '', bannerLink: '', bannerActive: false }),
+  })
+  check('Unbekannter Saisonmodus abgewiesen', !unknownTheme.ok, `Status ${unknownTheme.status}`)
+
+  // Ein Bannerlink landet im Kopfbereich jeder Seite — javascript: waere dort
+  // ein Einfallstor.
+  const scriptLink = await call('/api/admin/saison', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      theme: 'normal',
+      bannerText: 'Test',
+      // eslint-disable-next-line no-script-url
+      bannerLink: 'javascript:alert(1)',
+      bannerActive: true,
+    }),
+  })
+  check('Bannerlink mit javascript: abgewiesen', !scriptLink.ok, `Status ${scriptLink.status}`)
+
+  await call('/api/admin/saison', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ theme: previousTheme, bannerText: '', bannerLink: '', bannerActive: false }),
+  })
+  const restoredTheme = await prisma.setting.findUnique({ where: { key: 'shop:seasonal_theme' } })
+  check('Saisonmodus zurueckgesetzt', (restoredTheme?.value ?? 'normal') === previousTheme)
+
+  // --- Mitarbeitende: Schutz vor Selbstaussperrung ---------------------------
+  console.log('\nMitarbeitende')
+  const me = await prisma.user.findFirstOrThrow({
+    where: { email: 'inhaber@raeucherhaken24.example' },
+    select: { id: true, roleId: true, firstName: true, lastName: true, email: true },
+  })
+
+  const selfOff = await call(`/api/admin/mitarbeiter/${me.id}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ intent: 'activation', active: false }),
+  })
+  check('Eigenes Konto kann nicht deaktiviert werden', selfOff.status === 409, `Status ${selfOff.status}`)
+
+  const stillActive = await prisma.user.findUniqueOrThrow({ where: { id: me.id } })
+  check('Eigenes Konto weiterhin aktiv', stillActive.active)
+
+  const otherRole = await prisma.role.findFirst({ where: { id: { not: me.roleId } }, select: { id: true } })
+  if (otherRole) {
+    const selfUpgrade = await call(`/api/admin/mitarbeiter/${me.id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        firstName: me.firstName,
+        lastName: me.lastName,
+        email: me.email,
+        roleId: otherRole.id,
+        active: true,
+        password: '',
+        passwordConfirm: '',
+      }),
+    })
+    check('Eigene Rolle kann nicht geaendert werden', selfUpgrade.status === 403, `Status ${selfUpgrade.status}`)
+
+    const unchangedRole = await prisma.user.findUniqueOrThrow({ where: { id: me.id } })
+    check('Eigene Rolle unveraendert', unchangedRole.roleId === me.roleId)
+  }
+
+  const weakPassword = await call('/api/admin/mitarbeiter', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      firstName: 'Prüf',
+      lastName: 'Lauf',
+      email: `prueflauf-${Date.now().toString(36)}@raeucherhaken24.example`,
+      roleId: me.roleId,
+      active: true,
+      password: 'passwort',
+      passwordConfirm: 'passwort',
+    }),
+  })
+  check('Zu schwaches Passwort abgewiesen', weakPassword.status === 422, `Status ${weakPassword.status}`)
+
+  // --- Rollen ----------------------------------------------------------------
+  console.log('\nRollen')
+  const ownerRole = await prisma.role.findFirst({ where: { key: 'owner' }, select: { id: true } })
+  if (ownerRole) {
+    const strip = await call(`/api/admin/rollen/${ownerRole.id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ permissions: [] }),
+    })
+    check('Rechte der Inhaberrolle gesperrt', strip.status === 409, `Status ${strip.status}`)
+
+    const ownerPermissions = await prisma.rolePermission.count({ where: { roleId: ownerRole.id } })
+    check('Inhaberrolle hat weiterhin Rechte', ownerPermissions > 0, `${ownerPermissions}`)
+  }
+
+  const unknownPermission = await prisma.role.findFirst({
+    where: { key: { not: 'owner' } },
+    select: { id: true },
+  })
+  if (unknownPermission) {
+    const bogus = await call(`/api/admin/rollen/${unknownPermission.id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ permissions: ['alles:duerfen'] }),
+    })
+    check('Unbekannte Berechtigung abgewiesen', !bogus.ok, `Status ${bogus.status}`)
+  }
+
   // --- Abmeldung -------------------------------------------------------------
   console.log('\nAbmeldung')
   const logout = await call('/api/admin/auth', { method: 'DELETE' })
