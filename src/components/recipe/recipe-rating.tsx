@@ -5,52 +5,48 @@ import { useRouter } from 'next/navigation'
 import { AlertCircle, Star } from 'lucide-react'
 import { apiRequest } from '@/lib/client/api'
 import { Button } from '@/components/ui/button'
-import { Card, CardBody, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Card, CardBody, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Field, FormError, FormHint, Input, Textarea } from '@/components/ui/field'
-import { RatingInput, RatingStars } from '@/components/ui/rating'
+import { RatingInput } from '@/components/ui/rating'
 import { useToast } from '@/components/ui/toast'
 
 /**
  * Bewertung eines Rezeptes.
  *
  * Je Besucher zaehlt genau eine Bewertung; der Server erkennt ihn ueber ein
- * eigenes HttpOnly-Cookie. Eine bereits abgegebene Bewertung wird beim
- * Laden geholt und im Formular vorbelegt — dadurch ist sofort sichtbar, dass
- * eine erneute Abgabe die bisherige ersetzt und keine zweite Stimme erzeugt.
+ * eigenes HttpOnly-Cookie. Eine bereits abgegebene Bewertung wird beim Laden
+ * geholt und im Formular vorbelegt — dadurch ist sofort sichtbar, dass eine
+ * erneute Abgabe die bisherige ersetzt und keine zweite Stimme erzeugt.
  *
- * Der Server ist die einzige Instanz, die verbindlich prueft; seine Antwort
- * ueberschreibt anschliessend den lokalen Zustand.
+ * Der Durchschnitt steht bewusst nur einmal auf der Seite, naemlich im Kopf
+ * des Rezeptes. Nach dem Speichern wird die Seite neu angefordert, damit dort
+ * kein ueberholter Wert stehen bleibt.
  */
 
 const MAX_COMMENT = 1_000
 const MAX_NAME = 60
 
+interface OwnRating {
+  stars: number
+  comment: string | null
+  authorName: string | null
+}
+
 interface RatingState {
   average: number | null
   count: number
-  own: { stars: number; comment: string | null; authorName: string | null } | null
+  own: OwnRating | null
 }
 
 interface RatingResponse extends RatingState {
   message: string
 }
 
-export function RecipeRating({
-  slug,
-  initialAverage,
-  initialCount,
-}: {
-  slug: string
-  /** Serverseitig gerenderter Ausgangswert, damit sofort etwas dasteht. */
-  initialAverage: number | null
-  initialCount: number
-}) {
+export function RecipeRating({ slug }: { slug: string }) {
   const router = useRouter()
   const toast = useToast()
 
-  const [average, setAverage] = useState(initialAverage)
-  const [count, setCount] = useState(initialCount)
-  const [ownStars, setOwnStars] = useState(0)
+  const [stars, setStars] = useState(0)
   const [hasOwnRating, setHasOwnRating] = useState(false)
   const [comment, setComment] = useState('')
   const [authorName, setAuthorName] = useState('')
@@ -62,9 +58,11 @@ export function RecipeRating({
   const [formError, setFormError] = useState<string | null>(null)
   const [confirmation, setConfirmation] = useState<string | null>(null)
 
-  // Eigene Bewertung nachladen: Sie haengt am HttpOnly-Cookie und kann
-  // deshalb nicht serverseitig in eine zwischenspeicherbare Seite gerendert
-  // werden, ohne diese fuer jeden Besucher einzeln aufzubauen.
+  /*
+   * Die eigene Bewertung haengt am HttpOnly-Cookie. Sie serverseitig zu
+   * rendern wuerde bedeuten, die Rezeptseite fuer jeden Besucher einzeln
+   * aufzubauen — deshalb wird sie hier nachgeladen.
+   */
   useEffect(() => {
     const controller = new AbortController()
 
@@ -74,15 +72,11 @@ export function RecipeRating({
       })
       if (controller.signal.aborted) return
 
-      if (result.ok) {
-        setAverage(result.data.average)
-        setCount(result.data.count)
-        if (result.data.own) {
-          setOwnStars(result.data.own.stars)
-          setHasOwnRating(true)
-          setComment(result.data.own.comment ?? '')
-          setAuthorName(result.data.own.authorName ?? '')
-        }
+      if (result.ok && result.data.own) {
+        setStars(result.data.own.stars)
+        setHasOwnRating(true)
+        setComment(result.data.own.comment ?? '')
+        setAuthorName(result.data.own.authorName ?? '')
       }
       // Ein Fehler beim Nachladen bleibt ohne Meldung: Das Formular ist auch
       // ohne vorbelegte Werte vollstaendig bedienbar.
@@ -98,7 +92,7 @@ export function RecipeRating({
     setFormError(null)
     setConfirmation(null)
 
-    if (ownStars < 1) {
+    if (stars < 1) {
       setErrors({ stars: 'Bitte wählen Sie zwischen einem und fünf Sternen.' })
       return
     }
@@ -108,12 +102,7 @@ export function RecipeRating({
 
     const result = await apiRequest<RatingResponse>(`/api/rezepte/${encodeURIComponent(slug)}/bewertung`, {
       method: 'POST',
-      body: {
-        stars: ownStars,
-        comment: comment.trim(),
-        authorName: authorName.trim(),
-        website,
-      },
+      body: { stars, comment: comment.trim(), authorName: authorName.trim(), website },
     })
 
     setSaving(false)
@@ -125,16 +114,16 @@ export function RecipeRating({
       return
     }
 
-    setAverage(result.data.average)
-    setCount(result.data.count)
+    // Die Antwort des Servers ist massgeblich und ueberschreibt die Eingabe.
     setHasOwnRating(true)
+    setStars(result.data.own?.stars ?? stars)
     setComment(result.data.own?.comment ?? '')
     setAuthorName(result.data.own?.authorName ?? '')
     setConfirmation(result.data.message)
     toast.success(result.data.message)
 
-    // Kopfbereich und Kommentarliste stammen vom Server — nach dem Speichern
-    // neu anfordern, damit dort nicht der alte Durchschnitt stehen bleibt.
+    // Durchschnitt und Erfahrungsberichte stammen vom Server — neu anfordern,
+    // damit dort nicht der alte Stand stehen bleibt.
     router.refresh()
   }
 
@@ -146,14 +135,9 @@ export function RecipeRating({
           <CardDescription>
             {hasOwnRating
               ? 'Sie haben dieses Rezept bereits bewertet. Eine erneute Abgabe ersetzt Ihre bisherige Bewertung.'
-              : 'Ihre Bewertung hilft anderen bei der Auswahl. Eine Anmeldung ist nicht nötig.'}
+              : 'Ihre Bewertung hilft anderen bei der Auswahl. Eine Anmeldung ist dafür nicht nötig.'}
           </CardDescription>
         </div>
-        {average !== null && count > 0 && (
-          <div className="shrink-0 text-right">
-            <RatingStars value={average} count={count} size="md" showValue />
-          </div>
-        )}
       </CardHeader>
 
       <CardBody>
@@ -170,15 +154,15 @@ export function RecipeRating({
             <div className="flex flex-wrap items-center gap-3">
               <RatingInput
                 name="rezept-sterne"
-                value={ownStars}
+                value={stars}
                 onChange={(value) => {
-                  setOwnStars(value)
+                  setStars(value)
                   setErrors((current) => ({ ...current, stars: '' }))
                 }}
                 disabled={loading || saving}
               />
               <span className="tabular text-sm text-ink-muted">
-                {ownStars > 0 ? `${ownStars} von 5 Sternen` : 'Noch keine Auswahl'}
+                {stars > 0 ? `${stars} von 5 Sternen` : 'Noch keine Auswahl'}
               </span>
             </div>
             {errors.stars && (
@@ -193,7 +177,7 @@ export function RecipeRating({
             label="Ihre Erfahrung"
             hint="Optional"
             error={errors.comment}
-            description="Was hat gut funktioniert, was würden Sie anders machen?"
+            description="Erscheint öffentlich unter dem Rezept. Was hat gut funktioniert, was würden Sie anders machen?"
           >
             <Textarea
               value={comment}
@@ -209,7 +193,7 @@ export function RecipeRating({
             label="Name"
             hint="Optional"
             error={errors.authorName}
-            description="Wird zusammen mit Ihrer Erfahrung öffentlich angezeigt. Ohne Angabe bleibt die Bewertung anonym."
+            description="Wird neben Ihrer Erfahrung angezeigt. Ohne Angabe bleibt die Bewertung anonym."
           >
             <Input
               value={authorName}
@@ -236,9 +220,9 @@ export function RecipeRating({
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <FormHint>
-              Wir speichern zu Ihrer Bewertung keine personenbezogenen Daten. Zur Unterscheidung der
-              Bewertenden legen wir ein technisches Cookie an.
+            <FormHint className="max-w-md">
+              Wir speichern zu Ihrer Bewertung weder E-Mail-Adresse noch IP-Adresse. Damit jede Person nur
+              einmal zählt, legen wir ein technisches Cookie an.
             </FormHint>
             <Button type="submit" loading={saving} disabled={loading}>
               <Star className="size-4" aria-hidden="true" />

@@ -176,8 +176,9 @@ export default async function AdminUsersPage({ searchParams }: PageProps) {
             Deaktivierung und Rollenwechsel beenden sofort alle Sitzungen des betroffenen Kontos.
           </li>
           <li>
-            Derzeit dürfen {administrators} {administrators === 1 ? 'Konto' : 'Konten'} Mitarbeitende
-            verwalten; das letzte davon kann nicht deaktiviert werden.
+            {administrators === 1
+              ? 'Derzeit darf genau ein Konto Mitarbeitende verwalten; es kann deshalb nicht deaktiviert werden.'
+              : `Derzeit dürfen ${administrators} Konten Mitarbeitende verwalten; das letzte davon kann nicht deaktiviert werden.`}
           </li>
         </ul>
       </div>
