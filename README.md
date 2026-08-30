@@ -370,7 +370,8 @@ API, nicht in der ausgeblendeten Navigation.
 | CSP | Nonce je Anfrage, `strict-dynamic`, `frame-ancestors 'none'`, `object-src 'none'` |
 | Weitere Header | HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy` |
 | Uploads | Prüfung am Dateiinhalt (magische Bytes), nicht am gemeldeten MIME-Typ; serverseitig vergebener Dateiname; Ablage außerhalb von `public/`; Download nur als `attachment` mit neutralem Content-Type |
-| Öffentliche Formulare | Kontakt und Sonderanfertigung zusätzlich mit Honeypot-Feld; die Abweisung sieht aus wie ein Eingabefehler und verrät den Mechanismus nicht |
+| Öffentliche Formulare | Kontakt, Sonderanfertigung und Rezeptbewertung zusätzlich mit Honeypot-Feld; die Abweisung sieht aus wie ein Eingabefehler und verrät den Mechanismus nicht |
+| Nutzerinhalte | Rezeptkommentare erscheinen erst nach Sichtung unter `/admin/bewertungen` (`content:write`). Die Sternwertung zählt sofort — sie ist eine Zahl ohne Text. Ein geänderter Kommentar geht erneut in die Sichtung, damit ein freigegebener Text nicht nachträglich ausgetauscht werden kann |
 | Erratbare Nummern | Bestellnummern und Projektnummern sind fortlaufend. Die Bestellansicht zeigt deshalb keine vollständige Anschrift; die technischen Angaben einer Sonderanfertigung gibt es erst gegen die E-Mail-Adresse der Anfrage, und die Antwort unterscheidet nicht zwischen unbekannter Nummer und falscher Adresse |
 | Selbstaussperrung | Niemand deaktiviert, löscht oder stuft das eigene Konto um; das letzte aktive Konto mit `users:write` bleibt bestehen; die Rolle „Inhaber“ behält immer alle Rechte |
 | Protokoll | Sicherheitsrelevante Admin-Aktionen landen im Audit-Log; IP-Adressen nur pseudonymisiert; Nachrichten- und Notiztexte bleiben draußen |

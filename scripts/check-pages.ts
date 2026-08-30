@@ -80,6 +80,7 @@ const ADMIN_PAGES = [
   '/admin/mitarbeiter/rollen',
   '/admin/saison',
   '/admin/protokoll',
+  '/admin/bewertungen',
 ]
 
 async function main() {

@@ -72,7 +72,13 @@ interface RatingState {
   average: number | null
   count: number
   /** Die eigene Bewertung dieses Besuchers, sofern vorhanden. */
-  own: { stars: number; comment: string | null; authorName: string | null } | null
+  own: {
+    stars: number
+    comment: string | null
+    authorName: string | null
+    /** Steht der eigene Kommentar oeffentlich oder noch in der Sichtung? */
+    commentApproved: boolean
+  } | null
 }
 
 /**
@@ -93,7 +99,7 @@ export async function GET(_request: Request, context: RouteContext) {
     const own = token
       ? await prisma.recipeRating.findUnique({
           where: { recipeId_voterKey: { recipeId: recipe.id, voterKey: voterKeyFrom(token) } },
-          select: { stars: true, comment: true, authorName: true },
+          select: { stars: true, comment: true, authorName: true, commentApproved: true },
         })
       : null
 
@@ -158,10 +164,20 @@ export async function POST(request: Request, context: RouteContext) {
         select: { id: true, stars: true },
       })
 
+      /*
+       * Ein Kommentar geht immer neu in die Sichtung — auch beim Aendern einer
+       * bereits freigegebenen Bewertung. Sonst liesse sich ein harmloser Text
+       * freigeben und anschliessend gegen einen beliebigen austauschen.
+       */
       if (previous) {
         await tx.recipeRating.update({
           where: { id: previous.id },
-          data: { stars, comment: comment ?? null, authorName: authorName ?? null },
+          data: {
+            stars,
+            comment: comment ?? null,
+            authorName: authorName ?? null,
+            commentApproved: false,
+          },
         })
       } else {
         await tx.recipeRating.create({
@@ -210,14 +226,27 @@ export async function POST(request: Request, context: RouteContext) {
     const state: RatingState = {
       average: averageOf(outcome.updated.ratingSum, outcome.updated.ratingCount),
       count: outcome.updated.ratingCount,
-      own: { stars, comment: comment ?? null, authorName: authorName ?? null },
+      own: {
+        stars,
+        comment: comment ?? null,
+        authorName: authorName ?? null,
+        commentApproved: false,
+      },
     }
+
+    // Die Sternwertung zaehlt sofort, der Text erst nach der Sichtung. Beides
+    // gehoert in die Rueckmeldung, sonst wartet jemand vergeblich auf seinen
+    // Kommentar oder haelt die Bewertung fuer verloren.
+    const hasComment = typeof comment === 'string' && comment.length > 0
+    const base = outcome.wasUpdate
+      ? 'Ihre Bewertung wurde aktualisiert.'
+      : 'Vielen Dank für Ihre Bewertung.'
 
     return jsonOk({
       ...state,
-      message: outcome.wasUpdate
-        ? 'Ihre Bewertung wurde aktualisiert.'
-        : 'Vielen Dank für Ihre Bewertung.',
+      message: hasComment
+        ? `${base} Ihre Sterne zählen sofort; Ihr Kommentar erscheint nach einer kurzen Sichtung.`
+        : base,
     })
   } catch (error) {
     return handleRouteError(error, 'rezept-bewertung:post')

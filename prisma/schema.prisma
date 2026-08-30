@@ -826,10 +826,15 @@ model RecipeRating {
   stars    Int
   comment  String?
   authorName String?
+  /// Kommentare erscheinen erst nach Sichtung. Die Sternwertung zaehlt sofort:
+  /// Sie ist eine Zahl ohne Text und damit nicht missbrauchbar im selben Mass.
+  commentApproved Boolean @default(false)
   createdAt DateTime @default(now())
 
   @@unique([recipeId, voterKey])
   @@index([recipeId, createdAt])
+  /// Warteschlange der Moderation: unfreigegebene Kommentare, aelteste zuerst.
+  @@index([commentApproved, createdAt])
 }
 
 // ---------------------------------------------------------------------------
