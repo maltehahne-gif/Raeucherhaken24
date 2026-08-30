@@ -45,6 +45,41 @@ Die Anmeldedaten für den Verwaltungsbereich gibt der Seed am Ende aus. Sie
 gelten ausschließlich für die lokale Entwicklung — siehe
 [Produktivbetrieb](#produktivbetrieb).
 
+### GitHub Codespaces
+
+Das Repository bringt einen Dev Container mit. Beim Erzeugen des Codespace
+laufen Installation, `.env`, Datenbank und Seed automatisch durch
+(`.devcontainer/setup.sh`); danach genügt `npm run dev`.
+
+Zwei Punkte, an denen es sonst regelmäßig scheitert:
+
+**Die Seite liegt nicht auf `localhost`.** Der im Terminal ausgegebene Link
+zeigt auf `http://localhost:3000` — das ist die Adresse *im Container*, nicht
+im Browser. Sichtbar wird der Shop über die Portweiterleitung: Reiter **PORTS**
+→ Zeile **3000** → Weltkugel-Symbol *Open in Browser*. Der Port ist
+standardmäßig privat und nur für das eigene Konto erreichbar; zum Teilen die
+Sichtbarkeit auf *Public* stellen.
+
+**Ohne Einrichtung fehlen drei Dinge.** `.env`, der erzeugte Prisma-Client und
+die SQLite-Datei gehören bewusst nicht ins Repository. Wer den Codespace ohne
+Dev Container verwendet oder den Einrichtungsschritt übersprungen hat, holt ihn
+nach:
+
+```bash
+cp .env.example .env
+npm run setup
+npm run dev
+```
+
+Damit Canonical-URLs, Sitemap und Open Graph nicht ins Leere zeigen, gehört in
+die `.env` die weitergeleitete Adresse:
+
+```bash
+NEXT_PUBLIC_SITE_URL="https://<codespace-name>-3000.app.github.dev"
+```
+
+Das Einrichtungsskript trägt sie automatisch ein.
+
 ---
 
 ## Technischer Aufbau
@@ -147,6 +182,9 @@ die Beratung fällt nie aus.
 ## Projektstruktur
 
 ```
+.devcontainer/
+  devcontainer.json      Dev Container für GitHub Codespaces
+  setup.sh               Einrichtung: Abhängigkeiten, .env, Datenbank, Seed
 prisma/
   schema.prisma          Datenmodell (40 Entitäten)
   seed.ts                Seed-Einstieg
