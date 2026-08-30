@@ -7,6 +7,10 @@
  *
  * Aufruf: npx tsx scripts/check-pages.ts [basis-url]
  */
+
+// Eigener Modulgueltigkeitsbereich, damit sich Skripte im selben Ordner
+// nicht gegenseitig ihre Namen ueberschreiben.
+export {}
 const BASE = process.argv[2] ?? 'http://localhost:3100'
 
 const jar = new Map<string, string>()

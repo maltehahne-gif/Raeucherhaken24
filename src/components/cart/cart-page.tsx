@@ -32,6 +32,7 @@ export function CartPageContent({ initialCart }: { initialCart: CartView | null 
     return (
       <EmptyState
         className="mt-10"
+        headingLevel="h2"
         icon={<ShoppingBag className="size-5" aria-hidden="true" />}
         title="Ihr Warenkorb ist leer"
         description="Stöbern Sie im Sortiment oder lassen Sie sich in wenigen Schritten das Passende empfehlen."

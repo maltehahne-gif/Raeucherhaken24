@@ -24,7 +24,8 @@
     "setup": "prisma generate && prisma db push && tsx prisma/seed.ts",
     "admin:create": "tsx scripts/create-admin.ts",
     "check:pages": "tsx scripts/check-pages.ts",
-    "check:flow": "tsx scripts/smoke-test.ts"
+    "check:flow": "tsx scripts/smoke-test.ts",
+    "check:a11y": "tsx scripts/check-a11y.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

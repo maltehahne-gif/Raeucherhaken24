@@ -30,6 +30,7 @@ export default async function CheckoutPage() {
     return (
       <div className="container-page py-16">
         <EmptyState
+          headingLevel="h1"
           icon={<ShoppingBag className="size-5" aria-hidden="true" />}
           title="Ihr Warenkorb ist leer"
           description="Legen Sie zuerst Artikel in den Warenkorb, dann können Sie die Bestellung abschließen."

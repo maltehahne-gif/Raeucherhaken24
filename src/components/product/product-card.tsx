@@ -59,10 +59,13 @@ export function ProductCard({
 
   return (
     <article className={cn('group relative flex flex-col', className)}>
-      <Link
-        href={`/produkt/${product.slug}`}
-        className="relative aspect-square overflow-hidden rounded-lg bg-paper-sunken"
-      >
+      {/*
+        Das Bild ist bewusst kein eigener Link: Der Titel-Link spannt sich ueber
+        die gesamte Karte. Zwei Links auf dasselbe Ziel wuerden in der
+        Tastatur- und Screenreader-Navigation doppelt auftauchen, und der
+        aufgespannte Titel-Link laege ohnehin darueber.
+      */}
+      <div className="relative aspect-square overflow-hidden rounded-lg bg-paper-sunken">
         {product.imageUrl ? (
           <Image
             src={product.imageUrl}
@@ -88,7 +91,7 @@ export function ProductCard({
           {product.bestseller && !product.promotionName && <Badge tone="steel">Bestseller</Badge>}
           {soldOut && <Badge tone="neutral">Ausverkauft</Badge>}
         </div>
-      </Link>
+      </div>
 
       <div className="mt-3.5 flex flex-1 flex-col">
         <p className="text-2xs font-medium tracking-wide text-ink-faint uppercase">
@@ -121,10 +124,7 @@ export function ProductCard({
 export function ProductCardCompact({ product }: { product: ProductCardData }) {
   return (
     <article className="group relative flex items-center gap-3">
-      <Link
-        href={`/produkt/${product.slug}`}
-        className="relative size-16 shrink-0 overflow-hidden rounded-md bg-paper-sunken"
-      >
+      <div className="relative size-16 shrink-0 overflow-hidden rounded-md bg-paper-sunken">
         {product.imageUrl ? (
           <Image
             src={product.imageUrl}
@@ -140,7 +140,7 @@ export function ProductCardCompact({ product }: { product: ProductCardData }) {
             <Package className="size-5" aria-hidden="true" />
           </span>
         )}
-      </Link>
+      </div>
       <div className="min-w-0 flex-1">
         <h3 className="line-clamp-2 text-sm leading-snug font-medium">
           <Link href={`/produkt/${product.slug}`} className="after:absolute after:inset-0 after:content-['']">

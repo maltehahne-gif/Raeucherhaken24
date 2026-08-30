@@ -11,6 +11,11 @@ export interface EmptyStateProps {
   secondaryAction?: { label: string; href: string }
   className?: string
   compact?: boolean
+  /**
+   * Ueberschriftenebene. Steht der Leerzustand allein auf einer Seite, muss er
+   * die h1 stellen — sonst hat die Seite gar keine Hauptueberschrift.
+   */
+  headingLevel?: 'h1' | 'h2' | 'h3'
 }
 
 export function EmptyState({
@@ -21,6 +26,7 @@ export function EmptyState({
   secondaryAction,
   className,
   compact = false,
+  headingLevel: Heading = 'h2',
 }: EmptyStateProps) {
   return (
     <div
@@ -35,7 +41,7 @@ export function EmptyState({
           {icon}
         </div>
       )}
-      <h3 className="font-display text-lg font-semibold text-ink">{title}</h3>
+      <Heading className="font-display text-lg font-semibold text-ink">{title}</Heading>
       {description && <p className="mt-2 max-w-md text-sm leading-relaxed text-ink-muted">{description}</p>}
       {(action || secondaryAction) && (
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
