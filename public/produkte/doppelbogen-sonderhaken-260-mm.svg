@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img">
+  <defs>
+    <radialGradient id="g" cx="48%" cy="29%" r="85%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="58%" stop-color="#f1f2f1"/>
+      <stop offset="100%" stop-color="#e3e6e3"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#g)"/>
+  <g opacity="0.055" stroke="#3d4644" stroke-width="1">
+    <path d="M0 200 H800 M0 400 H800 M0 600 H800 M200 0 V800 M400 0 V800 M600 0 V800"/>
+  </g>
+  
+  <g fill="none" stroke-linecap="round">
+    <g stroke="#3d4644" stroke-width="13">
+      <path d="M400 118 a30 30 0 1 1 -0.1 0"/>
+      <path d="M400 178 V 400"/>
+      <path d="M400 400 c0 66 48 104 100 104 48 0 82 -34 82 -78" stroke="#96502a"/>
+    </g>
+    <g stroke="#96502a" stroke-width="4" stroke-dasharray="10 8" opacity="0.75">
+      <path d="M256 118 H 370"/>
+      <path d="M256 504 H 470"/>
+      <path d="M280 118 V 504"/>
+      <path d="M272 130 l8 -14 8 14 M272 492 l8 14 8 -14" stroke-dasharray="none"/>
+    </g>
+    <text x="220" y="318" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26"
+          fill="#96502a" text-anchor="middle" transform="rotate(-90 220 318)" opacity="0.8">nach Maß</text>
+  </g>
+</svg>

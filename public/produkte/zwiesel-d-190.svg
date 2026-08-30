@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img">
+  <defs>
+    <radialGradient id="g" cx="46%" cy="27%" r="85%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="58%" stop-color="#eff0f0"/>
+      <stop offset="100%" stop-color="#e0e3e4"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#g)"/>
+  <g opacity="0.055" stroke="#3a434b" stroke-width="1">
+    <path d="M0 200 H800 M0 400 H800 M0 600 H800 M200 0 V800 M400 0 V800 M600 0 V800"/>
+  </g>
+  
+  <g transform="translate(400 96)" fill="none" stroke="#3a434b" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 0 a30 30 0 1 1 -0.1 0"/>
+    <path d="M0 60 V 214"/>
+    <path d="M-96 262 q 0 -48 48 -48 h 96 q 48 0 48 48"/>
+    <path d="M-96 262 v 118 c0 52 34 84 78 84 38 0 62 -26 62 -60" stroke="#8d4520"/>
+    <path d="M96 262 v 118 c0 52 -34 84 -78 84 -38 0 -62 -26 -62 -60" stroke="#8d4520" opacity="0"/>
+    <path d="M96 262 v 118 c0 52 34 84 78 84 38 0 62 -26 62 -60" stroke="#8d4520"/>
+    <path d="M44 396 l-4 -30" stroke="#8d4520" stroke-width="10"/>
+    <path d="M236 396 l-4 -30" stroke="#8d4520" stroke-width="10"/>
+  </g>
+</svg>

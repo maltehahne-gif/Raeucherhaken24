@@ -1,0 +1,1660 @@
+[
+ {
+  "title": "Heißgeräucherte Forelle aus der Salzlake",
+  "teaser": "Ganze Forellen über Nacht in Salzlake, danach bei 80 bis 90 Grad im Buchenrauch gegart – der Einstieg ins Heißräuchern.",
+  "intro": "Die heißgeräucherte Forelle ist das Grundrezept jedes Räucherofens und verzeiht kleine Abweichungen. Entscheidend sind eine gleichmäßig gesalzene Lake, eine wirklich trockene Fischhaut vor dem Rauch und eine ruhige Temperaturführung beim Garen. Buchenmehl liefert dazu einen klaren, nicht bitteren Rauch. Das Rezept ist auf vier Fische im stehenden Ofen mit Räucherhaken ausgelegt, funktioniert aber ebenso im liegenden Tischräucherofen.",
+  "method": "heiss",
+  "foodType": "fisch",
+  "flavor": "klassisch",
+  "woodType": "buche",
+  "difficulty": "einsteiger",
+  "prepMinutes": 40,
+  "brineHours": 12,
+  "smokeMinutes": 90,
+  "servings": 4,
+  "ingredients": [
+   {
+    "label": "Küchenfertige Forellen, je 300 bis 350 g",
+    "amount": "4 Stück",
+    "group": "Für den Fisch"
+   },
+   {
+    "label": "Wasser, kalt",
+    "amount": "4 l",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Speisesalz ohne Rieselhilfe",
+    "amount": "240 g",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Rohrzucker",
+    "amount": "20 g",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Lorbeerblätter",
+    "amount": "3 Stück",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Wacholderbeeren, angedrückt",
+    "amount": "1 EL",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Schwarze Pfefferkörner",
+    "amount": "1 TL",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Zwiebel, halbiert",
+    "amount": "1 Stück",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Räuchermehl Buche, mittlere Körnung",
+    "amount": "2 Handvoll",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Fischhaken oder S-Haken aus Edelstahl",
+    "amount": "4 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Fische kontrollieren und säubern",
+    "body": "Prüfen Sie die ausgenommenen Forellen auf Blutreste entlang der Wirbelsäule und streifen Sie diese mit dem Daumennagel unter fließendem kaltem Wasser heraus. Blutreste färben später dunkel und schmecken streng. Tupfen Sie die Fische anschließend außen ab.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "Lake ansetzen",
+    "body": "Lösen Sie Salz und Zucker vollständig im kalten Wasser auf und geben Sie Lorbeer, Wacholder, Pfeffer und Zwiebel dazu. Die Lake entspricht etwa sechs Prozent Salz und ist damit für Fische dieser Größe passend. Rühren Sie so lange, bis am Boden kein Salz mehr liegt.",
+    "durationMinutes": 10
+   },
+   {
+    "title": "Forellen einlegen",
+    "body": "Legen Sie die Fische so in die Lake, dass sie vollständig bedeckt sind, und beschweren Sie sie bei Bedarf mit einem Teller. Stellen Sie das Gefäß für zwölf Stunden kühl, idealerweise bei 4 bis 7 Grad. Wenden Sie die Fische nach der Hälfte der Zeit einmal.",
+    "durationMinutes": 720
+   },
+   {
+    "title": "Abspülen und trocknen",
+    "body": "Spülen Sie die Forellen kurz mit kaltem Wasser ab und hängen Sie sie an Fischhaken an den Kiemendeckeln auf. Lassen Sie sie ein bis zwei Stunden an einem luftigen, kühlen Platz abtropfen, bis die Haut matt und griffig ist. Feuchte Haut nimmt keinen Rauch an und wird fleckig.",
+    "durationMinutes": 120
+   },
+   {
+    "title": "Ofen anwärmen",
+    "body": "Heizen Sie den Räucherofen auf 50 Grad vor und hängen Sie die Fische ein. Halten Sie die Temperatur etwa 30 Minuten, damit die Haut vollständig nachtrocknet und sich strafft. Lassen Sie die Zugklappe dabei geöffnet.",
+    "durationMinutes": 30
+   },
+   {
+    "title": "Garen bei 80 bis 90 Grad",
+    "body": "Ziehen Sie die Temperatur auf 80 bis 90 Grad an und garen Sie die Forellen 30 bis 40 Minuten. Der Fisch ist gar, wenn sich die Rückenflosse ohne Widerstand herausziehen lässt. Öffnen Sie die Tür in dieser Phase nur kurz, damit die Temperatur nicht einbricht.",
+    "durationMinutes": 40
+   },
+   {
+    "title": "Räuchern",
+    "body": "Streuen Sie das Buchenmehl auf die Glut oder in die Räucherschale und schließen Sie die Klappe weitgehend. Räuchern Sie die Forellen 20 bis 30 Minuten, bis die Haut goldbraun glänzt. Bei zu dichtem Qualm ziehen die Fische bitter, deshalb lieber wenig Mehl nachlegen als zu viel auf einmal.",
+    "durationMinutes": 30
+   },
+   {
+    "title": "Auskühlen lassen",
+    "body": "Nehmen Sie die Forellen aus dem Ofen und lassen Sie sie hängend abkühlen, damit die Haut trocken bleibt. Lauwarm schmecken sie am besten. Reste wickeln Sie luftig in Pergamentpapier und halten sie im Kühlschrank.",
+    "durationMinutes": 15
+   }
+  ]
+ },
+ {
+  "title": "Kaltgeräucherte Lachsseite über Erlenmehl",
+  "teaser": "Trocken gepökelte Lachsseite, die in drei Durchgängen bei 20 bis 25 Grad über Erlenmehl ihren milden Rauch bekommt.",
+  "intro": "Kaltgeräucherter Lachs entsteht in zwei getrennten Schritten: erst Trockenpökeln, dann mehrere kurze Rauchgänge mit Ruhephasen dazwischen. Die Trockenpökelung entzieht Wasser, festigt das Fleisch und macht die Seite schnittfest. Erlenmehl gibt einen zurückhaltenden Rauch, der den Eigengeschmack nicht überdeckt. Planen Sie insgesamt vier Tage ein und arbeiten Sie durchgehend kühl und sauber.",
+  "method": "kalt",
+  "foodType": "fisch",
+  "flavor": "mild",
+  "woodType": "erle",
+  "difficulty": "fortgeschritten",
+  "prepMinutes": 45,
+  "brineHours": 18,
+  "smokeMinutes": 1440,
+  "servings": 10,
+  "ingredients": [
+   {
+    "label": "Lachsseite mit Haut, entgrätet",
+    "amount": "1 Stück, ca. 1,4 kg",
+    "group": "Für den Fisch"
+   },
+   {
+    "label": "Meersalz, grob",
+    "amount": "400 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Brauner Zucker",
+    "amount": "150 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Wacholderbeeren, gemörsert",
+    "amount": "2 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Bunter Pfeffer, grob geschrotet",
+    "amount": "1 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Dill, frisch gehackt",
+    "amount": "1 Bund",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Abrieb einer unbehandelten Zitrone",
+    "amount": "1 Stück",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Räuchermehl Erle, feine Körnung",
+    "amount": "600 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Sparbrand oder Kaltrauchgenerator",
+    "amount": "1 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Lachsseite prüfen",
+    "body": "Fahren Sie mit den Fingerkuppen gegen die Faser über das Filet und ziehen Sie verbliebene Gräten mit einer Grätenzange heraus. Schneiden Sie die dünne Bauchlappe gerade ab, sonst trocknet sie im Rauch aus. Tupfen Sie die Seite trocken.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Pökelmischung ansetzen",
+    "body": "Vermengen Sie Salz, Zucker, Wacholder, Pfeffer, Dill und Zitronenabrieb gründlich in einer Schüssel. Verteilen Sie ein Drittel davon in einer flachen Wanne als Bett. Der Zuckeranteil mildert das Salz und unterstützt später die Farbe.",
+    "durationMinutes": 10
+   },
+   {
+    "title": "Trocken pökeln",
+    "body": "Legen Sie den Lachs mit der Haut nach unten auf das Salzbett und bedecken Sie das Fleisch vollständig mit der restlichen Mischung. Stellen Sie die Wanne 18 Stunden bei 4 bis 6 Grad kalt, dickere Seiten dürfen bis zu 24 Stunden liegen. Gießen Sie austretende Flüssigkeit zwischendurch ab.",
+    "durationMinutes": 1080
+   },
+   {
+    "title": "Abspülen und durchbrennen",
+    "body": "Spülen Sie die Salzmischung vollständig kalt ab und trocknen Sie die Seite mit Küchenpapier. Lassen Sie den Lachs unbedeckt 12 Stunden im Kühlschrank liegen, damit sich das Salz gleichmäßig verteilt. Auf der Oberfläche bildet sich dabei eine leicht klebrige, matte Haut, an der der Rauch haftet.",
+    "durationMinutes": 720
+   },
+   {
+    "title": "Erster Rauchgang",
+    "body": "Hängen Sie die Seite in Lachsklemmen oder legen Sie sie auf ein Edelstahlgitter und räuchern Sie acht Stunden bei 20 bis 25 Grad. Der Sparbrand soll dünn und gleichmäßig glimmen, dichter weißer Qualm macht den Fisch bitter. Lassen Sie den Ofen leicht geöffnet, damit der Rauch abziehen kann.",
+    "durationMinutes": 480
+   },
+   {
+    "title": "Ruhephase einlegen",
+    "body": "Nehmen Sie den Lachs aus dem Ofen und lassen Sie ihn zwölf Stunden abgedeckt im Kühlschrank ruhen. In dieser Zeit verteilt sich der Rauchgeschmack und die scharfen Spitzen verschwinden. Wiederholen Sie danach den Rauchgang.",
+    "durationMinutes": 720
+   },
+   {
+    "title": "Zweiter und dritter Rauchgang",
+    "body": "Räuchern Sie zweimal weitere acht Stunden mit jeweils einer Ruhephase dazwischen. Die Farbe soll bernsteinfarben werden, nicht dunkelbraun. Prüfen Sie nach dem zweiten Gang mit einem dünnen Anschnitt, ob Ihnen die Rauchnote bereits genügt.",
+    "durationMinutes": 960
+   },
+   {
+    "title": "Reifen und aufschneiden",
+    "body": "Wickeln Sie die fertige Seite in ein Leinentuch und lassen Sie sie zwei Tage bei 4 Grad nachreifen. Schneiden Sie danach mit einem langen, flachen Messer schräg von der Haut ab. Halten Sie den Lachs durchgehend gekühlt und verbrauchen Sie ihn innerhalb einer Woche.",
+    "durationMinutes": 30
+   }
+  ]
+ },
+ {
+  "title": "Heißgeräucherte Makrele mit Pfeffer und Zitronenschale",
+  "teaser": "Kräftige Makrele aus der schnellen Lake: vier Stunden pökeln, gut abtrocknen, dann heiß über Buche räuchern.",
+  "intro": "Makrele ist fett, kräftig im Geschmack und damit fast unempfindlich gegen zu viel Rauch. Wegen des hohen Fettanteils genügt eine kurze Lake von vier Stunden, längeres Pökeln macht den Fisch salzig. Die Haut platzt leicht auf, wenn die Temperatur zu schnell steigt, deshalb wird zunächst angewärmt und erst danach gegart. Das Rezept eignet sich gut für einen Räuchertag mit mehreren Fischen gleichzeitig.",
+  "method": "heiss",
+  "foodType": "fisch",
+  "flavor": "kraeftig",
+  "woodType": "buche",
+  "difficulty": "einsteiger",
+  "prepMinutes": 30,
+  "brineHours": 4,
+  "smokeMinutes": 75,
+  "servings": 4,
+  "ingredients": [
+   {
+    "label": "Makrelen, küchenfertig, je ca. 350 g",
+    "amount": "4 Stück",
+    "group": "Für den Fisch"
+   },
+   {
+    "label": "Wasser",
+    "amount": "3 l",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Speisesalz ohne Rieselhilfe",
+    "amount": "240 g",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Zucker",
+    "amount": "30 g",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Schwarzer Pfeffer, grob geschrotet",
+    "amount": "2 EL",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Senfkörner",
+    "amount": "1 EL",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Schale einer unbehandelten Zitrone",
+    "amount": "1 Stück",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Räuchermehl Buche",
+    "amount": "2 Handvoll",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Fischhaken aus Edelstahl",
+    "amount": "4 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Makrelen vorbereiten",
+    "body": "Waschen Sie die Bauchhöhle gründlich aus und entfernen Sie die dunkle Bauchhaut mit Küchenpapier. Kürzen Sie die Schwanzflosse, damit sie im Ofen nicht anbrennt. Legen Sie die Fische bis zur Lake kalt.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "Lake mischen",
+    "body": "Rühren Sie Salz und Zucker im kalten Wasser klar und geben Sie Pfeffer, Senfkörner und Zitronenschale dazu. Die Lake ist mit etwa acht Prozent Salz kräftiger angesetzt als bei Forelle, weil sie nur kurz einwirkt. Kühlen Sie sie vor dem Einlegen auf unter 8 Grad ab.",
+    "durationMinutes": 10
+   },
+   {
+    "title": "Vier Stunden einlegen",
+    "body": "Legen Sie die Makrelen vollständig bedeckt in die Lake und stellen Sie das Gefäß kühl. Vier Stunden genügen; deutlich längere Zeiten machen den Fisch zu salzig. Wenden Sie die Fische einmal.",
+    "durationMinutes": 240
+   },
+   {
+    "title": "Trocknen",
+    "body": "Spülen Sie die Fische kurz ab und hängen Sie sie an den Kiemendeckeln auf. Lassen Sie sie mindestens 60 Minuten im Luftzug abtrocknen, bis die Haut sich stumpf anfühlt. Ein Ventilator auf niedriger Stufe verkürzt diesen Schritt deutlich.",
+    "durationMinutes": 60
+   },
+   {
+    "title": "Anwärmen",
+    "body": "Hängen Sie die Makrelen bei 45 bis 50 Grad in den Ofen und lassen Sie sie 20 Minuten nachtrocknen. Steigt die Temperatur zu früh, reißt die Haut auf und Fett tritt aus. Halten Sie die Klappe in dieser Phase offen.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Garen und räuchern",
+    "body": "Erhöhen Sie auf 85 Grad und garen Sie 30 Minuten, dann geben Sie das Buchenmehl auf. Räuchern Sie weitere 25 Minuten, bis die Haut goldbraun bis kupferfarben ist. Am Rückgrat soll das Fleisch weiß und undurchsichtig sein.",
+    "durationMinutes": 55
+   },
+   {
+    "title": "Auskühlen und servieren",
+    "body": "Lassen Sie die Fische hängend auskühlen, damit das Fett abtropft. Filetieren Sie sie erst kurz vor dem Servieren, dann bleibt das Fleisch saftig. Im Kühlschrank halten sich die geräucherten Makrelen zwei bis drei Tage.",
+    "durationMinutes": 15
+   }
+  ]
+ },
+ {
+  "title": "Räucheraal aus dem stehenden Ofen",
+  "teaser": "Aal in Bauchlage gespreizt, bei 70 Grad gegart und über Erle nachgeräuchert – Handarbeit für erfahrene Räucherer.",
+  "intro": "Aal gehört zu den anspruchsvollsten Fischen im Ofen, weil sein hoher Fettanteil eine sehr genaue Temperaturführung verlangt. Die Bauchhöhle wird mit Spreizern offen gehalten, damit die Hitze innen ankommt und der Fisch gleichmäßig gart. Traditionell wird über Erle geräuchert, häufig mit einem Anteil Buche für mehr Farbe. Rechnen Sie mit einem ganzen Nachmittag und arbeiten Sie mit Thermometer statt nach Gefühl.",
+  "method": "heiss",
+  "foodType": "fisch",
+  "flavor": "klassisch",
+  "woodType": "erle",
+  "difficulty": "profi",
+  "prepMinutes": 50,
+  "brineHours": 6,
+  "smokeMinutes": 120,
+  "servings": 6,
+  "ingredients": [
+   {
+    "label": "Aale, ausgenommen, je 600 bis 800 g",
+    "amount": "3 Stück",
+    "group": "Für den Fisch"
+   },
+   {
+    "label": "Grobes Salz zum Abreiben der Haut",
+    "amount": "200 g",
+    "group": "Für den Fisch"
+   },
+   {
+    "label": "Wasser",
+    "amount": "5 l",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Speisesalz ohne Rieselhilfe",
+    "amount": "350 g",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Lorbeerblätter",
+    "amount": "4 Stück",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Wacholderbeeren",
+    "amount": "2 EL",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Pimentkörner",
+    "amount": "1 TL",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Räuchermehl Erle",
+    "amount": "3 Handvoll",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Räuchermehl Buche für die Farbe",
+    "amount": "1 Handvoll",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Aalhaken aus Edelstahl",
+    "amount": "3 Stück",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Holzspreizer oder Zahnstocher",
+    "amount": "12 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Schleim entfernen",
+    "body": "Reiben Sie die Aale kräftig mit grobem Salz ab, bis die Haut nicht mehr rutschig ist, und spülen Sie sie kalt nach. Zeitungspapier hilft beim Festhalten. Ohne diesen Schritt bleibt die Haut nach dem Räuchern glasig und schmeckt streng.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Bauchhöhle säubern",
+    "body": "Kratzen Sie die Nierenleiste entlang der Wirbelsäule vollständig heraus und waschen Sie die Bauchhöhle mehrfach aus. Reste dieser Blutleiste werden im Rauch bitter. Tupfen Sie den Fisch anschließend innen und außen trocken.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "In Lake legen",
+    "body": "Setzen Sie die Lake mit etwa sieben Prozent Salz an, geben Sie Lorbeer, Wacholder und Piment dazu und legen Sie die Aale sechs Stunden kühl ein. Beschweren Sie sie, damit sie nicht aufschwimmen. Danach kalt abspülen.",
+    "durationMinutes": 360
+   },
+   {
+    "title": "Spreizen und aufhängen",
+    "body": "Stecken Sie je vier Holzspreizer quer in die Bauchhöhle, damit sie offen bleibt, und hängen Sie die Aale an Aalhaken durch den Kopf. Lassen Sie sie zwei Stunden im Luftzug abtrocknen. Die Haut muss völlig trocken sein, sonst wird sie im Ofen fleckig.",
+    "durationMinutes": 120
+   },
+   {
+    "title": "Anwärmen bei 50 Grad",
+    "body": "Hängen Sie die Aale in den auf 50 Grad vorgewärmten Ofen und lassen Sie sie 30 Minuten nachtrocknen. Die Haut soll sich pergamentartig anfühlen. Die Klappe bleibt geöffnet.",
+    "durationMinutes": 30
+   },
+   {
+    "title": "Garen bei 70 Grad",
+    "body": "Steigern Sie langsam auf 70 Grad und garen Sie 45 bis 60 Minuten. Der Aal ist gar, wenn sich die Rückenhaut leicht wellt und das Fleisch am Rückgrat weiß ist. Vermeiden Sie mehr als 75 Grad, sonst tropft zu viel Fett aus und der Fisch wird trocken.",
+    "durationMinutes": 60
+   },
+   {
+    "title": "Räuchern",
+    "body": "Geben Sie Erlen- und Buchenmehl auf die Glut und räuchern Sie 45 bis 60 Minuten bei fallender Temperatur. Der Aal soll goldbraun bis bernsteinfarben werden. Legen Sie das Mehl in zwei Portionen nach statt alles auf einmal.",
+    "durationMinutes": 60
+   },
+   {
+    "title": "Abkühlen lassen",
+    "body": "Lassen Sie die Aale hängend auskühlen und entfernen Sie erst danach die Spreizer. Sie schmecken lauwarm am besten und lassen sich ausgekühlt sauber in Portionen schneiden. Bewahren Sie sie gekühlt und locker eingeschlagen auf.",
+    "durationMinutes": 20
+   }
+  ]
+ },
+ {
+  "title": "Warmgeräucherter Saibling über Apfelholz",
+  "teaser": "Saiblingsfilets bei 40 bis 50 Grad über Apfelholz warm geräuchert, mit feiner Süße und lockerem Biss.",
+  "intro": "Saibling hat ein feines, zartes Fleisch, das schnell trocken wird und deshalb vom Warmräuchern profitiert. Bei 40 bis 50 Grad bleibt der Fisch saftig und nimmt in aller Ruhe Rauch an, ohne wie beim Heißräuchern durchzugaren. Apfelholz bringt eine leicht süßliche Note, die gut zum milden Fisch passt. Serviert wird der Saibling am besten am selben Tag, lauwarm oder ausgekühlt.",
+  "method": "warm",
+  "foodType": "fisch",
+  "flavor": "suess-rauchig",
+  "woodType": "apfel",
+  "difficulty": "fortgeschritten",
+  "prepMinutes": 30,
+  "brineHours": 10,
+  "smokeMinutes": 150,
+  "servings": 4,
+  "ingredients": [
+   {
+    "label": "Saiblingsfilets mit Haut, je ca. 180 g",
+    "amount": "6 Stück",
+    "group": "Für den Fisch"
+   },
+   {
+    "label": "Wasser",
+    "amount": "2 l",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Speisesalz ohne Rieselhilfe",
+    "amount": "120 g",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Honig",
+    "amount": "2 EL",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Fenchelsamen, angedrückt",
+    "amount": "1 TL",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Weiße Pfefferkörner",
+    "amount": "1 TL",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Zweige Thymian",
+    "amount": "2 Stück",
+    "group": "Für die Lake"
+   },
+   {
+    "label": "Räuchermehl Apfel",
+    "amount": "400 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Edelstahlgitter oder Filetklemmen",
+    "amount": "nach Bedarf",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Filets vorbereiten",
+    "body": "Ziehen Sie die feinen Gräten aus der Mittellinie und schneiden Sie die dünnen Bauchlappen ab. Prüfen Sie die Haut auf Schuppenreste und streifen Sie diese gegen die Wuchsrichtung ab. Legen Sie die Filets bis zum Einlegen kalt.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "Milde Lake ansetzen",
+    "body": "Lösen Sie Salz und Honig im kalten Wasser auf und geben Sie Fenchel, Pfeffer und Thymian dazu. Mit rund sechs Prozent Salz ist die Lake bewusst mild gehalten, weil Filets deutlich schneller Salz aufnehmen als ganze Fische. Kühlen Sie die Lake vor dem Einlegen herunter.",
+    "durationMinutes": 10
+   },
+   {
+    "title": "Zehn Stunden einlegen",
+    "body": "Legen Sie die Filets mit der Hautseite nach oben ein und beschweren Sie sie leicht. Stellen Sie das Gefäß zehn Stunden bei 4 bis 6 Grad kalt. Anschließend kurz abspülen und abtupfen.",
+    "durationMinutes": 600
+   },
+   {
+    "title": "Trockenhaut bilden",
+    "body": "Legen Sie die Filets mit der Hautseite nach unten auf ein Edelstahlgitter und lassen Sie sie zwei Stunden kühl und luftig antrocknen. Die Oberfläche muss sich seidig-klebrig anfühlen, dann haftet der Rauch. Wenden Sie die Filets dabei nicht.",
+    "durationMinutes": 120
+   },
+   {
+    "title": "Ofen auf Warmrauchtemperatur bringen",
+    "body": "Heizen Sie den Ofen auf 40 Grad vor und schieben Sie das Gitter mit den Filets ein. Halten Sie diese Temperatur 20 Minuten, bevor Sie Rauch geben. Ein Thermometer auf Gitterhöhe ist wichtiger als die Anzeige an der Tür.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Zwei Stunden warm räuchern",
+    "body": "Geben Sie das Apfelmehl auf und räuchern Sie zwei Stunden bei 40 bis 50 Grad. Der Fisch soll gerade eben stocken, aber nicht flockig zerfallen. Regeln Sie über die Luftzufuhr, nicht über die Menge Räuchermehl.",
+    "durationMinutes": 120
+   },
+   {
+    "title": "Nachziehen und servieren",
+    "body": "Nehmen Sie die Filets vom Gitter, sobald sich das Fleisch am dicksten Punkt leicht spalten lässt, und lassen Sie sie zehn Minuten ruhen. Warm schmeckt der Saibling am aromatischsten. Reste halten sich gekühlt zwei Tage.",
+    "durationMinutes": 15
+   }
+  ]
+ },
+ {
+  "title": "Kaltgeräuchertes Zanderfilet mit Wacholder",
+  "teaser": "Zanderfilet trocken gepökelt und in zwei Kaltrauchgängen über Wacholder und Buche zu würzigen Scheiben gereift.",
+  "intro": "Zander ist mager und feinfaserig, deshalb wird er beim Kalträuchern trocken gepökelt statt in Lake gelegt. Das Salz zieht Wasser, festigt die Struktur und macht die Filets später hauchdünn schneidbar. Wacholder gibt eine harzige Würze, die durch einen Anteil Buche abgerundet wird. Das Rezept verlangt saubere Kühlung und Geduld, belohnt aber mit einem ungewöhnlichen Räucherfisch abseits von Lachs und Forelle.",
+  "method": "kalt",
+  "foodType": "fisch",
+  "flavor": "wuerzig",
+  "woodType": "wacholder",
+  "difficulty": "profi",
+  "prepMinutes": 40,
+  "brineHours": 14,
+  "smokeMinutes": 720,
+  "servings": 6,
+  "ingredients": [
+   {
+    "label": "Zanderfilets mit Haut, je ca. 400 g",
+    "amount": "2 Stück",
+    "group": "Für den Fisch"
+   },
+   {
+    "label": "Meersalz, fein",
+    "amount": "250 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Zucker",
+    "amount": "80 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Wacholderbeeren, gemörsert",
+    "amount": "2 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Zitronenpfeffer",
+    "amount": "1 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Korianderkörner, angeröstet und zerstoßen",
+    "amount": "1 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Räuchermehl Buche",
+    "amount": "400 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Wacholderzweige oder getrocknete Wacholderbeeren",
+    "amount": "2 Handvoll",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Sparbrand für Kaltrauch",
+    "amount": "1 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Filets zuschneiden",
+    "body": "Schneiden Sie die Filets auf gleichmäßige Dicke zu und trennen Sie die dünnen Schwanzenden ab, die sonst übersalzen. Entfernen Sie verbliebene Gräten und tupfen Sie das Fleisch trocken. Verarbeiten Sie die abgeschnittenen Enden separat oder anderweitig.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Pökelmischung aufbringen",
+    "body": "Mischen Sie Salz, Zucker, Wacholder, Zitronenpfeffer und Koriander und legen Sie die Filets mit der Haut nach unten in eine flache Wanne. Bedecken Sie das Fleisch gleichmäßig, an den dünnen Stellen etwas sparsamer. Decken Sie die Wanne ab.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "14 Stunden pökeln",
+    "body": "Stellen Sie die Filets 14 Stunden bei 4 Grad kalt und gießen Sie austretende Flüssigkeit nach der Hälfte der Zeit ab. Das Fleisch soll sich danach fest und elastisch anfühlen. Spülen Sie die Mischung anschließend vollständig kalt ab.",
+    "durationMinutes": 840
+   },
+   {
+    "title": "Durchbrennen lassen",
+    "body": "Legen Sie die abgetrockneten Filets unbedeckt auf ein Gitter und stellen Sie sie zwölf Stunden in den Kühlschrank. In dieser Zeit gleicht sich das Salz im Fleisch aus und die Oberfläche bildet eine dünne, klebrige Haut. Ohne diesen Schritt schmeckt der Rand salziger als die Mitte.",
+    "durationMinutes": 720
+   },
+   {
+    "title": "Erster Kaltrauchgang",
+    "body": "Räuchern Sie sechs Stunden bei höchstens 22 Grad mit Buchenmehl, dem Sie einige Wacholderbeeren beimischen. Der Rauch soll dünn und bläulich sein. Bei wärmerem Wetter räuchern Sie besser nachts oder in den frühen Morgenstunden.",
+    "durationMinutes": 360
+   },
+   {
+    "title": "Ruhen",
+    "body": "Lassen Sie die Filets zwölf Stunden abgedeckt im Kühlschrank ruhen, damit sich der Rauch setzt. Direkt nach dem Ofen wirkt die Note noch scharf und einseitig. Nach der Pause ist sie deutlich runder.",
+    "durationMinutes": 720
+   },
+   {
+    "title": "Zweiter Rauchgang",
+    "body": "Wiederholen Sie den Rauchgang mit weiteren sechs Stunden. Danach ist die Oberfläche goldgelb und trocken. Prüfen Sie mit einem Probeschnitt, ob Ihnen Festigkeit und Rauchnote reichen, sonst hängen Sie einen dritten Gang an.",
+    "durationMinutes": 360
+   },
+   {
+    "title": "Reifen und aufschneiden",
+    "body": "Wickeln Sie die Filets in ein Leinentuch und lassen Sie sie 24 Stunden bei 4 Grad nachreifen. Schneiden Sie sie dann sehr dünn schräg zur Faser auf. Halten Sie die Ware durchgehend gekühlt und verbrauchen Sie sie innerhalb von fünf Tagen.",
+    "durationMinutes": 20
+   }
+  ]
+ },
+ {
+  "title": "Lachsschinken vom Schweinerücken",
+  "teaser": "Schweinelachs in vierzehn Tagen durchgepökelt und in vier Kaltrauchgängen über Buche zum Lachsschinken gereift.",
+  "intro": "Der Lachsschinken ist der klassische Einstieg in kaltgeräucherte Rohschinken, weil das Stück schlank, gleichmäßig dick und schnell durchgepökelt ist. Verwendet wird der ausgelöste Schweinerücken ohne Fettdeckel, der nach dem Pökeln fest und schnittfähig wird. Buchenrauch gibt die typische braune Farbe und eine unaufdringliche Würze. Wichtig sind eine korrekt bemessene Pökelzeit, konsequente Kühlung während der gesamten Reife und ein Raum mit ruhiger, nicht zu trockener Luft.",
+  "method": "kalt",
+  "foodType": "schinken",
+  "flavor": "klassisch",
+  "woodType": "buche",
+  "difficulty": "fortgeschritten",
+  "prepMinutes": 45,
+  "brineHours": 336,
+  "smokeMinutes": 1440,
+  "servings": 10,
+  "ingredients": [
+   {
+    "label": "Schweinelachs (Rückenmuskel), pariert",
+    "amount": "1,5 kg",
+    "group": "Für das Fleisch"
+   },
+   {
+    "label": "Nitritpökelsalz, 40 g je Kilogramm Fleisch",
+    "amount": "60 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Zucker",
+    "amount": "15 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Schwarzer Pfeffer, grob geschrotet",
+    "amount": "2 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Wacholderbeeren, gemörsert",
+    "amount": "1 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Knoblauch, gepresst",
+    "amount": "2 Zehen",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Lorbeerblätter, zerrieben",
+    "amount": "2 Stück",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Räuchermehl Buche",
+    "amount": "800 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Schinkenhaken oder Fleischerhaken aus Edelstahl",
+    "amount": "1 Stück",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Vakuumbeutel für die Pökelphase",
+    "amount": "1 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Fleisch parieren",
+    "body": "Lösen Sie Silberhaut, Sehnen und den Fettdeckel vollständig ab, damit das Salz gleichmäßig eindringt. Runden Sie die Enden ab, spitze Zipfel trocknen sonst hart aus. Wiegen Sie das parierte Stück und berechnen Sie die Salzmenge danach.",
+    "durationMinutes": 25
+   },
+   {
+    "title": "Pökelmischung einreiben",
+    "body": "Vermengen Sie Pökelsalz, Zucker und Gewürze und massieren Sie die Mischung rundum kräftig in das Fleisch ein. Arbeiten Sie an den Stirnseiten besonders sorgfältig, dort beginnt später die Reifung. Ziehen Sie dabei Einweghandschuhe an.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "14 Tage pökeln",
+    "body": "Vakuumieren Sie das Stück mitsamt der anhaftenden Mischung und lagern Sie es 14 Tage bei 4 bis 7 Grad. Wenden Sie den Beutel alle zwei Tage, damit die austretende Lake das Fleisch umspült. Als Faustregel gilt etwa ein Tag Pökelzeit je Zentimeter Dicke plus einige Tage Sicherheit; halten Sie diese Zeit vollständig ein.",
+    "durationMinutes": 20160
+   },
+   {
+    "title": "Wässern und durchbrennen",
+    "body": "Nehmen Sie den Schinken aus dem Beutel, wässern Sie ihn 60 Minuten in kaltem Wasser und tupfen Sie ihn trocken. Hängen Sie ihn danach zwei Tage bei 8 bis 12 Grad zum Durchbrennen auf. Erst wenn die Oberfläche vollständig trocken und griffig ist, geht es in den Rauch.",
+    "durationMinutes": 2880
+   },
+   {
+    "title": "Vier Kaltrauchgänge",
+    "body": "Räuchern Sie viermal je sechs Stunden bei 18 bis 24 Grad über Buchenmehl. Legen Sie zwischen den Gängen jeweils zwölf Stunden Pause an der Luft ein, sonst wird der Geschmack scharf und rußig. Die Farbe entwickelt sich langsam von hellbraun zu kastanienbraun.",
+    "durationMinutes": 1440
+   },
+   {
+    "title": "Nachreifen",
+    "body": "Hängen Sie den Schinken zwei bis drei Wochen bei 10 bis 14 Grad und ruhiger Luftbewegung. Er soll etwa 30 Prozent seines Ausgangsgewichts verlieren, wiegen Sie deshalb wöchentlich nach. Bildet sich weißer Edelschimmel, ist das unbedenklich; grüne oder schwarze Stellen wischen Sie mit Salzwasser ab.",
+    "durationMinutes": 30
+   },
+   {
+    "title": "Anschneiden",
+    "body": "Schneiden Sie den fertigen Lachsschinken sehr dünn quer zur Faser auf. Angeschnittene Stücke wickeln Sie in ein Leinentuch und lagern sie kühl weiter. Trocknet der Anschnitt hart, schneiden Sie ihn vor dem nächsten Mal knapp ab.",
+    "durationMinutes": 10
+   }
+  ]
+ },
+ {
+  "title": "Geräucherter Bauchspeck mit Wacholder",
+  "teaser": "Bauchspeck mit Wacholder und Knoblauch gepökelt, danach in fünf Gängen kalt geräuchert und luftgetrocknet.",
+  "intro": "Bauchspeck ist das dankbarste Stück für den Einstieg in kaltgeräucherte Speckwaren, weil der Fettanteil das Fleisch vor dem Austrocknen schützt. Gepökelt wird trocken im Vakuumbeutel, gewürzt mit Wacholder, Knoblauch und Pfeffer. Eine Mischung aus Buchenmehl und Wacholder gibt die kräftige, leicht harzige Note, die man aus Bauernküchen kennt. Nach dem Räuchern braucht der Speck noch zwei bis drei Wochen Luftreife, bevor er sich sauber schneiden lässt.",
+  "method": "kalt",
+  "foodType": "fleisch",
+  "flavor": "kraeftig",
+  "woodType": "mix",
+  "difficulty": "fortgeschritten",
+  "prepMinutes": 40,
+  "brineHours": 240,
+  "smokeMinutes": 1800,
+  "servings": 12,
+  "ingredients": [
+   {
+    "label": "Schweinebauch mit Schwarte, entknocht",
+    "amount": "2 kg",
+    "group": "Für das Fleisch"
+   },
+   {
+    "label": "Nitritpökelsalz, 40 g je Kilogramm Fleisch",
+    "amount": "80 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Brauner Zucker",
+    "amount": "20 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Wacholderbeeren, gemörsert",
+    "amount": "2 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Knoblauch, gepresst",
+    "amount": "4 Zehen",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Schwarzer Pfeffer, grob",
+    "amount": "1 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Kümmel, ganz",
+    "amount": "1 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Räuchermehl Buche",
+    "amount": "1 kg",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Wacholderbeeren zum Beimischen",
+    "amount": "3 EL",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Fleischerhaken aus Edelstahl",
+    "amount": "2 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Bauch zuschneiden",
+    "body": "Teilen Sie den Bauch in zwei gleich große, rechteckige Stücke und schneiden Sie ausgefranste Ränder gerade ab. Prüfen Sie, ob alle Knorpel und Rippenreste entfernt sind. Wiegen Sie die Stücke und berechnen Sie das Pökelsalz exakt nach Gewicht.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Würzen und vakuumieren",
+    "body": "Mischen Sie Pökelsalz, Zucker und Gewürze und reiben Sie beide Seiten kräftig ein, die Schwarte darf sparsamer behandelt werden. Vakuumieren Sie jedes Stück einzeln. So bleibt die austretende Lake am Fleisch und wirkt weiter.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Zehn Tage pökeln",
+    "body": "Lagern Sie die Beutel zehn Tage bei 4 bis 7 Grad und wenden Sie sie täglich. Rechnen Sie etwa einen Tag je Zentimeter Dicke plus Sicherheitszuschlag und kürzen Sie diese Zeit nicht ab. Das Fleisch fühlt sich am Ende durchgehend fest an, ohne weiche Kernstellen.",
+    "durationMinutes": 14400
+   },
+   {
+    "title": "Abspülen und durchbrennen",
+    "body": "Spülen Sie die Stücke kalt ab, tupfen Sie sie trocken und hängen Sie sie zwei Tage bei 8 bis 12 Grad auf. Die Oberfläche muss vollständig abtrocknen, feuchter Speck nimmt Rauch fleckig an. Ein leichter Luftzug beschleunigt den Vorgang.",
+    "durationMinutes": 2880
+   },
+   {
+    "title": "Fünf Kaltrauchgänge",
+    "body": "Räuchern Sie fünfmal je sechs Stunden bei 18 bis 22 Grad über Buchenmehl mit eingemischten Wacholderbeeren. Zwischen den Gängen liegt jeweils mindestens eine Nacht Pause. Legen Sie den Wacholder sparsam nach, er dominiert schnell.",
+    "durationMinutes": 1800
+   },
+   {
+    "title": "Luftreife",
+    "body": "Hängen Sie den Speck zwei bis drei Wochen bei 10 bis 14 Grad in einen luftigen, dunklen Raum. Er soll etwa ein Viertel des Ausgangsgewichts verlieren und sich am Rand fest anfühlen. Kontrollieren Sie die Stücke wöchentlich auf Feuchtstellen.",
+    "durationMinutes": 30
+   },
+   {
+    "title": "Anschneiden und lagern",
+    "body": "Schneiden Sie die Schwarte vor dem Servieren ab und den Speck in dünne Scheiben oder Würfel. Gekühlt und in Leinen gewickelt hält er sich mehrere Wochen. Zum längeren Aufbewahren teilen Sie ihn in portionsgerechte Stücke und vakuumieren diese.",
+    "durationMinutes": 15
+   }
+  ]
+ },
+ {
+  "title": "Nussschinken aus der Oberschale",
+  "teaser": "Nussschinken aus der Oberschale: drei Wochen trocken gepökelt, sechs Kaltrauchgänge über Eiche, danach reifen lassen.",
+  "intro": "Der Nussschinken wird aus der Nuss oder Oberschale der Schweinekeule geschnitten und ist der anspruchsvollste der klassischen Rohschinken im Hausgebrauch. Das kompakte, fettarme Stück braucht eine lange, sorgfältig bemessene Pökelzeit, weil das Salz weit ins Innere wandern muss. Eichenmehl gibt eine herbe, gerbstoffbetonte Note, die zum kräftigen Fleisch passt. Rechnen Sie insgesamt mit gut sechs Wochen von der Pökelwanne bis zum ersten Anschnitt.",
+  "method": "kalt",
+  "foodType": "schinken",
+  "flavor": "wuerzig",
+  "woodType": "eiche",
+  "difficulty": "profi",
+  "prepMinutes": 60,
+  "brineHours": 504,
+  "smokeMinutes": 2160,
+  "servings": 14,
+  "ingredients": [
+   {
+    "label": "Schweinenuss oder Oberschale am Stück, pariert",
+    "amount": "2,5 kg",
+    "group": "Für das Fleisch"
+   },
+   {
+    "label": "Nitritpökelsalz, 42 g je Kilogramm Fleisch",
+    "amount": "105 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Zucker",
+    "amount": "25 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Wacholderbeeren, gemörsert",
+    "amount": "2 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Schwarzer Pfeffer, geschrotet",
+    "amount": "1 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Piment, gemahlen",
+    "amount": "1 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Rosmarin, getrocknet und zerrieben",
+    "amount": "1 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Räuchermehl Eiche",
+    "amount": "1,2 kg",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Schinkennetz oder Schinkenschlinge",
+    "amount": "1 Stück",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Schinkenhaken aus Edelstahl",
+    "amount": "1 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Muskel sauber auslösen",
+    "body": "Trennen Sie die Nuss entlang der natürlichen Muskelnähte heraus, sodass ein geschlossenes Stück ohne offene Fleischtaschen entsteht. Entfernen Sie Sehnen, Fettauflagen und Bindegewebe restlos. Offene Taschen sind die häufigste Ursache für Fehlreifungen im Kern.",
+    "durationMinutes": 35
+   },
+   {
+    "title": "Einsalzen",
+    "body": "Wiegen Sie das parierte Stück und berechnen Sie die Salzmenge exakt. Massieren Sie die Pökelmischung rundum ein und arbeiten Sie sie besonders in die Stirnflächen und die Kuhle am Nussansatz ein. Verwenden Sie Handschuhe und eine saubere Arbeitsfläche.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Drei Wochen pökeln",
+    "body": "Vakuumieren Sie das Stück und lagern Sie es 21 Tage bei 4 bis 7 Grad, mit Wenden alle zwei Tage. Die Faustregel von einem Tag je Zentimeter Dicke plus mehreren Tagen Zuschlag ist bei diesem dicken Stück das Minimum, kürzen Sie sie keinesfalls ab. Am Ende darf sich nirgends eine weiche Stelle ertasten lassen.",
+    "durationMinutes": 30240
+   },
+   {
+    "title": "Wässern und durchbrennen",
+    "body": "Wässern Sie den Schinken zwei Stunden in kaltem Wasser und wechseln Sie das Wasser einmal. Trocknen Sie ihn ab und hängen Sie ihn drei Tage bei 8 bis 12 Grad zum Durchbrennen auf. In dieser Phase gleicht sich der Salzgehalt zwischen Rand und Kern aus.",
+    "durationMinutes": 4320
+   },
+   {
+    "title": "Ins Netz ziehen",
+    "body": "Ziehen Sie den Schinken in ein Netz oder binden Sie ihn mit einer Schlinge, damit er die Form hält und gleichmäßig trocknet. Hängen Sie ihn an einen Edelstahlhaken, der das Gewicht sicher trägt. Achten Sie darauf, dass er im Ofen nirgends anliegt.",
+    "durationMinutes": 10
+   },
+   {
+    "title": "Sechs Kaltrauchgänge",
+    "body": "Räuchern Sie sechsmal je sechs Stunden bei 16 bis 22 Grad über Eichenmehl, mit jeweils mindestens zwölf Stunden Pause dazwischen. Eiche raucht herber als Buche, gehen Sie deshalb mit der Mehlmenge sparsam um. Die Farbe soll tief rotbraun werden.",
+    "durationMinutes": 2160
+   },
+   {
+    "title": "Reifen lassen",
+    "body": "Hängen Sie den Schinken vier bis sechs Wochen bei 10 bis 14 Grad und 70 bis 80 Prozent Luftfeuchte. Er ist schnittreif, wenn er rund 35 Prozent an Gewicht verloren hat und sich rundum fest anfühlt. Wiegen Sie wöchentlich und notieren Sie die Werte.",
+    "durationMinutes": 60
+   },
+   {
+    "title": "Anschneiden und pflegen",
+    "body": "Schneiden Sie den Schinken hauchdünn quer zur Faser auf. Reiben Sie die Schnittfläche nach dem Anschnitt dünn mit Schweineschmalz ein, dann trocknet sie nicht aus. Lagern Sie das Stück weiterhin kühl und luftig, nicht luftdicht verpackt.",
+    "durationMinutes": 15
+   }
+  ]
+ },
+ {
+  "title": "Kaltgeräucherter Rinderschinken aus der Oberschale",
+  "teaser": "Rinderoberschale mit Wacholder und Rotwein gepökelt, gepresst und in drei Gängen kalt geräuchert.",
+  "intro": "Rindfleisch ergibt einen sehr mageren, dunklen Rohschinken, der dünn geschnitten fast durchscheinend wird. Verwendet wird die Oberschale, aus der die Muskelstränge einzeln ausgelöst und gleichmäßig zugeschnitten werden. Rotwein in der Pökelmischung unterstützt die dunkle Farbe und bringt eine leicht säuerliche Tiefe. Zwischen den Rauchgängen wird das Fleisch gepresst, damit es die typische kompakte, rechteckige Form bekommt.",
+  "method": "kalt",
+  "foodType": "schinken",
+  "flavor": "kraeftig",
+  "woodType": "wacholder",
+  "difficulty": "profi",
+  "prepMinutes": 50,
+  "brineHours": 360,
+  "smokeMinutes": 1080,
+  "servings": 10,
+  "ingredients": [
+   {
+    "label": "Rinderoberschale, ausgelöste Muskelstränge",
+    "amount": "1,8 kg",
+    "group": "Für das Fleisch"
+   },
+   {
+    "label": "Nitritpökelsalz, 40 g je Kilogramm Fleisch",
+    "amount": "72 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Kräftiger Rotwein",
+    "amount": "150 ml",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Wacholderbeeren, gemörsert",
+    "amount": "2 EL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Lorbeerblätter, zerrieben",
+    "amount": "3 Stück",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Thymian, getrocknet",
+    "amount": "2 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Schwarzer Pfeffer, geschrotet",
+    "amount": "2 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Räuchermehl Buche",
+    "amount": "600 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Wacholderbeeren zum Beimischen",
+    "amount": "4 EL",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Edelstahlhaken und Pressbrett mit Gewicht",
+    "amount": "je 1 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Muskelstränge auslösen",
+    "body": "Trennen Sie die Oberschale entlang der Bindegewebshäute in einzelne Stränge und entfernen Sie alle Sehnen und Fettreste. Schneiden Sie die Stücke auf etwa gleiche Dicke, damit sie zusammen fertig werden. Ungleich dicke Stücke pökeln Sie besser getrennt.",
+    "durationMinutes": 30
+   },
+   {
+    "title": "Pökelmischung mit Rotwein ansetzen",
+    "body": "Verrühren Sie Pökelsalz, Gewürze und Rotwein zu einer feuchten Paste und verteilen Sie diese rundum auf dem Fleisch. Der Wein hilft, dass die Gewürze haften und gleichmäßig eindringen. Vakuumieren Sie die Stränge anschließend einzeln.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "15 Tage pökeln",
+    "body": "Lagern Sie die Beutel 15 Tage bei 4 bis 6 Grad und massieren Sie sie alle zwei Tage kurz durch. Die Farbe wechselt dabei von hellrot zu dunklem Rotbraun. Halten Sie die volle Zeit ein, auch wenn die Stücke äußerlich früher fertig aussehen.",
+    "durationMinutes": 21600
+   },
+   {
+    "title": "Abspülen und pressen",
+    "body": "Spülen Sie die Stränge kurz ab, tupfen Sie sie trocken und legen Sie sie zwischen zwei Brettern mit etwa drei Kilogramm Auflast für 24 Stunden in den Kühlschrank. Das Pressen verdichtet das Fleisch und macht die Scheiben später gleichmäßig. Wenden Sie nach zwölf Stunden.",
+    "durationMinutes": 1440
+   },
+   {
+    "title": "Durchbrennen",
+    "body": "Hängen Sie das Fleisch zwei Tage bei 8 bis 12 Grad auf, bis die Oberfläche vollständig trocken ist. Ein feuchter Rand nimmt Rauch ungleichmäßig an und wird fleckig. Die Stücke dürfen sich dabei nicht berühren.",
+    "durationMinutes": 2880
+   },
+   {
+    "title": "Drei Kaltrauchgänge",
+    "body": "Räuchern Sie dreimal je sechs Stunden bei 16 bis 20 Grad über Buchenmehl mit Wacholderbeeren, dazwischen jeweils eine Nacht Pause. Rindfleisch nimmt Rauch schneller an als Schwein, deshalb genügen drei Gänge. Prüfen Sie die Farbe nach jedem Gang.",
+    "durationMinutes": 1080
+   },
+   {
+    "title": "Reifen und schneiden",
+    "body": "Hängen Sie die Stücke drei bis vier Wochen bei 10 bis 14 Grad, bis rund 40 Prozent des Gewichts verloren sind. Schneiden Sie den Schinken danach mit der Aufschnittmaschine hauchdünn. Lagern Sie ihn gekühlt und schneiden Sie immer nur die benötigte Menge frisch auf.",
+    "durationMinutes": 30
+   }
+  ]
+ },
+ {
+  "title": "Kaminwurzen aus dem Kaltrauch",
+  "teaser": "Grob gewolfte Rohwurst im Schweinesaitling, kalt geräuchert und anschließend am Stück luftgetrocknet.",
+  "intro": "Kaminwurzen sind kurze, kräftig gewürzte Rohwürste, die nach dem Räuchern an der Luft weiterreifen und dabei fest werden. Entscheidend ist eine sehr kalte Verarbeitung des Bräts, damit Fett und Fleisch nicht verschmieren und die Wurst später sauber schneidbar bleibt. Die Umrötung vor dem Rauch braucht Zeit und eine konstant kühle Umgebung. Wer zum ersten Mal Rohwurst macht, arbeitet am besten mit gekühlten Geräten und einer Starterkultur für kontrollierte Reifung.",
+  "method": "kalt",
+  "foodType": "wurst",
+  "flavor": "wuerzig",
+  "woodType": "buche",
+  "difficulty": "fortgeschritten",
+  "prepMinutes": 120,
+  "brineHours": 24,
+  "smokeMinutes": 720,
+  "servings": 10,
+  "ingredients": [
+   {
+    "label": "Schweineschulter, gut gekühlt",
+    "amount": "1,4 kg",
+    "group": "Für die Wurstmasse"
+   },
+   {
+    "label": "Rindfleisch aus der Wade oder Schulter",
+    "amount": "600 g",
+    "group": "Für die Wurstmasse"
+   },
+   {
+    "label": "Rückenspeck, halb gefroren",
+    "amount": "400 g",
+    "group": "Für die Wurstmasse"
+   },
+   {
+    "label": "Nitritpökelsalz, 28 g je Kilogramm Masse",
+    "amount": "68 g",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Schwarzer Pfeffer, grob geschrotet",
+    "amount": "2 EL",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Knoblauch, gepresst",
+    "amount": "3 Zehen",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Kümmel, gemahlen",
+    "amount": "1 TL",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Dextrose",
+    "amount": "10 g",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Starterkultur für Rohwurst, nach Herstellerangabe",
+    "amount": "1 Portion",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Schweinesaitling, Kaliber 28/30",
+    "amount": "5 m",
+    "group": "Zum Füllen"
+   },
+   {
+    "label": "Räuchermehl Buche",
+    "amount": "600 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Wursthaken oder Räucherstangen aus Edelstahl",
+    "amount": "nach Bedarf",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Fleisch und Geräte kühlen",
+    "body": "Legen Sie Fleisch, Speck, Wolfaufsatz und Schüssel zwei Stunden vor der Verarbeitung ins Gefrierfach, bis das Fleisch am Rand anfriert. Die Masse soll beim Wolfen unter null Grad liegen. Warmes Fett verschmiert und macht die Wurst später fleckig und weich.",
+    "durationMinutes": 120
+   },
+   {
+    "title": "Wolfen",
+    "body": "Drehen Sie Schweine- und Rindfleisch durch die 5-mm-Scheibe, den Speck durch die 8-mm-Scheibe. Arbeiten Sie zügig und lassen Sie die Masse zwischendurch nicht stehen. Ein scharfes Messer am Wolf ist wichtiger als hohe Drehzahl.",
+    "durationMinutes": 25
+   },
+   {
+    "title": "Würzen und mischen",
+    "body": "Geben Sie Pökelsalz, Gewürze, Dextrose und die angerührte Starterkultur zu und mischen Sie kurz und kräftig, bis die Masse bindet und an der Hand kleben bleibt. Kneten Sie nicht länger als nötig, sonst erwärmt sie sich. Ziehen Sie eine kleine Probe und braten Sie sie zum Abschmecken an.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Füllen und abdrehen",
+    "body": "Füllen Sie die Masse straff und blasenfrei in gewässerte Saitlinge und drehen Sie Würste von etwa 20 Zentimetern ab. Stechen Sie Luftblasen mit einer feinen Nadel an. Zu locker gefüllte Würste bekommen beim Trocknen Hohlräume.",
+    "durationMinutes": 40
+   },
+   {
+    "title": "Umröten lassen",
+    "body": "Hängen Sie die Würste 24 Stunden bei 20 bis 24 Grad an einem zugfreien Platz auf. In dieser Zeit setzt die Umrötung ein und die Oberfläche trocknet ab. Erst danach dürfen sie in den Rauch, feuchte Därme werden sonst grau und fleckig.",
+    "durationMinutes": 1440
+   },
+   {
+    "title": "Drei Kaltrauchgänge",
+    "body": "Räuchern Sie dreimal je vier Stunden bei höchstens 22 Grad über Buchenmehl, dazwischen jeweils eine Nacht Pause an der Luft. Der Rauch soll dünn ziehen, dichter Qualm hinterlässt Bitterstoffe. Nach dem dritten Gang sind die Würste rotbraun.",
+    "durationMinutes": 720
+   },
+   {
+    "title": "Trocknen und reifen",
+    "body": "Hängen Sie die Kaminwurzen zwei bis drei Wochen bei 12 bis 15 Grad und 75 Prozent Luftfeuchte. Sie sind fertig, wenn sie etwa ein Drittel ihres Gewichts verloren haben und sich durchgehend fest anfühlen. Bei zu trockener Luft bildet sich ein harter Rand, dann hängen Sie die Würste zeitweise in einen geschlossenen Behälter.",
+    "durationMinutes": 60
+   },
+   {
+    "title": "Lagern",
+    "body": "Bewahren Sie die fertigen Würste kühl und luftig auf, am besten hängend in einem Leinenbeutel. Vakuumierte Ware bleibt geschmeidiger, verliert aber die Trockenreife. Schneiden Sie die Würste erst kurz vor dem Verzehr auf.",
+    "durationMinutes": 10
+   }
+  ]
+ },
+ {
+  "title": "Grobe Knacker warm geräuchert",
+  "teaser": "Grobe Knacker aus Schulter und Speck, warm bei 55 Grad über Buche geräuchert und im Anschluss gebrüht.",
+  "intro": "Knacker sind Brühwürste mit grober Körnung, die ihren typischen Biss aus dem Zusammenspiel von Warmrauch und anschließendem Brühen bekommen. Anders als bei Rohwurst wird hier nicht getrocknet, sondern nach dem Rauch bei 75 Grad im Wasserbad fertig gegart. Die Wurst kommt dadurch am selben Tag auf den Tisch. Buchenmehl gibt die kräftige Farbe, der Rauch darf hier ruhig deutlich schmecken.",
+  "method": "warm",
+  "foodType": "wurst",
+  "flavor": "kraeftig",
+  "woodType": "buche",
+  "difficulty": "fortgeschritten",
+  "prepMinutes": 100,
+  "brineHours": 12,
+  "smokeMinutes": 120,
+  "servings": 8,
+  "ingredients": [
+   {
+    "label": "Schweineschulter, gut gekühlt",
+    "amount": "1,2 kg",
+    "group": "Für die Wurstmasse"
+   },
+   {
+    "label": "Rückenspeck, halb gefroren",
+    "amount": "500 g",
+    "group": "Für die Wurstmasse"
+   },
+   {
+    "label": "Schweinebauch ohne Schwarte",
+    "amount": "300 g",
+    "group": "Für die Wurstmasse"
+   },
+   {
+    "label": "Eiswasser",
+    "amount": "200 ml",
+    "group": "Für die Wurstmasse"
+   },
+   {
+    "label": "Nitritpökelsalz, 20 g je Kilogramm Masse",
+    "amount": "40 g",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Weißer Pfeffer, gemahlen",
+    "amount": "2 TL",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Kümmel, gemahlen",
+    "amount": "1 TL",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Majoran, gerebelt",
+    "amount": "2 TL",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Knoblauch, gepresst",
+    "amount": "2 Zehen",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Muskatnuss, frisch gerieben",
+    "amount": "1 Msp.",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Schweinesaitling, Kaliber 32/34",
+    "amount": "4 m",
+    "group": "Zum Füllen"
+   },
+   {
+    "label": "Räuchermehl Buche",
+    "amount": "400 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Wursthaken aus Edelstahl",
+    "amount": "nach Bedarf",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Masse vorbereiten",
+    "body": "Kühlen Sie Fleisch und Speck an, bis sie außen fest sind, und drehen Sie Schulter und Bauch durch die 5-mm-Scheibe. Den Speck wolfen Sie durch die 8-mm-Scheibe, damit die Körnung sichtbar bleibt. Halten Sie die Masse durchgehend unter vier Grad.",
+    "durationMinutes": 35
+   },
+   {
+    "title": "Würzen und binden",
+    "body": "Geben Sie Pökelsalz, Gewürze und das Eiswasser zu und mischen Sie, bis die Masse spürbar bindet. Das Eiswasser hält die Temperatur unten und sorgt für saftige Würste. Braten Sie eine kleine Probe zum Abschmecken.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Füllen",
+    "body": "Füllen Sie die Masse blasenfrei in gewässerte Saitlinge und drehen Sie Paare von etwa 15 Zentimetern ab. Stechen Sie sichtbare Lufteinschlüsse an. Hängen Sie die Würste anschließend paarweise über Wursthaken.",
+    "durationMinutes": 35
+   },
+   {
+    "title": "Umröten und abtrocknen",
+    "body": "Hängen Sie die Knacker zwölf Stunden bei 6 bis 10 Grad in den Kühlschrank oder einen kühlen Raum. Die Farbe vertieft sich dabei und die Därme trocknen ab. Vor dem Rauch muss die Oberfläche griffig trocken sein.",
+    "durationMinutes": 720
+   },
+   {
+    "title": "Warm anwärmen",
+    "body": "Hängen Sie die Würste bei 45 Grad in den Ofen und lassen Sie sie 30 Minuten ohne Rauch nachtrocknen. Feuchte Därme nehmen keinen gleichmäßigen Rauch an. Die Klappe bleibt dabei offen.",
+    "durationMinutes": 30
+   },
+   {
+    "title": "Warm räuchern bei 55 Grad",
+    "body": "Geben Sie Buchenmehl auf und räuchern Sie 60 bis 90 Minuten bei 50 bis 60 Grad, bis die Würste kräftig rotbraun sind. Kontrollieren Sie die Temperatur auf Wursthöhe. Legen Sie das Mehl in zwei Portionen nach.",
+    "durationMinutes": 90
+   },
+   {
+    "title": "Brühen",
+    "body": "Setzen Sie einen Topf mit Wasser auf 75 Grad an und brühen Sie die Würste darin 20 bis 25 Minuten, ohne dass das Wasser kocht. Bei über 80 Grad platzen die Därme und Fett tritt aus. Die Kerntemperatur soll bei etwa 72 Grad liegen.",
+    "durationMinutes": 25
+   },
+   {
+    "title": "Abschrecken und lagern",
+    "body": "Schrecken Sie die Knacker kurz kalt ab, damit sich der Darm zusammenzieht, und lassen Sie sie hängend abtrocknen. Gekühlt halten sie sich rund eine Woche. Zum Servieren nur noch heiß ziehen lassen, nicht erneut kochen.",
+    "durationMinutes": 15
+   }
+  ]
+ },
+ {
+  "title": "Kaltgeräucherte Hähnchenbrust mit Apfelholz",
+  "teaser": "Hähnchenbrust vier Tage im Pökel, gut abgetrocknet und in drei kurzen Kaltrauchgängen über Apfelholz veredelt.",
+  "intro": "Kaltgeräucherte Hähnchenbrust ist ein magerer, feiner Aufschnitt, der sich gut als Alternative zu Schinken vom Schwein eignet. Das Fleisch ist empfindlich, deshalb sind saubere Verarbeitung, durchgehende Kühlung und eine vollständig eingehaltene Pökelzeit hier besonders wichtig. Apfelholz gibt einen milden, leicht süßlichen Rauch, der das zarte Geflügelaroma nicht überdeckt. Nach dem Räuchern reift die Brust noch eine knappe Woche, bis sie sich sauber schneiden lässt.",
+  "method": "kalt",
+  "foodType": "gefluegel",
+  "flavor": "mild",
+  "woodType": "apfel",
+  "difficulty": "fortgeschritten",
+  "prepMinutes": 30,
+  "brineHours": 96,
+  "smokeMinutes": 600,
+  "servings": 6,
+  "ingredients": [
+   {
+    "label": "Hähnchenbrustfilets ohne Haut, je ca. 250 g",
+    "amount": "4 Stück",
+    "group": "Für das Fleisch"
+   },
+   {
+    "label": "Nitritpökelsalz, 35 g je Kilogramm Fleisch",
+    "amount": "35 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Zucker",
+    "amount": "8 g",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Weißer Pfeffer, gemahlen",
+    "amount": "1 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Thymian, getrocknet",
+    "amount": "1 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Knoblauchgranulat",
+    "amount": "1 TL",
+    "group": "Für die Pökelmischung"
+   },
+   {
+    "label": "Räuchermehl Apfel",
+    "amount": "400 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Räucherhaken aus Edelstahl, klein",
+    "amount": "4 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Filets parieren",
+    "body": "Entfernen Sie das Innenfilet, Sehnen und alle Fettreste, damit ein gleichmäßig dickes Stück bleibt. Schneiden Sie dünne Enden ab, sie übersalzen sonst. Wiegen Sie das Fleisch und berechnen Sie die Salzmenge exakt danach.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "Einsalzen und vakuumieren",
+    "body": "Mischen Sie Pökelsalz, Zucker und Gewürze und reiben Sie die Filets rundum damit ein. Vakuumieren Sie sie einzeln, damit die Lake am Fleisch bleibt. Arbeiten Sie mit frisch gereinigten Brettern und Handschuhen.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "Vier Tage pökeln",
+    "body": "Lagern Sie die Beutel vier Tage bei 3 bis 5 Grad und wenden Sie sie täglich. Geflügel ist empfindlicher als Schwein, kürzen Sie die Pökelzeit deshalb nicht ab und halten Sie die Kühlkette lückenlos ein. Die Filets fühlen sich danach gleichmäßig fest an.",
+    "durationMinutes": 5760
+   },
+   {
+    "title": "Abspülen und durchbrennen",
+    "body": "Spülen Sie die Filets kalt ab, tupfen Sie sie gründlich trocken und legen Sie sie unbedeckt auf ein Gitter im Kühlschrank. Nach 24 Stunden hat sich das Salz ausgeglichen und die Oberfläche ist matt und trocken. Erst dann kommen sie in den Rauch.",
+    "durationMinutes": 1440
+   },
+   {
+    "title": "Drei kurze Rauchgänge",
+    "body": "Räuchern Sie dreimal je drei bis vier Stunden bei höchstens 20 Grad über Apfelmehl. Legen Sie zwischen den Gängen jeweils eine Nacht Kühlpause im Kühlschrank ein. Mageres Geflügel nimmt Rauch schnell an, längere Gänge machen es herb.",
+    "durationMinutes": 600
+   },
+   {
+    "title": "Nachreifen lassen",
+    "body": "Hängen Sie die Brüste vier bis sechs Tage bei 8 bis 12 Grad, bis sie etwa 25 Prozent Gewicht verloren haben. Sie sollen sich fest, aber nicht hart anfühlen. Kontrollieren Sie die Stücke täglich.",
+    "durationMinutes": 30
+   },
+   {
+    "title": "Aufschneiden und lagern",
+    "body": "Schneiden Sie die Brust quer zur Faser in dünne Scheiben. Halten Sie das Fleisch durchgehend gekühlt und verbrauchen Sie es innerhalb einer Woche. Aufgeschnittene Ware lagern Sie luftdicht und gekühlt.",
+    "durationMinutes": 10
+   }
+  ]
+ },
+ {
+  "title": "Warmgeräucherte Entenbrust über Kirschholz",
+  "teaser": "Entenbrust mit Orangenschale und Thymian gewürzt, bei 50 Grad über Kirschholz warm geräuchert.",
+  "intro": "Die Entenbrust bringt unter der Haut eine kräftige Fettschicht mit, die beim Warmräuchern langsam ausschmilzt und das Fleisch von innen saftig hält. Bei 50 Grad bleibt der Kern rosa, während die Haut Farbe und Rauch annimmt. Kirschholz gibt eine fruchtig-süßliche Note, die gut zu Orangenschale und Thymian passt. Serviert wird die Brust ausgekühlt in dünnen Scheiben oder kurz in der Pfanne nachgebraten.",
+  "method": "warm",
+  "foodType": "gefluegel",
+  "flavor": "suess-rauchig",
+  "woodType": "kirsche",
+  "difficulty": "fortgeschritten",
+  "prepMinutes": 30,
+  "brineHours": 24,
+  "smokeMinutes": 180,
+  "servings": 4,
+  "ingredients": [
+   {
+    "label": "Entenbrüste mit Haut, je ca. 350 g",
+    "amount": "2 Stück",
+    "group": "Für das Fleisch"
+   },
+   {
+    "label": "Meersalz",
+    "amount": "40 g",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Brauner Zucker",
+    "amount": "15 g",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Abrieb einer unbehandelten Orange",
+    "amount": "1 Stück",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Thymian, frisch",
+    "amount": "4 Zweige",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Schwarzer Pfeffer, grob geschrotet",
+    "amount": "2 TL",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Piment, gemahlen",
+    "amount": "1 Msp.",
+    "group": "Zum Würzen"
+   },
+   {
+    "label": "Räuchermehl Kirsche",
+    "amount": "400 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Fleischerhaken aus Edelstahl",
+    "amount": "2 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Fettdeckel einschneiden",
+    "body": "Ritzen Sie die Haut rautenförmig ein, ohne das Fleisch zu verletzen, damit das Fett später ablaufen kann. Schneiden Sie überstehende Hautränder gerade ab. Tupfen Sie die Brüste anschließend trocken.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "Trocken würzen",
+    "body": "Mischen Sie Salz, Zucker, Orangenabrieb, Pfeffer und Piment und reiben Sie die Brüste rundum damit ein. Legen Sie die Thymianzweige mit in die Schale. Diese kurze Trockenwürzung ersetzt eine Lake und hält das Fleisch fest.",
+    "durationMinutes": 10
+   },
+   {
+    "title": "24 Stunden ziehen lassen",
+    "body": "Decken Sie die Schale ab und stellen Sie sie 24 Stunden bei 4 Grad kalt. Gießen Sie austretende Flüssigkeit nach zwölf Stunden ab und wenden Sie die Brüste. Spülen Sie sie danach kurz ab und tupfen Sie sie gründlich trocken.",
+    "durationMinutes": 1440
+   },
+   {
+    "title": "Oberfläche trocknen",
+    "body": "Hängen Sie die Brüste an Fleischerhaken zwei Stunden kühl und luftig auf. Die Haut soll sich pergamentartig anfühlen. Nur eine trockene Haut wird im Rauch gleichmäßig braun.",
+    "durationMinutes": 120
+   },
+   {
+    "title": "Anwärmen",
+    "body": "Hängen Sie die Brüste bei 40 Grad in den Ofen und lassen Sie sie 30 Minuten ohne Rauch stehen. Das Fett beginnt langsam weich zu werden, ohne auszulaufen. Ein zu schneller Temperaturanstieg macht das Fleisch trocken.",
+    "durationMinutes": 30
+   },
+   {
+    "title": "Warm räuchern",
+    "body": "Geben Sie das Kirschmehl auf und räuchern Sie 2,5 bis 3 Stunden bei 50 bis 55 Grad. Zielen Sie auf eine Kerntemperatur von etwa 62 Grad, dann bleibt der Kern rosa. Messen Sie an der dicksten Stelle, ohne den Fettdeckel zu durchstechen.",
+    "durationMinutes": 150
+   },
+   {
+    "title": "Ruhen und servieren",
+    "body": "Lassen Sie die Brüste 20 Minuten ruhen und schneiden Sie sie dann quer zur Faser in dünne Scheiben. Für eine knusprige Haut braten Sie die Brust vor dem Aufschneiden kurz auf der Hautseite an. Gekühlt hält sie sich drei bis vier Tage.",
+    "durationMinutes": 20
+   }
+  ]
+ },
+ {
+  "title": "Kaltgeräucherter Bergkäse am Stück",
+  "teaser": "Bergkäse am Stück bei unter 20 Grad über Buchenmehl geräuchert und danach eine Woche im Kühlschrank ausgeglichen.",
+  "intro": "Käse räuchert man ausschließlich kalt, denn schon ab etwa 25 Grad beginnt der Rand zu schwitzen und Fett tritt aus. Am besten eignen sich fest gereifte Sorten wie Bergkäse, Gouda mittlerer Reife oder Emmentaler am Stück. Ein Sparbrand mit Buchenmehl liefert die nötige geringe Wärmeentwicklung. Nach dem Räuchern muss der Käse eine Woche ruhen, damit sich der zunächst scharfe Rauchgeschmack ausgleicht.",
+  "method": "kalt",
+  "foodType": "kaese",
+  "flavor": "mild",
+  "woodType": "buche",
+  "difficulty": "einsteiger",
+  "prepMinutes": 20,
+  "brineHours": 0,
+  "smokeMinutes": 240,
+  "servings": 8,
+  "ingredients": [
+   {
+    "label": "Bergkäse am Stück, gut gereift",
+    "amount": "800 g",
+    "group": "Für den Käse"
+   },
+   {
+    "label": "Gouda oder Emmentaler am Stück",
+    "amount": "400 g",
+    "group": "Für den Käse"
+   },
+   {
+    "label": "Räuchermehl Buche, feine Körnung",
+    "amount": "300 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Sparbrand oder Kaltrauchgenerator",
+    "amount": "1 Stück",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Edelstahlgitter",
+    "amount": "1 Stück",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Pergamentpapier zum Nachreifen",
+    "amount": "nach Bedarf",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Käse zuschneiden",
+    "body": "Teilen Sie den Käse in Stücke von etwa 400 Gramm mit einer Dicke von höchstens fünf Zentimetern. Kleinere Stücke nehmen zu viel Rauch an und schmecken bitter. Entfernen Sie eine gewachste oder mit Kunststoff überzogene Rinde vollständig.",
+    "durationMinutes": 10
+   },
+   {
+    "title": "Oberfläche abtrocknen",
+    "body": "Legen Sie die Stücke unbedeckt auf ein Gitter und lassen Sie sie zwei Stunden im Kühlschrank abtrocknen. Feuchte Oberflächen nehmen Rauch fleckig an. Der Käse soll beim Einschieben kalt sein, das hält die Temperatur im Ofen unten.",
+    "durationMinutes": 120
+   },
+   {
+    "title": "Kühlen Räuchertag wählen",
+    "body": "Räuchern Sie an einem kühlen Tag oder in den frühen Morgenstunden bei einer Außentemperatur unter 15 Grad. Im Ofen dürfen 20 Grad nicht überschritten werden. Bei wärmerem Wetter stellen Sie eine Schale mit Eiswürfeln in den unteren Bereich.",
+    "durationMinutes": 10
+   },
+   {
+    "title": "Sparbrand entzünden",
+    "body": "Füllen Sie den Sparbrand gleichmäßig mit Buchenmehl und zünden Sie ihn an einer Ecke an, bis er selbstständig glimmt. Warten Sie, bis der erste dichte Qualm abgezogen ist, bevor Sie den Käse einschieben. Anfangsqualm schlägt sich rußig nieder.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "Vier Stunden räuchern",
+    "body": "Legen Sie die Käsestücke mit Abstand auf das Gitter und räuchern Sie vier Stunden. Wenden Sie die Stücke nach der Hälfte der Zeit, damit auch die Auflageseite Farbe bekommt. Bei starkem Fettaustritt brechen Sie ab und kühlen den Käse herunter.",
+    "durationMinutes": 240
+   },
+   {
+    "title": "Ausgleichen lassen",
+    "body": "Wickeln Sie die Stücke locker in Pergamentpapier und legen Sie sie eine Woche in den Kühlschrank. Direkt nach dem Räuchern schmeckt der Käse scharf und einseitig, nach einigen Tagen ist der Rauch mild und rund. Vakuumieren Sie ihn erst nach dieser Ruhezeit.",
+    "durationMinutes": 20
+   },
+   {
+    "title": "Servieren",
+    "body": "Nehmen Sie den Käse eine halbe Stunde vor dem Servieren aus der Kühlung und schneiden Sie ihn in dünne Scheiben. Die dunkler geräucherte Außenschicht schneiden Sie nicht ab, dort sitzt das Aroma. Gekühlt und eingeschlagen hält sich der Käse mehrere Wochen.",
+    "durationMinutes": 10
+   }
+  ]
+ },
+ {
+  "title": "Selbst geräucherter Tofu mit Sojamarinade",
+  "teaser": "Tofu gepresst, in Sojasauce mariniert und bei 50 Grad über Erlenmehl zu würzigem Räuchertofu geräuchert.",
+  "intro": "Räuchertofu aus dem eigenen Ofen schmeckt deutlich kräftiger als gekaufter, weil man Marinade und Rauchzeit selbst bestimmt. Der wichtigste Schritt ist das Auspressen: Nur ein wirklich entwässerter Tofu nimmt die Marinade auf und wird im Rauch fest statt schwammig. Erlenmehl liefert einen milden Rauch, der die Sojanote unterstützt. Das Rezept ist an einem Nachmittag zu schaffen und eignet sich gut, um den Ofen nach einem Fischdurchgang auszunutzen.",
+  "method": "warm",
+  "foodType": "vegetarisch",
+  "flavor": "wuerzig",
+  "woodType": "erle",
+  "difficulty": "einsteiger",
+  "prepMinutes": 40,
+  "brineHours": 12,
+  "smokeMinutes": 120,
+  "servings": 4,
+  "ingredients": [
+   {
+    "label": "Naturtofu, fest",
+    "amount": "800 g",
+    "group": "Für den Tofu"
+   },
+   {
+    "label": "Sojasauce",
+    "amount": "200 ml",
+    "group": "Für die Marinade"
+   },
+   {
+    "label": "Wasser",
+    "amount": "200 ml",
+    "group": "Für die Marinade"
+   },
+   {
+    "label": "Ahornsirup",
+    "amount": "2 EL",
+    "group": "Für die Marinade"
+   },
+   {
+    "label": "Knoblauch, in Scheiben",
+    "amount": "3 Zehen",
+    "group": "Für die Marinade"
+   },
+   {
+    "label": "Ingwer, frisch gerieben",
+    "amount": "1 EL",
+    "group": "Für die Marinade"
+   },
+   {
+    "label": "Schwarzer Pfeffer, grob geschrotet",
+    "amount": "2 TL",
+    "group": "Für die Marinade"
+   },
+   {
+    "label": "Geräuchertes Paprikapulver",
+    "amount": "1 TL",
+    "group": "Für die Marinade"
+   },
+   {
+    "label": "Räuchermehl Erle",
+    "amount": "300 g",
+    "group": "Zum Räuchern"
+   },
+   {
+    "label": "Edelstahlgitter",
+    "amount": "1 Stück",
+    "group": "Zum Räuchern"
+   }
+  ],
+  "steps": [
+   {
+    "title": "Tofu pressen",
+    "body": "Schneiden Sie den Tofu in etwa zwei Zentimeter dicke Platten und legen Sie sie zwischen zwei Bretter mit Küchentuch dazwischen. Beschweren Sie das obere Brett mit rund zwei Kilogramm und pressen Sie 60 Minuten. Wechseln Sie das Tuch nach der Hälfte der Zeit.",
+    "durationMinutes": 60
+   },
+   {
+    "title": "Marinade ansetzen",
+    "body": "Verrühren Sie Sojasauce, Wasser, Ahornsirup, Knoblauch, Ingwer, Pfeffer und Paprikapulver in einer flachen Form. Die Verdünnung mit Wasser verhindert, dass der Tofu zu salzig wird. Rühren Sie so lange, bis sich der Sirup vollständig gelöst hat.",
+    "durationMinutes": 10
+   },
+   {
+    "title": "Zwölf Stunden marinieren",
+    "body": "Legen Sie die Tofuplatten nebeneinander in die Marinade und wenden Sie sie nach sechs Stunden. Stellen Sie die Form abgedeckt in den Kühlschrank. Die Platten sollen durchgehend dunkelbraun gefärbt sein.",
+    "durationMinutes": 720
+   },
+   {
+    "title": "Abtropfen und antrocknen",
+    "body": "Nehmen Sie die Platten aus der Marinade und legen Sie sie auf ein Gitter, bis die Oberfläche nicht mehr glänzt. Rechnen Sie mit etwa 60 Minuten bei Raumtemperatur. Nasser Tofu bekommt im Rauch keine gleichmäßige Farbe.",
+    "durationMinutes": 60
+   },
+   {
+    "title": "Ofen vorwärmen",
+    "body": "Bringen Sie den Räucherofen auf 50 Grad und schieben Sie das Gitter mit den Platten ein. Lassen Sie sie 15 Minuten ohne Rauch anwärmen. Halten Sie zwischen den Platten Abstand, damit der Rauch überall hinkommt.",
+    "durationMinutes": 15
+   },
+   {
+    "title": "Zwei Stunden warm räuchern",
+    "body": "Geben Sie das Erlenmehl auf und räuchern Sie zwei Stunden bei 45 bis 55 Grad. Wenden Sie die Platten nach einer Stunde. Der Tofu wird dabei außen deutlich fester und nimmt eine bernsteinbraune Farbe an.",
+    "durationMinutes": 120
+   },
+   {
+    "title": "Auskühlen und lagern",
+    "body": "Lassen Sie die Platten auf dem Gitter vollständig auskühlen, dann festigt sich die Oberfläche weiter. Gekühlt und luftdicht verpackt hält sich der Räuchertofu etwa eine Woche. In Streifen geschnitten passt er in Pfannengerichte oder aufs Brot.",
+    "durationMinutes": 20
+   }
+  ]
+ }
+]

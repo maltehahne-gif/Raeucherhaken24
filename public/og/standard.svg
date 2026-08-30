@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bg" cx="72%" cy="14%" r="88%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="56%" stop-color="#faf8f5"/>
+      <stop offset="100%" stop-color="#ece6dc"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g opacity="0.05" stroke="#17140f" stroke-width="1">
+    <path d="M0 158H1200M0 316H1200M0 474H1200M300 0V630M600 0V630M900 0V630"/>
+  </g>
+
+  <g transform="translate(880 150)" fill="none" stroke="#434c54" stroke-width="13" stroke-linecap="round">
+    <path d="M0 0a30 30 0 1 1-0.1 0"/>
+    <path d="M0 60V286"/>
+    <path d="M0 286c0 58 42 92 88 92 42 0 72-30 72-68" stroke="#a8461f"/>
+  </g>
+
+  <text x="96" y="250" font-family="Georgia, 'Times New Roman', serif" font-size="76"
+        font-weight="600" fill="#17140f">Räucherhaken24</text>
+  <text x="96" y="322" font-family="system-ui, sans-serif" font-size="34" fill="#6d6459">
+    Räucherbedarf für Handwerk und Anspruch
+  </text>
+  <line x1="96" y1="372" x2="700" y2="372" stroke="#17140f" stroke-opacity="0.14" stroke-width="2"/>
+  <text x="96" y="428" font-family="system-ui, sans-serif" font-size="27" fill="#423b32">
+    Räucherhaken aus V2A und V4A · Räuchermehl · Räucherlaugen
+  </text>
+  <text x="96" y="470" font-family="system-ui, sans-serif" font-size="27" fill="#423b32">
+    Über einhundert Naturgewürze · Sonderanfertigung nach Maß
+  </text>
+  <rect x="96" y="516" width="228" height="52" rx="26" fill="#a8461f"/>
+  <text x="210" y="550" font-family="system-ui, sans-serif" font-size="23" font-weight="600"
+        fill="#ffffff" text-anchor="middle">raeucherhaken24</text>
+</svg>
