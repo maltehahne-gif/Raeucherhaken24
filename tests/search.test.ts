@@ -3,6 +3,7 @@ import {
   BASE_SYNONYMS,
   expandTokens,
   levenshtein,
+  looksLikeIdentifier,
   scoreProduct,
   scoreToken,
   toleranceFor,
@@ -190,5 +191,34 @@ describe('scoreProduct', () => {
   it('findet trotz fehlender Umlaute', () => {
     // Wer „raucherhaken“ ohne Umlaut tippt, muss den Artikel finden.
     expect(scoreProduct(product(), ['raucherhaken'])).toBeGreaterThan(0)
+  })
+})
+
+describe('looksLikeIdentifier', () => {
+  it('erkennt Artikelnummern und SKUs', () => {
+    expect(looksLikeIdentifier('RH-HAK-0001')).toBe(true)
+    expect(looksLikeIdentifier('rh-hak-0001')).toBe(true)
+    expect(looksLikeIdentifier('HAK-0001')).toBe(true)
+    expect(looksLikeIdentifier('HAK-0042-V4A-200')).toBe(true)
+  })
+
+  it('hält gewöhnliche Suchanfragen davon fern', () => {
+    // Ohne den rein numerischen Abschnitt wäre "V4A-Draht" fälschlich eine
+    // Artikelnummer, und die normale Suche würde übersprungen.
+    expect(looksLikeIdentifier('V4A-Draht')).toBe(false)
+    expect(looksLikeIdentifier('raeucherhaken')).toBe(false)
+    expect(looksLikeIdentifier('S-Haken')).toBe(false)
+    expect(looksLikeIdentifier('pfeffer schwarz')).toBe(false)
+  })
+
+  it('lehnt zu kurze und zu lange Eingaben ab', () => {
+    expect(looksLikeIdentifier('A-1')).toBe(false)
+    expect(looksLikeIdentifier(`A-${'1'.repeat(60)}`)).toBe(false)
+  })
+
+  it('erkennt Werkstoffbezeichnungen mit Punkt', () => {
+    // 1.4404 ist keine Artikelnummer des Shops, hat aber dieselbe Form.
+    // Der Sonderweg fängt das ab und sucht die Zeichenkette wörtlich.
+    expect(looksLikeIdentifier('1.4404')).toBe(true)
   })
 })

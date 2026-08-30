@@ -269,6 +269,79 @@ export interface SearchResult {
   suggestions: string[]
 }
 
+
+/**
+ * Sieht die Eingabe nach einer Artikelnummer oder SKU aus?
+ *
+ * Wer "RH-HAK-0042" eintippt, sucht genau diesen Artikel — nicht 171 Treffer,
+ * bei denen irgendwo ein "RH" im Text steht. Solche Eingaben bekommen deshalb
+ * einen eigenen, exakten Weg.
+ */
+export function looksLikeIdentifier(query: string): boolean {
+  const trimmed = query.trim()
+  if (trimmed.length < 4 || trimmed.length > 40) return false
+  if (/\s/.test(trimmed)) return false
+  if (!/^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)+$/.test(trimmed)) return false
+
+  /*
+   * Entscheidend ist ein rein numerischer Abschnitt: Artikelnummern und SKUs
+   * enden auf eine laufende Nummer ("RH-HAK-0042"). Ohne diese Bedingung
+   * wuerde "V4A-Draht" als Artikelnummer gelten und die normale Suche
+   * uebersprungen — obwohl es eine ganz gewoehnliche Suchanfrage ist.
+   */
+  return trimmed.split(/[-_.]/).some((segment) => /^\d{2,}$/.test(segment))
+}
+
+/**
+ * Sucht die Eingabe woertlich in Name, Beschreibung und Werkstoff.
+ *
+ * Gebraucht fuer Angaben wie "1.4404": Die Zeichenkette steht in den
+ * Produkttexten, wird von der Tokenisierung aber in "1" und "4404" zerlegt
+ * und dadurch unbrauchbar.
+ */
+async function findLiteral(query: string): Promise<ScoredProduct[]> {
+  const value = query.trim()
+  const rows = await prisma.product.findMany({
+    where: {
+      active: true,
+      visible: true,
+      OR: [
+        { name: { contains: value } },
+        { shortDescription: { contains: value } },
+        { description: { contains: value } },
+        { material: { contains: value } },
+      ],
+    },
+    select: PRODUCT_SEARCH_SELECT,
+    orderBy: [{ popularity: 'desc' }],
+    take: 25,
+  })
+  return rows.map((row) => ({ ...mapSearchable(row), score: 100 }))
+}
+
+/** Exakte oder beginnende Übereinstimmung auf SKU und Artikelnummer. */
+async function findByIdentifier(query: string): Promise<ScoredProduct[]> {
+  const value = query.trim().toUpperCase()
+  const rows = await prisma.product.findMany({
+    where: {
+      active: true,
+      visible: true,
+      OR: [
+        { sku: { startsWith: value } },
+        { articleNumber: { startsWith: value } },
+      ],
+    },
+    select: PRODUCT_SEARCH_SELECT,
+    take: 25,
+  })
+  return rows.map((row) => {
+    const mapped = mapSearchable(row)
+    // Exakte Treffer stehen vor Präfixtreffern.
+    const exact = mapped.sku.toUpperCase() === value || mapped.articleNumber.toUpperCase() === value
+    return { ...mapped, score: exact ? 1000 : 500 }
+  })
+}
+
 /** Fuehrt eine Volltextsuche ueber den aktiven Katalog aus. */
 export async function searchProducts(query: string, options: SearchOptions = {}): Promise<SearchResult> {
   const limit = options.limit ?? 24
@@ -276,6 +349,46 @@ export async function searchProducts(query: string, options: SearchOptions = {})
 
   if (rawTokens.length === 0) {
     return { items: [], tokens: [], total: 0, suggestions: [] }
+  }
+
+  // Artikelnummern und SKUs bekommen einen eigenen, exakten Weg.
+  if (looksLikeIdentifier(query)) {
+    const byIdentifier = await findByIdentifier(query)
+    if (byIdentifier.length > 0) {
+      byIdentifier.sort((a, b) => b.score - a.score || a.sku.localeCompare(b.sku))
+      return {
+        items: byIdentifier.slice(0, limit),
+        tokens: [query.trim().toUpperCase()],
+        total: byIdentifier.length,
+        suggestions: [],
+      }
+    }
+    /*
+     * Keine Artikelnummer getroffen. Bevor wir aufgeben, wird die Eingabe
+     * woertlich in den Produkttexten gesucht — Werkstoffangaben wie "1.4404"
+     * stehen dort, werden von der Tokenisierung aber zerlegt.
+     */
+    const literal = await findLiteral(query)
+    if (literal.length > 0) {
+      return {
+        items: literal.slice(0, limit),
+        tokens: [query.trim()],
+        total: literal.length,
+        suggestions: [],
+      }
+    }
+
+    /*
+     * Auch woertlich nichts gefunden: Diesen Artikel gibt es nicht. Eine
+     * Volltextsuche wuerde hier hunderte Treffer liefern, weil Bruchstuecke
+     * wie "RH" ueberall vorkommen — das ist kein Ergebnis, sondern Rauschen.
+     */
+    return {
+      items: [],
+      tokens: [query.trim().toUpperCase()],
+      total: 0,
+      suggestions: await buildSuggestions(rawTokens),
+    }
   }
 
   const synonyms = await loadSynonyms()
