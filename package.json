@@ -22,7 +22,9 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
     "setup": "prisma generate && prisma db push && tsx prisma/seed.ts",
-    "admin:create": "tsx scripts/create-admin.ts"
+    "admin:create": "tsx scripts/create-admin.ts",
+    "check:pages": "tsx scripts/check-pages.ts",
+    "check:flow": "tsx scripts/smoke-test.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
