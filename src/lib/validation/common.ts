@@ -60,11 +60,25 @@ export const slugSchema = z
   .max(96, 'Der URL-Pfad ist zu lang.')
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Nur Kleinbuchstaben, Ziffern und Bindestriche sind erlaubt.')
 
+/**
+ * Ganzzahl aus einem Eingabefeld.
+ *
+ * `Number.parseInt` liest so weit, wie es kann: aus „3,5“ wird 3, aus
+ * „12abc“ wird 12. Beides waere eine stille Verfaelschung — der Bearbeiter
+ * sieht eine Erfolgsmeldung und einen anderen Wert als eingegeben. Deshalb muss
+ * die gesamte Eingabe eine Ganzzahl sein; sonst entsteht NaN und Zod meldet den
+ * Fehler am Feld.
+ */
+const toWholeNumber = (input: string): number => {
+  const cleaned = input.trim().replace(/\./g, '')
+  return /^-?\d+$/.test(cleaned) ? Number.parseInt(cleaned, 10) : Number.NaN
+}
+
 /** Positive Ganzzahl aus Formulardaten (kommt als String an). */
 export const intFromInput = (min: number, max: number, label: string) =>
   z
     .union([z.string(), z.number()])
-    .transform((v) => (typeof v === 'number' ? v : Number.parseInt(v.trim().replace(/\./g, ''), 10)))
+    .transform((v) => (typeof v === 'number' ? v : toWholeNumber(v)))
     .pipe(
       z
         .number({ invalid_type_error: `${label} muss eine Zahl sein.` })
@@ -81,11 +95,11 @@ export const optionalIntFromInput = (min: number, max: number, label: string) =>
       if (typeof v === 'number') return v
       const trimmed = v.trim()
       if (trimmed.length === 0) return null
-      return Number.parseInt(trimmed.replace(/\./g, ''), 10)
+      return toWholeNumber(trimmed)
     })
     .pipe(
       z
-        .number()
+        .number({ invalid_type_error: `${label} muss eine Zahl sein.` })
         .int(`${label} muss eine ganze Zahl sein.`)
         .min(min, `${label} muss mindestens ${min} betragen.`)
         .max(max, `${label} darf höchstens ${max} betragen.`)

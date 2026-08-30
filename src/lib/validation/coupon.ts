@@ -253,7 +253,9 @@ const countFromInput = (max: number, label: string) =>
       if (typeof v === 'number') return v
       const raw = v.trim().replace(/\./g, '')
       if (raw.length === 0) return 0
-      return Number.parseInt(raw, 10)
+      // Vollstaendig oder gar nicht: `parseInt` wuerde aus "10x" klaglos 10
+      // machen und damit ein anderes Limit speichern als eingegeben.
+      return /^-?\d+$/.test(raw) ? Number.parseInt(raw, 10) : Number.NaN
     })
     .pipe(
       z

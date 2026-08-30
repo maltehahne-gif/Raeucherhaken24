@@ -125,7 +125,7 @@ const emptyIfMissing = <T extends z.ZodTypeAny>(inner: T) =>
 
 const taxRateSchema = z
   .union([z.string(), z.number()])
-  .transform((v) => (typeof v === 'number' ? v : Number.parseInt(v.trim(), 10)))
+  .transform((v) => (typeof v === 'number' ? v : /^\d+$/.test(v.trim()) ? Number.parseInt(v.trim(), 10) : Number.NaN))
   .pipe(
     z
       .number({ invalid_type_error: 'Bitte wählen Sie einen Steuersatz.' })
