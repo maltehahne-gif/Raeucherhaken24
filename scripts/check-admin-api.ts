@@ -299,7 +299,6 @@ async function main() {
     body: JSON.stringify({
       theme: 'normal',
       bannerText: 'Test',
-      // eslint-disable-next-line no-script-url
       bannerLink: 'javascript:alert(1)',
       bannerActive: true,
     }),
