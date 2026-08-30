@@ -71,8 +71,62 @@ export function handleRouteError(error: unknown, context: string): NextResponse 
   if (error instanceof AppError) {
     return jsonError(error.message, error.status, { code: error.code })
   }
+
+  /*
+   * Verletzte Eindeutigkeit ist ein Eingabefehler, kein Serverfehler.
+   *
+   * Routen pruefen vorab, ob eine SKU oder ein Gutscheincode schon vergeben
+   * ist. Zwischen dieser Pruefung und dem Schreiben kann jemand anders
+   * denselben Wert anlegen — dann greift der eindeutige Index. Ohne diese
+   * Behandlung saehe der Bearbeiter "unerwarteter Fehler" statt einer
+   * Meldung, mit der er etwas anfangen kann.
+   */
+  const conflict = uniqueConstraintField(error)
+  if (conflict) {
+    return jsonError('Bitte prüfen Sie Ihre Eingaben.', 409, {
+      code: 'duplicate',
+      fieldErrors: { [conflict.field]: conflict.message },
+    })
+  }
+
   console.error(`[${context}]`, error)
   return jsonError('Es ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut.', 500)
+}
+
+/** Deutsche Bezeichnungen der Felder, die einen eindeutigen Index tragen. */
+const UNIQUE_FIELD_LABELS: Record<string, string> = {
+  sku: 'Diese SKU ist bereits vergeben.',
+  articleNumber: 'Diese Artikelnummer ist bereits vergeben.',
+  slug: 'Dieser URL-Pfad ist bereits vergeben.',
+  code: 'Dieser Code ist bereits vergeben.',
+  email: 'Für diese E-Mail-Adresse existiert bereits ein Konto.',
+  orderNumber: 'Diese Bestellnummer ist bereits vergeben.',
+  customerNumber: 'Diese Kundennummer ist bereits vergeben.',
+  ticketNumber: 'Diese Ticketnummer ist bereits vergeben.',
+  projectNumber: 'Diese Projektnummer ist bereits vergeben.',
+  key: 'Dieser Schlüssel ist bereits vergeben.',
+}
+
+/** Erkennt eine Verletzung der Eindeutigkeit und benennt das betroffene Feld. */
+function uniqueConstraintField(error: unknown): { field: string; message: string } | null {
+  if (typeof error !== 'object' || error === null) return null
+  const candidate = error as { code?: unknown; meta?: { target?: unknown } }
+  if (candidate.code !== 'P2002') return null
+
+  const target = candidate.meta?.target
+  const fields = Array.isArray(target)
+    ? target.filter((t): t is string => typeof t === 'string')
+    : typeof target === 'string'
+      ? [target]
+      : []
+
+  const field = fields.find((f) => f in UNIQUE_FIELD_LABELS) ?? fields[0]
+  if (!field) return null
+
+  return {
+    field,
+    message: UNIQUE_FIELD_LABELS[field] ?? 'Dieser Wert ist bereits vergeben.',
+  }
 }
 
 /** Fachlicher Fehler mit einer Meldung, die dem Endnutzer gezeigt werden darf. */
