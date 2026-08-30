@@ -169,7 +169,13 @@ export async function recommend(
         visible: true,
         category: { slug: { in: ['raeucherhaken', 'fleischerhaken'] } },
       },
-      select: { ...CARD_SELECT, lengthMm: true, loadCapacityGrams: true, usage: true, name: true },
+      select: {
+        ...CARD_SELECT,
+        lengthMm: true,
+        loadCapacityGrams: true,
+        usage: true,
+        name: true,
+      },
     }),
     prisma.product.findMany({
       where: { active: true, visible: true, category: { slug: 'raeuchermehl' } },
@@ -239,6 +245,22 @@ type HookRow = Parameters<typeof toCardData>[0] & {
   name: string
 }
 
+/**
+ * Wie stark ist ein Haken ueberdimensioniert?
+ * Ein Fleischerhaken fuer 40 kg an einer 300-g-Forelle traegt zwar sicher,
+ * ist aber die falsche Empfehlung: Der Draht ist zu dick, die Spitze zu grob,
+ * und der Preis steht in keinem Verhaeltnis. Das Verhaeltnis fliesst deshalb
+ * in die Bewertung ein.
+ */
+function oversizePenalty(loadCapacityGrams: number | null, requiredGrams: number): number {
+  if (loadCapacityGrams === null || requiredGrams <= 0) return 0
+  const ratio = loadCapacityGrams / requiredGrams
+  if (ratio <= 4) return 0
+  if (ratio <= 8) return 12
+  if (ratio <= 16) return 26
+  return 40
+}
+
 function scoreHooks(
   rows: HookRow[],
   spec: ReturnType<typeof hookProfile>,
@@ -247,10 +269,24 @@ function scoreHooks(
 ): ScoredRow[] {
   const out: ScoredRow[] = []
 
+  const wantsHeavyDuty = spec.minLoadGrams >= 4_000
+
   for (const row of rows) {
     let score = 40
     const reasons: string[] = []
     const haystack = normalizeSearch(`${row.name} ${row.usage ?? ''}`)
+    const isButcherHook = row.category.slug === 'fleischerhaken'
+
+    /*
+     * Fleischerhaken sind fuer gewerbliche Dauerlasten gebaut. Fuer Fisch,
+     * Kaese oder Wurst sind sie schlicht die falsche Bauform — auch wenn sie
+     * die Last mühelos tragen wuerden.
+     */
+    if (isButcherHook && !wantsHeavyDuty) score -= 30
+    if (isButcherHook && wantsHeavyDuty) {
+      score += 8
+      reasons.push('für gewerbliche Dauerlast ausgelegt')
+    }
 
     // Bauform passend zum Räuchergut
     const keywordHit = spec.keywords.some((k) => haystack.includes(normalizeSearch(k)))
@@ -269,11 +305,13 @@ function scoreHooks(
       }
     }
 
-    // Belastbarkeit
+    // Belastbarkeit: ausreichend, aber nicht masslos ueberdimensioniert
     if (row.loadCapacityGrams !== null) {
       if (row.loadCapacityGrams >= spec.minLoadGrams) {
         score += 14
-        reasons.push('trägt das Gewicht Ihres Räucherguts sicher')
+        const penalty = oversizePenalty(row.loadCapacityGrams, spec.minLoadGrams)
+        score -= penalty
+        if (penalty === 0) reasons.push('trägt das Gewicht Ihres Räucherguts sicher')
       } else {
         score -= 26
       }
