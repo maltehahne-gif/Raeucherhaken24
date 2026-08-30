@@ -279,16 +279,36 @@ Die Integrationstests laufen gegen eine eigene SQLite-Datei
 wird. Ein Testlauf kann die Entwicklungsdatenbank nicht beschädigen.
 
 Abgedeckt sind die Bereiche, in denen ein Fehler unmittelbar Geld oder Ware
-kostet: Geldrechnung, Preis-Engine, Suche, Sicherheitsbausteine sowie
-Bestellungen, Lager und Gutscheine gegen eine echte Datenbank.
+kostet:
 
-Zusätzlich prüft `scripts/smoke-test.ts` denselben Ablauf gegen den laufenden
-Server — vom Warenkorb über den Gutschein bis zur Bestellung, einschließlich
-CSRF, Origin-Prüfung und Sicherheits-Headern:
+| Datei | Prüft |
+|---|---|
+| `tests/money.test.ts` | Rundung, Basispunkte, verlustfreie Verteilung von Rabatten |
+| `tests/pricing.test.ts` | Preis-Engine: Staffeln, Aufschläge, Aktionen, Versand, Steuer |
+| `tests/orders.test.ts` | Bestellung, Bestand, Idempotenz, Statuswechsel, Gutscheineinlösung |
+| `tests/catalog.test.ts` | Filter, Sortierung, Facetten, Seitenaufteilung |
+| `tests/search.test.ts` | Umlaute, Tippfehler, Synonyme, Artikelnummern |
+| `tests/advisor.test.ts` | Beratung: passende Empfehlung, nur vorhandene Artikel |
+| `tests/security.test.ts` | Passwörter, Sitzungen, CSRF, Rechte, Uploads, Ratenbegrenzung |
+| `tests/validation.test.ts` | Umrechnung Formularfeld ↔ Speicherwert, fachliche Regeln |
+| `tests/theme.test.ts` | Zu jedem Saisonmodus existiert Gestaltung |
+
+Gegen den laufenden Server prüfen zusätzlich drei Skripte die tatsächliche
+Wirkung — nicht nur, ob eine Antwort kommt:
 
 ```bash
-npm run dev                    # in einem Terminal
-npx tsx scripts/smoke-test.ts  # in einem zweiten
+npm run dev            # in einem Terminal
+npm run check:flow     # Warenkorb → Gutschein → Bestellung, CSRF, Header
+npm run check:admin    # Verwaltungs-Schnittstellen inkl. Zugriffsschutz
+npm run check:pages    # Erreichbarkeit aller Seiten
+npm run check:a11y     # Barrierefreiheits-Stichproben (benötigt Chromium)
+```
+
+`npm run check:a11y` erwartet einen Chromium mit offenem Debug-Port:
+
+```bash
+/opt/pw-browsers/chromium-*/chrome-linux/chrome \
+  --headless --no-sandbox --remote-debugging-port=9333 about:blank &
 ```
 
 ---
