@@ -10,7 +10,7 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -25,7 +25,8 @@
     "admin:create": "tsx scripts/create-admin.ts",
     "check:pages": "tsx scripts/check-pages.ts",
     "check:flow": "tsx scripts/smoke-test.ts",
-    "check:a11y": "tsx scripts/check-a11y.ts"
+    "check:a11y": "tsx scripts/check-a11y.ts",
+    "check:admin": "tsx scripts/check-admin-api.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
