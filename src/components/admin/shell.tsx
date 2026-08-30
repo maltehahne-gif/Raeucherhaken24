@@ -187,8 +187,8 @@ export function AdminShell({ user, children }: { user: AuthUser; children: React
       {/* Seitennavigation ab Desktop */}
       <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col bg-steel-900 lg:flex">
         <div className="flex h-16 shrink-0 items-center px-5">
-          <Link href="/admin" className="text-steel-50">
-            <Logo className="h-6 w-auto" />
+          <Link href="/admin">
+            <Logo className="h-6 w-auto text-steel-50" />
           </Link>
         </div>
         <div className="scroll-area min-h-0 flex-1 overflow-y-auto">{nav}</div>

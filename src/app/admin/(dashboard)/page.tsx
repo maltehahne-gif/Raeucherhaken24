@@ -93,8 +93,8 @@ export default async function AdminDashboard() {
         </h2>
         <div className="grid gap-3 sm:grid-cols-3">
           <RevenueTile label="Heute" comparison={data.today} previousLabel="gestern" />
-          <RevenueTile label="Letzte 7 Tage" comparison={data.last7Days} previousLabel="Vorwoche" />
-          <RevenueTile label="Letzte 30 Tage" comparison={data.last30Days} previousLabel="Vorperiode" />
+          <RevenueTile label="Letzte 7 Tage" comparison={data.last7Days} previousLabel="der Vorwoche" />
+          <RevenueTile label="Letzte 30 Tage" comparison={data.last30Days} previousLabel="der Vorperiode" />
         </div>
         <Card>
           <CardHeader>
@@ -324,7 +324,9 @@ function RevenueTile({
       </p>
       <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
         {change === null ? (
-          <span className="text-ink-faint">Keine Vergleichsdaten aus der {previousLabel}</span>
+          // Bewusst ohne Zeitangabe: "aus der gestern" waere falsch, und eine
+          // Fallunterscheidung nur fuer diesen Satz lohnt nicht.
+          <span className="text-ink-faint">Kein Vergleichswert vorhanden</span>
         ) : (
           <>
             <span
