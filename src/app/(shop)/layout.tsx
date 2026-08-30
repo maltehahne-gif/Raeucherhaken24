@@ -9,6 +9,7 @@ import { CartProvider } from '@/components/cart/cart-provider'
 import { CartDrawer } from '@/components/cart/cart-drawer'
 import { ToastProvider } from '@/components/ui/toast'
 import { RevealOnScroll } from '@/components/layout/reveal'
+import { SmokyLauncher } from '@/components/advisor/smoky-launcher'
 import { JsonLdScript } from '@/components/seo/json-ld'
 import { organizationJsonLd, websiteJsonLd } from '@/lib/seo/structured-data'
 
@@ -37,6 +38,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
         </main>
         <Footer />
         <CartDrawer />
+        <SmokyLauncher />
         <RevealOnScroll />
         <JsonLdScript data={[organizationJsonLd(), websiteJsonLd()]} />
       </CartProvider>
