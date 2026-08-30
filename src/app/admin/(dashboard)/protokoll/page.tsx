@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ScrollText, SearchX, ShieldCheck } from 'lucide-react'
 import { prisma, type Prisma } from '@/lib/db'
 import { requirePermission } from '@/lib/server/auth'
+import { SETTING_KEYS } from '@/lib/server/settings'
 import { formatNumber } from '@/lib/money'
 import { formatDateTime, formatRelative, truncate } from '@/lib/utils/text'
 import { AdminFilterBar } from '@/components/admin/filter-bar'
@@ -90,6 +91,37 @@ const ENTITY_LABELS: Record<string, string> = {
   SupportRequest: 'Supportanfrage',
   CustomProject: 'Sonderanfertigung',
   ProjectAttachment: 'Anhang',
+  Recipe: 'Rezept',
+}
+
+/**
+ * Datensatzarten, die unten nachgeschlagen werden. Nur bei diesen darf die
+ * Liste behaupten, ein Datensatz sei nicht mehr vorhanden — bei allen anderen
+ * steht schlicht die Kennung, statt etwas Falsches zu behaupten.
+ */
+const RESOLVED_ENTITIES = new Set([
+  'Order',
+  'Product',
+  'Coupon',
+  'Customer',
+  'SupportRequest',
+  'CustomProject',
+  'ProjectAttachment',
+  'Recipe',
+  'User',
+  'Role',
+  'Setting',
+])
+
+/**
+ * Betriebseinstellungen tragen ihren Schluessel als Datensatzkennung; er wird
+ * hier in Klartext uebersetzt, statt als technischer Wert zu erscheinen.
+ */
+const SETTING_LABELS: Record<string, string> = {
+  [SETTING_KEYS.seasonalTheme]: 'Saisonmodus und Banner',
+  [SETTING_KEYS.bannerText]: 'Bannertext',
+  [SETTING_KEYS.bannerLink]: 'Bannerlink',
+  [SETTING_KEYS.bannerActive]: 'Banner sichtbar',
 }
 
 /** Deutsche Beschriftung der haeufigsten Detailfelder. */
@@ -266,11 +298,23 @@ export default async function AuditLogPage({ searchParams }: PageProps) {
   const customerIds = idsFor('Customer')
   const supportIds = idsFor('SupportRequest')
   const projectIds = idsFor('CustomProject')
+  const attachmentIds = idsFor('ProjectAttachment')
+  const recipeIds = idsFor('Recipe')
   const userIds = idsFor('User')
   const roleIds = idsFor('Role')
 
-  const [orders, products, coupons, customers, supportRequests, projects, users, roles] =
-    await Promise.all([
+  const [
+    orders,
+    products,
+    coupons,
+    customers,
+    supportRequests,
+    projects,
+    attachments,
+    recipes,
+    users,
+    roles,
+  ] = await Promise.all([
       orderIds.length > 0
         ? prisma.order.findMany({
             where: { id: { in: orderIds } },
@@ -300,6 +344,15 @@ export default async function AuditLogPage({ searchParams }: PageProps) {
             where: { id: { in: projectIds } },
             select: { id: true, projectNumber: true, projectName: true },
           })
+        : [],
+      attachmentIds.length > 0
+        ? prisma.projectAttachment.findMany({
+            where: { id: { in: attachmentIds } },
+            select: { id: true, originalName: true, projectId: true },
+          })
+        : [],
+      recipeIds.length > 0
+        ? prisma.recipe.findMany({ where: { id: { in: recipeIds } }, select: { id: true, title: true } })
         : [],
       userIds.length > 0
         ? prisma.user.findMany({
@@ -356,6 +409,19 @@ export default async function AuditLogPage({ searchParams }: PageProps) {
       may('projects:read') ? `/admin/projekte/${project.id}` : null,
     )
   }
+  for (const attachment of attachments) {
+    register(
+      'ProjectAttachment',
+      attachment.id,
+      attachment.originalName,
+      may('projects:read') ? `/admin/projekte/${attachment.projectId}` : null,
+    )
+  }
+  // Rezepte werden nicht verlinkt: Die Redaktionsansicht liegt außerhalb
+  // dieses Bereichs, der Titel genügt zur Einordnung.
+  for (const recipe of recipes) {
+    register('Recipe', recipe.id, recipe.title, null)
+  }
   for (const user of users) {
     register(
       'User',
@@ -366,6 +432,17 @@ export default async function AuditLogPage({ searchParams }: PageProps) {
   }
   for (const role of roles) {
     register('Role', role.id, role.name, may('roles:write') ? '/admin/mitarbeiter/rollen' : null)
+  }
+  // Einstellungen stehen nicht in einer eigenen Tabelle mit Namen; ihr
+  // Schluessel ist zugleich die Kennung und wird direkt uebersetzt.
+  for (const entry of entries) {
+    if (entry.entity !== 'Setting' || entry.entityId === null) continue
+    register(
+      'Setting',
+      entry.entityId,
+      SETTING_LABELS[entry.entityId] ?? entry.entityId,
+      may('marketing:write') ? '/admin/saison' : null,
+    )
   }
 
   function href(overrides: Record<string, string | number | null>): string {
@@ -537,12 +614,16 @@ export default async function AuditLogPage({ searchParams }: PageProps) {
                             <span className="font-medium text-ink">{reference.label}</span>
                           )
                         ) : entry.entityId ? (
-                          <span className="text-ink-muted">
-                            nicht mehr vorhanden
-                            <span className="tabular ml-1 text-xs text-ink-faint">
-                              {truncate(entry.entityId, 12)}
+                          RESOLVED_ENTITIES.has(entry.entity) ? (
+                            <span className="text-ink-muted">
+                              nicht mehr vorhanden
+                              <span className="tabular ml-1 text-xs text-ink-faint">
+                                {truncate(entry.entityId, 12)}
+                              </span>
                             </span>
-                          </span>
+                          ) : (
+                            <span className="tabular text-xs text-ink-muted">{entry.entityId}</span>
+                          )
                         ) : (
                           <span className="text-ink-faint">—</span>
                         )}

@@ -171,11 +171,24 @@ async function main() {
 
   let total = 0
   for (const path of paths) {
+    // Der Statuscode wird getrennt abgefragt: Eine Fehlerseite ist gestalterisch
+    // einwandfrei und bestuende jede Pruefung — ohne diese Abfrage haette das
+    // Skript eine fehlende Seite als "OK" gemeldet.
+    const status = await fetch(BASE + path, { redirect: 'manual' })
+      .then((res) => res.status)
+      .catch(() => 0)
+
     await send('Page.navigate', { url: BASE + path })
     await new Promise((resolve) => setTimeout(resolve, 2200))
 
     const response = await send('Runtime.evaluate', { returnByValue: true, expression: CHECK_SCRIPT })
     const problems = (response.result?.result?.value ?? []) as Problem[]
+    if (status !== 200) {
+      problems.unshift({
+        rule: 'seite nicht erreichbar',
+        detail: status === 0 ? 'keine Antwort vom Server' : `HTTP ${status}`,
+      })
+    }
     total += problems.length
 
     if (problems.length === 0) {

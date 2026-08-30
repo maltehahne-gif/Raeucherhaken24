@@ -108,13 +108,22 @@ export default async function SearchPage({ searchParams }: PageProps) {
           </ul>
         </div>
       ) : (
-        <ul className="mt-9 grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-6 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product, index) => (
-            <li key={product.slug}>
-              <ProductCard product={product} priority={index < 4} />
-            </li>
-          ))}
-        </ul>
+        <section className="mt-9">
+          {/*
+            Die Produktkarte traegt ihren Namen als h3. Ohne diese Zwischen-
+            ueberschrift spraenge die Gliederung von h1 auf h3, und wer sich
+            mit einer Vorlesesoftware durch die Ueberschriften bewegt, verlaesse
+            den Seitenkopf direkt in der Trefferliste.
+          */}
+          <h2 className="sr-only">Suchergebnisse</h2>
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-6 lg:grid-cols-3 xl:grid-cols-4">
+            {products.map((product, index) => (
+              <li key={product.slug}>
+                <ProductCard product={product} priority={index < 4} />
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
     </div>
   )

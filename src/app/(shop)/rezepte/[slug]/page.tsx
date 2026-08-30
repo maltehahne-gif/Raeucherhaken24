@@ -126,6 +126,11 @@ export default async function RecipeDetailPage({ params }: PageProps) {
     { label: recipe.title },
   ]
 
+  // Ein Aenderungsdatum wird nur genannt, wenn es sich vom Erscheinungstag
+  // unterscheidet — zweimal dasselbe Datum sagt nichts aus.
+  const publishedOn = formatDate(recipe.createdAt)
+  const updatedOn = formatDate(recipe.updatedAt)
+
   const keyFigures = [
     { label: 'Vorbereitung', value: formatDuration(recipe.prepMinutes), icon: Clock },
     {
@@ -203,9 +208,8 @@ export default async function RecipeDetailPage({ params }: PageProps) {
 
               <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border-subtle)] pt-4">
                 <p className="text-xs text-ink-faint">
-                  Veröffentlicht am {formatDate(recipe.createdAt)}
-                  {recipe.updatedAt.getTime() - recipe.createdAt.getTime() > 60_000 &&
-                    ` · aktualisiert am ${formatDate(recipe.updatedAt)}`}
+                  Veröffentlicht am {publishedOn}
+                  {updatedOn !== publishedOn && ` · aktualisiert am ${updatedOn}`}
                 </p>
                 <ShareButtons
                   url={absoluteUrl(`/rezepte/${recipe.slug}`)}

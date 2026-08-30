@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Check, CookingPot, Search, X } from 'lucide-react'
+import { Check, ChevronDown, CookingPot, Search, X } from 'lucide-react'
 import { Prisma } from '@prisma/client'
 import { prisma } from '@/lib/db'
 import { buildMetadata } from '@/lib/seo/metadata'
@@ -9,7 +9,6 @@ import { JsonLdScript } from '@/components/seo/json-ld'
 import { Breadcrumbs, type Crumb } from '@/components/ui/breadcrumbs'
 import { Pagination } from '@/components/ui/pagination'
 import { EmptyState } from '@/components/ui/states'
-import { MobileFilters } from '@/components/catalog/mobile-filters'
 import { RecipeCard, type RecipeCardData } from '@/components/recipe/recipe-card'
 import { formatNumber } from '@/lib/money'
 import { cn } from '@/lib/utils/cn'
@@ -309,7 +308,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     description:
       'Erprobte Räucherrezepte für Fisch, Fleisch, Schinken, Wurst und Käse – mit Zutaten, Arbeitsschritten, Räucherdauer und passender Ausstattung.',
     path: BASE_PATH,
-    noIndex: hasActiveFilters(filters) || filters.page > 1,
+    noIndex: hasActiveFilters(filters),
   })
 }
 
@@ -349,6 +348,32 @@ export default async function RecipeIndexPage({ searchParams }: PageProps) {
           <div className="min-w-0 flex-1">
             <RecipeSearchForm filters={filters} />
 
+            {/*
+              Filter auf schmalen Bildschirmen: ein natives <details>. Es
+              klappt auch ohne JavaScript auf — anders als ein Dialogfenster,
+              das ohne Skript verschlossen bliebe.
+            */}
+            <details
+              open={activeFilterCount(filters) > 0}
+              className="group mt-4 rounded-xl border border-[var(--border-default)] lg:hidden"
+            >
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-medium text-ink-soft [&::-webkit-details-marker]:hidden">
+                <span className="inline-flex items-center gap-2">
+                  Filter
+                  {activeFilterCount(filters) > 0 && (
+                    <span className="tabular flex size-5 items-center justify-center rounded-full bg-[var(--accent)] text-2xs font-semibold text-[var(--accent-contrast)]">
+                      {activeFilterCount(filters)}
+                    </span>
+                  )}
+                </span>
+                <ChevronDown
+                  className="size-4.5 shrink-0 text-ink-muted transition-transform duration-300 group-open:rotate-180"
+                  aria-hidden="true"
+                />
+              </summary>
+              <div className="border-t border-[var(--border-subtle)] px-4 py-5">{filterPanel}</div>
+            </details>
+
             <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4">
               <p className="text-sm text-ink-muted" aria-live="polite">
                 {result.total === 0
@@ -357,12 +382,7 @@ export default async function RecipeIndexPage({ searchParams }: PageProps) {
                     ? '1 Rezept'
                     : `${formatNumber(result.total)} Rezepte`}
               </p>
-              <div className="flex items-center gap-2">
-                <MobileFilters activeCount={activeFilterCount(filters)} resultCount={result.total}>
-                  {filterPanel}
-                </MobileFilters>
-                <RecipeSortLinks filters={filters} />
-              </div>
+              <RecipeSortLinks filters={filters} />
             </div>
 
             {result.recipes.length === 0 ? (
@@ -474,7 +494,7 @@ function RecipeSortLinks({ filters }: { filters: RecipeFilters }) {
                 href={buildRecipeHref(filters, { sort, page: 1 })}
                 aria-current={active ? 'true' : undefined}
                 className={cn(
-                  'inline-flex h-9 items-center rounded-[5px] px-2.5 text-xs font-medium transition-colors sm:text-sm',
+                  'inline-flex h-10 items-center rounded-[5px] px-2.5 text-xs font-medium transition-colors sm:text-sm',
                   active ? 'bg-steel-800 text-steel-50' : 'text-ink-soft hover:bg-paper-sunken',
                 )}
               >
