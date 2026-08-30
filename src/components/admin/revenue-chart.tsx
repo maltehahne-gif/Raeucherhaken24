@@ -97,8 +97,14 @@ export function RevenueChart({ points }: { points: RevenuePoint[] }) {
               />
             ))}
 
-            {/* Säulen */}
-            <div className="absolute inset-0 flex items-end">
+            {/*
+              Die Säulenfläche ist rein darstellend: Sie trägt keine Information,
+              die nicht auch in der Tabelle darunter steht. Deshalb ist sie für
+              Hilfstechnik ausgeblendet — sonst entstünden dreißig Tabstopps ohne
+              eigenen Nutzen. Der barrierefreie Zugang zu denselben Zahlen ist
+              die Tabellenansicht.
+            */}
+            <div className="absolute inset-0 flex items-end" aria-hidden="true">
               {points.map((point, index) => {
                 const height = max > 0 ? (point.revenueCents / max) * CHART_HEIGHT : 0
                 const isHovered = hovered === index
@@ -109,17 +115,8 @@ export function RevenueChart({ points }: { points: RevenuePoint[] }) {
                     style={{ width: `${slotPercent}%` }}
                     onMouseEnter={() => setHovered(index)}
                     onMouseLeave={() => setHovered(null)}
-                    onFocus={() => setHovered(index)}
-                    onBlur={() => setHovered(null)}
+                    onClick={() => setHovered(isHovered ? null : index)}
                   >
-                    {/* Trefferfläche größer als die Säule selbst */}
-                    <button
-                      type="button"
-                      tabIndex={-1}
-                      aria-hidden="true"
-                      className="absolute inset-0 cursor-default"
-                      onClick={() => setHovered(isHovered ? null : index)}
-                    />
                     <span
                       className={cn(
                         'relative rounded-t-[4px] transition-opacity duration-150',

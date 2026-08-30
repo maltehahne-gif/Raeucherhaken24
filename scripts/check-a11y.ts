@@ -60,11 +60,21 @@ const CHECK_SCRIPT = `(() => {
   const problems = []
   const add = (rule, detail) => problems.push({ rule, detail })
 
+  /*
+   * Elemente unterhalb von aria-hidden erreichen Hilfstechnik nicht und werden
+   * deshalb nicht geprueft. Ohne diese Einschraenkung meldet die Pruefung rein
+   * darstellende Bereiche — etwa die Saeulen eines Diagramms, dessen Daten
+   * daneben als Tabelle stehen.
+   */
+  const versteckt = (el) => el.closest('[aria-hidden="true"]') !== null
+
   for (const img of document.querySelectorAll('img')) {
+    if (versteckt(img)) continue
     if (!img.hasAttribute('alt')) add('bild-ohne-alt', (img.getAttribute('src') || '?').slice(0, 60))
   }
 
   for (const el of document.querySelectorAll('input:not([type=hidden]), select, textarea')) {
+    if (versteckt(el)) continue
     const id = el.getAttribute('id')
     const labelled =
       el.getAttribute('aria-label') ||
@@ -75,6 +85,7 @@ const CHECK_SCRIPT = `(() => {
   }
 
   for (const el of document.querySelectorAll('button, a[href]')) {
+    if (versteckt(el)) continue
     const text = (el.textContent || '').trim()
     const imgAlt = [...el.querySelectorAll('img')].map((i) => i.getAttribute('alt') || '').join(' ').trim()
     const svgLabel = [...el.querySelectorAll('svg[role=img]')].map((s) => s.getAttribute('aria-label') || '').join(' ').trim()
