@@ -58,7 +58,13 @@ export function ProductCard({
   const lowStock = !soldOut && product.stock > 0 && product.stock <= product.lowStockThreshold
 
   return (
-    <article className={cn('group relative flex flex-col', className)}>
+    <article
+      className={cn(
+        'group relative flex flex-col rounded-xl p-2 transition-all duration-300 [transition-timing-function:var(--ease-out-soft)]',
+        'hover:-translate-y-1 hover:bg-[var(--surface-raised)] hover:shadow-[var(--shadow-raised)]',
+        className,
+      )}
+    >
       {/*
         Das Bild ist bewusst kein eigener Link: Der Titel-Link spannt sich ueber
         die gesamte Karte. Zwei Links auf dasselbe Ziel wuerden in der
@@ -76,7 +82,7 @@ export function ProductCard({
             loading={priority ? undefined : 'lazy'}
             sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 22vw"
             className={cn(
-              'size-full object-cover transition-transform duration-500 [transition-timing-function:var(--ease-out-soft)] group-hover:scale-[1.035]',
+              'size-full object-cover transition-transform duration-500 [transition-timing-function:var(--ease-out-soft)] group-hover:scale-[1.06]',
               soldOut && 'opacity-60 saturate-50',
             )}
           />
@@ -86,6 +92,13 @@ export function ProductCard({
           </span>
         )}
 
+        {/* Kupferkerbe unten links — die wiederkehrende "Anhaenger"-Form der Karte. */}
+        <span
+          className="pointer-events-none absolute bottom-0 left-0 size-4 bg-[var(--color-ember-500)]"
+          style={{ clipPath: 'polygon(0 0, 100% 100%, 0 100%)' }}
+          aria-hidden="true"
+        />
+
         <div className="pointer-events-none absolute inset-x-2.5 top-2.5 flex flex-wrap gap-1.5">
           {product.promotionName && <Badge tone="accent">{product.promotionName}</Badge>}
           {product.bestseller && !product.promotionName && <Badge tone="steel">Bestseller</Badge>}
@@ -93,8 +106,8 @@ export function ProductCard({
         </div>
       </div>
 
-      <div className="mt-3.5 flex flex-1 flex-col">
-        <p className="text-2xs font-medium tracking-wide text-ink-faint uppercase">
+      <div className="mt-3.5 flex flex-1 flex-col px-1">
+        <p className="text-2xs font-semibold tracking-[0.08em] text-[var(--accent-secondary)] uppercase">
           {product.categoryName}
         </p>
         <h3 className="mt-1 font-display text-base leading-snug font-semibold">

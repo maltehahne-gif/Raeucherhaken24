@@ -61,8 +61,8 @@ export function Header() {
     <>
       <header
         className={cn(
-          'sticky top-0 z-40 border-b bg-[var(--surface-page)]/92 backdrop-blur-md transition-shadow duration-300',
-          scrolled ? 'border-[var(--border-subtle)] shadow-[var(--shadow-subtle)]' : 'border-transparent',
+          'sticky top-0 z-40 border-b bg-steel-900/94 backdrop-blur-md transition-shadow duration-300',
+          scrolled ? 'border-ember-900/60 shadow-[0_8px_24px_-12px_rgb(0_0_0/0.6)]' : 'border-transparent',
         )}
       >
         <div className="container-page">
@@ -72,13 +72,13 @@ export function Header() {
               onClick={() => setMobileOpen(true)}
               aria-label="Menü öffnen"
               aria-expanded={mobileOpen}
-              className="-ml-2 flex size-11 shrink-0 items-center justify-center rounded-md text-ink-soft transition-colors hover:bg-paper-sunken lg:hidden"
+              className="-ml-2 flex size-11 shrink-0 items-center justify-center rounded-md text-steel-200 transition-colors hover:bg-white/8 hover:text-steel-50 lg:hidden"
             >
               <Menu className="size-5" aria-hidden="true" />
             </button>
 
             <Link href="/" className="shrink-0 rounded-xs" aria-label="Räucherhaken24 – zur Startseite">
-              <Logo className="h-7 w-auto lg:h-8" />
+              <Logo className="h-7 w-auto text-steel-50 lg:h-8" />
             </Link>
 
             <nav aria-label="Hauptnavigation" className="ml-6 hidden lg:block">
@@ -93,8 +93,10 @@ export function Header() {
                           onMouseEnter={() => setOpenGroup(group.href)}
                           aria-expanded={openGroup === group.href}
                           className={cn(
-                            'flex h-10 items-center gap-1 rounded-md px-3 text-sm font-medium transition-colors',
-                            pathname.startsWith(group.href) ? 'text-[var(--accent)]' : 'text-ink-soft hover:text-ink',
+                            'flex h-10 items-center gap-1 rounded-md border-b-2 px-3 text-sm font-medium transition-colors',
+                            pathname.startsWith(group.href)
+                              ? 'border-ember-500 text-ember-400'
+                              : 'border-transparent text-steel-200 hover:text-steel-50',
                           )}
                         >
                           {group.label}
@@ -129,8 +131,10 @@ export function Header() {
                       <Link
                         href={group.href}
                         className={cn(
-                          'flex h-10 items-center rounded-md px-3 text-sm font-medium transition-colors',
-                          pathname.startsWith(group.href) ? 'text-[var(--accent)]' : 'text-ink-soft hover:text-ink',
+                          'flex h-10 items-center rounded-md border-b-2 px-3 text-sm font-medium transition-colors',
+                          pathname.startsWith(group.href)
+                            ? 'border-ember-500 text-ember-400'
+                            : 'border-transparent text-steel-200 hover:text-steel-50',
                         )}
                       >
                         {group.label}
@@ -143,8 +147,10 @@ export function Header() {
                     <Link
                       href={group.href}
                       className={cn(
-                        'flex h-10 items-center rounded-md px-3 text-sm font-medium transition-colors',
-                        pathname.startsWith(group.href) ? 'text-[var(--accent)]' : 'text-ink-soft hover:text-ink',
+                        'flex h-10 items-center rounded-md border-b-2 px-3 text-sm font-medium transition-colors',
+                        pathname.startsWith(group.href)
+                          ? 'border-ember-500 text-ember-400'
+                          : 'border-transparent text-steel-200 hover:text-steel-50',
                       )}
                     >
                       {group.label}
@@ -158,11 +164,11 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setSearchOpen(true)}
-                className="hidden h-10 items-center gap-2 rounded-md border border-[var(--border-default)] bg-[var(--surface-raised)] pr-2 pl-3 text-sm text-ink-faint transition-colors hover:border-[var(--border-strong)] hover:text-ink-muted md:flex"
+                className="hidden h-10 items-center gap-2 rounded-full border border-white/12 bg-white/6 pr-2 pl-3.5 text-sm text-steel-300 transition-colors hover:border-ember-500/50 hover:text-steel-50 md:flex"
               >
                 <Search className="size-4" aria-hidden="true" />
                 <span className="w-32 text-left lg:w-40">Suchen …</span>
-                <kbd className="rounded border border-[var(--border-default)] px-1.5 py-0.5 font-sans text-2xs text-ink-faint">
+                <kbd className="rounded border border-white/15 px-1.5 py-0.5 font-sans text-2xs text-steel-300">
                   ⌘K
                 </kbd>
               </button>
@@ -171,7 +177,7 @@ export function Header() {
                 type="button"
                 onClick={() => setSearchOpen(true)}
                 aria-label="Suche öffnen"
-                className="flex size-11 items-center justify-center rounded-md text-ink-soft transition-colors hover:bg-paper-sunken md:hidden"
+                className="flex size-11 items-center justify-center rounded-md text-steel-200 transition-colors hover:bg-white/8 hover:text-steel-50 md:hidden"
               >
                 <Search className="size-5" aria-hidden="true" />
               </button>
@@ -180,11 +186,11 @@ export function Header() {
                 type="button"
                 onClick={openCart}
                 aria-label={itemCount > 0 ? `Warenkorb öffnen, ${itemCount} Artikel` : 'Warenkorb öffnen'}
-                className="relative flex size-11 items-center justify-center rounded-md text-ink-soft transition-colors hover:bg-paper-sunken"
+                className="relative flex size-11 items-center justify-center rounded-md text-steel-200 transition-colors hover:bg-white/8 hover:text-steel-50"
               >
                 <ShoppingBag className="size-5" aria-hidden="true" />
                 {itemCount > 0 && (
-                  <span className="tabular absolute top-1.5 right-1 flex min-w-4.5 items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[0.625rem] leading-4.5 font-semibold text-[var(--accent-contrast)]">
+                  <span className="tabular absolute top-1.5 right-1 flex min-w-4.5 items-center justify-center rounded-full bg-ember-500 px-1 text-[0.625rem] leading-4.5 font-semibold text-white shadow-[0_0_0_2px_var(--color-steel-900)]">
                     {itemCount > 99 ? '99+' : itemCount}
                   </span>
                 )}
@@ -192,6 +198,7 @@ export function Header() {
             </div>
           </div>
         </div>
+        <span className="scale-divider" aria-hidden="true" />
       </header>
 
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />

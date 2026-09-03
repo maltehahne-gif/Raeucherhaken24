@@ -1,58 +1,73 @@
 @import 'tailwindcss';
 
 /*
- * Design-System Raeucherhaken24
+ * Design-System Raeucherhaken24 — "Rauchhaus"
  *
  * Alle visuellen Entscheidungen laufen ueber Design-Tokens. Der Saisonmodus
  * setzt ausschliesslich Token-Werte neu (data-season am <html>-Element) —
  * es gibt keine saisonalen Sonderkomponenten und keine Layout-Umbauten.
  *
- * Farbwelt: warmes Papier als Grund, tiefes Raucheiche-Anthrazit als Schrift,
- * Edelstahl-Blaugrau fuer Flaechen, Glut-Kupfer als einziger Signalfarbton.
+ * Farbwelt: helles Rauchpapier fuer Inhalte und Produktfotos (Lesbarkeit,
+ * Kontrast fuer den Kauf), gerahmt von dunkler Raeucherkammer-Kohle in
+ * Kopf-, Fuss- und Hero-Flaechen. Zwei Signalfarben statt einer: gluehendes
+ * Kupfer fuer Feuer/Metall (Haken, CTAs), Salbeigruen fuer Gewuerz/Kraeuter.
+ * Das ist die Abgrenzung zu den ueblichen Ein-Akzentfarbe-Baukastenshops.
  */
 
 @theme {
   /* --- Grundflaechen ----------------------------------------------------- */
-  --color-paper: #faf8f5;
+  --color-paper: #f7f2e9;
   --color-paper-raised: #ffffff;
-  --color-paper-sunken: #f2eee8;
-  --color-paper-muted: #ebe6de;
+  --color-paper-sunken: #eee4d1;
+  --color-paper-muted: #e4d7bd;
 
   /* --- Schrift ----------------------------------------------------------- */
-  --color-ink: #17140f;
-  --color-ink-soft: #423b32;
-  --color-ink-muted: #6d6459;
-  --color-ink-faint: #948a7d;
+  --color-ink: #1c140d;
+  --color-ink-soft: #453626;
+  --color-ink-muted: #71614e;
+  --color-ink-faint: #9c8b74;
 
-  /* --- Edelstahl (Struktur, Linien, Flaechen) ---------------------------- */
-  --color-steel-50: #f5f6f7;
-  --color-steel-100: #e8eaec;
-  --color-steel-200: #d3d7db;
-  --color-steel-300: #b1b8bf;
-  --color-steel-400: #8b959f;
-  --color-steel-500: #6b7681;
-  --color-steel-600: #545e68;
-  --color-steel-700: #434c54;
-  --color-steel-800: #2f363c;
-  --color-steel-900: #1e2327;
+  /* --- Raeucherkammer (dunkle Flaechen: Header, Footer, Hero) ------------ */
+  --color-steel-50: #f5f4f2;
+  --color-steel-100: #e7e3dd;
+  --color-steel-200: #cec5b8;
+  --color-steel-300: #a89a85;
+  --color-steel-400: #7c6d5a;
+  --color-steel-500: #5a4c3d;
+  --color-steel-600: #3f3527;
+  --color-steel-700: #2c2519;
+  --color-steel-800: #1c170f;
+  --color-steel-900: #120e09;
 
-  /* --- Glut (Akzent, sparsam) -------------------------------------------- */
-  --color-ember-50: #fdf4ef;
-  --color-ember-100: #fae4d6;
-  --color-ember-200: #f3c5ab;
-  --color-ember-300: #e89f78;
-  --color-ember-400: #db7647;
-  --color-ember-500: #c85a29;
-  --color-ember-600: #a8461f;
-  --color-ember-700: #85361a;
-  --color-ember-800: #632a17;
-  --color-ember-900: #452013;
+  /* --- Glut (Primaerakzent: Feuer, Metall, CTAs) -------------------------- */
+  --color-ember-50: #fff3ea;
+  --color-ember-100: #ffe0c9;
+  --color-ember-200: #ffbf90;
+  --color-ember-300: #ff9a54;
+  --color-ember-400: #fa7724;
+  --color-ember-500: #e85c0a;
+  --color-ember-600: #c14608;
+  --color-ember-700: #97350a;
+  --color-ember-800: #6c270c;
+  --color-ember-900: #451a0a;
 
-  /* --- Rauch (sekundaerer Akzent, Badges) -------------------------------- */
-  --color-smoke-100: #eeece8;
-  --color-smoke-300: #c4bdb2;
-  --color-smoke-500: #8c8172;
-  --color-smoke-700: #5a5145;
+  /* --- Salbei (Sekundaerakzent: Gewuerze, Kraeuter, Frische) -------------- */
+  --color-sage-50: #f3f6ea;
+  --color-sage-100: #e3ebcd;
+  --color-sage-200: #c8d9a1;
+  --color-sage-300: #a9c274;
+  --color-sage-400: #87a350;
+  --color-sage-500: #6a8339;
+  --color-sage-600: #52672c;
+  --color-sage-700: #3e4e23;
+  --color-sage-800: #2d3a1a;
+  --color-sage-900: #1f2812;
+
+  /* --- Rauch (tertiaer, Badges, Trennlinien) ------------------------------ */
+  --color-smoke-100: #ece6da;
+  --color-smoke-300: #c9bda4;
+  --color-smoke-500: #8f8069;
+  --color-smoke-700: #5c5140;
 
   /* --- Statusfarben ------------------------------------------------------ */
   --color-success-50: #eff6ef;
@@ -144,6 +159,11 @@
   --accent-soft: var(--color-ember-50);
   --accent-border: var(--color-ember-200);
   --accent-contrast: #ffffff;
+
+  /* Zweiter Akzent: Gewuerze/Kraeuter, dosiert neben dem Glut-Kupfer. */
+  --accent-secondary: var(--color-sage-600);
+  --accent-secondary-soft: var(--color-sage-50);
+  --accent-secondary-border: var(--color-sage-200);
 
   --focus-ring: var(--color-ember-600);
 
@@ -356,6 +376,37 @@
   mask-image: linear-gradient(to right, transparent, black 1.25rem, black calc(100% - 1.25rem), transparent);
 }
 
+/*
+ * Schuppen-/Wellenlinie als Trennkante zwischen dunklen und hellen Flaechen —
+ * das wiederkehrende Erkennungsmerkmal des Rauchhaus-Designs (Fischschuppe
+ * und Rauchschwaden zugleich). Reines CSS, kein Bild, keine Extra-Anfrage.
+ */
+@utility scale-divider {
+  --scale-divider-color: var(--color-steel-900);
+  display: block;
+  width: 100%;
+  height: 1.25rem;
+  background-repeat: repeat-x;
+  background-size: 2.5rem 1.25rem;
+  background-image: radial-gradient(
+    circle at 50% 0%,
+    transparent 0,
+    transparent 62%,
+    var(--scale-divider-color) 64%,
+    var(--scale-divider-color) 100%
+  );
+}
+
+/* Feines Korn fuer dunkle Flaechen — Holz-/Rauchtextur ohne Bilddatei. */
+@utility grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
 /* --- Animationen ---------------------------------------------------------
  * Ausschliesslich transform und opacity, damit kein Layout neu berechnet wird.
  */
@@ -385,12 +436,22 @@
   50%  { transform: translate3d(2%, -2%, 0) scale(1.04); opacity: 0.72; }
   100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.5; }
 }
+/* Einzelner Glutfunke, der langsam aufsteigt und verglueht. */
+@keyframes rh-ember-rise {
+  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+  12%  { opacity: 1; }
+  100% { transform: translate3d(var(--ember-drift, 8px), -140px, 0); opacity: 0; }
+}
 
 .animate-fade-up { animation: rh-fade-up 0.55s var(--ease-out-soft) both; }
 .animate-fade-in { animation: rh-fade-in 0.4s var(--ease-out-soft) both; }
 .animate-scale-in { animation: rh-scale-in 0.22s var(--ease-out-soft) both; }
 .animate-slide-in-right { animation: rh-slide-in-right 0.32s var(--ease-out-soft) both; }
 .animate-smoke { animation: rh-smoke-drift 18s ease-in-out infinite; }
+.animate-ember {
+  animation: rh-ember-rise var(--ember-duration, 5s) linear infinite;
+  animation-delay: var(--ember-delay, 0s);
+}
 
 /* Scroll-Reveal: Startzustand nur setzen, wenn JS die Beobachtung uebernimmt */
 [data-reveal] {

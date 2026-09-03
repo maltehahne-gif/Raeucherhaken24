@@ -239,33 +239,61 @@ export default async function HomePage() {
 }
 
 function Hero({ productCount, recipeCount }: { productCount: number; recipeCount: number }) {
+  // Feste Positionen/Verzoegerungen statt Math.random(): Server- und
+  // Client-Rendering muessen exakt uebereinstimmen (Hydration).
+  const embers = [
+    { left: '8%', duration: '5.2s', delay: '0s', drift: '-6px' },
+    { left: '22%', duration: '6.4s', delay: '1.1s', drift: '10px' },
+    { left: '38%', duration: '5.8s', delay: '2.4s', drift: '-4px' },
+    { left: '55%', duration: '7s', delay: '0.6s', drift: '8px' },
+    { left: '71%', duration: '5.5s', delay: '3s', drift: '-8px' },
+    { left: '86%', duration: '6.1s', delay: '1.8s', drift: '5px' },
+  ]
+
   return (
-    <section className="relative overflow-hidden border-b border-[var(--border-subtle)]">
+    <section className="relative isolate overflow-hidden bg-steel-900">
+      <div className="grain-overlay" aria-hidden="true" />
       <div
         className="pointer-events-none absolute inset-0"
         style={{ background: 'var(--season-hero-tint)' }}
         aria-hidden="true"
       />
       <div
-        className="animate-smoke pointer-events-none absolute inset-0 opacity-70"
+        className="animate-smoke pointer-events-none absolute inset-0 opacity-90"
         style={{
           background:
-            'radial-gradient(46% 58% at 74% 8%, rgb(200 90 41 / 0.09), transparent 62%), radial-gradient(38% 46% at 14% 92%, rgb(107 118 129 / 0.10), transparent 60%)',
+            'radial-gradient(52% 64% at 82% 6%, rgb(250 119 36 / 0.24), transparent 62%), ' +
+            'radial-gradient(44% 52% at 8% 96%, rgb(106 131 57 / 0.16), transparent 60%)',
         }}
         aria-hidden="true"
       />
+      {/* Aufsteigende Glutfunken — ausschliesslich Deko, respektiert reduzierte Bewegung global. */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {embers.map((ember, i) => (
+          <span
+            key={i}
+            className="animate-ember absolute bottom-0 block size-1 rounded-full bg-ember-400 shadow-[0_0_8px_2px_rgb(250_119_36/0.65)]"
+            style={{
+              left: ember.left,
+              ['--ember-duration' as string]: ember.duration,
+              ['--ember-delay' as string]: ember.delay,
+              ['--ember-drift' as string]: ember.drift,
+            }}
+          />
+        ))}
+      </div>
 
-      <div className="container-page relative grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
+      <div className="container-page relative grid items-center gap-10 py-16 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
         <div className="animate-fade-up max-w-xl">
-          <p className="flex items-center gap-2 text-2xs font-semibold tracking-[0.14em] text-[var(--accent)] uppercase">
+          <p className="flex items-center gap-2 text-2xs font-semibold tracking-[0.14em] text-ember-400 uppercase">
             <Flame className="size-3.5" aria-hidden="true" />
             Räucherbedarf seit dem ersten Rauch
           </p>
-          <h1 className="mt-4 font-display text-4xl leading-[1.08] font-semibold sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 font-display text-4xl leading-[1.05] font-semibold text-steel-50 sm:text-5xl lg:text-6xl">
             Werkzeug, das dem
-            <span className="text-[var(--accent)]"> Feuer standhält</span>
+            <span className="text-ember-400"> Feuer standhält</span>
           </h1>
-          <p className="mt-5 text-lg leading-relaxed text-ink-muted">
+          <p className="mt-5 text-lg leading-relaxed text-steel-300">
             Räucherhaken aus V2A und V4A, Räuchermehl in Räucherqualität, abgestimmte Laugen und über
             einhundert Naturgewürze. Für Fischräuchereien, Fleischereien und alle, die es genauso
             genau nehmen.
@@ -275,13 +303,18 @@ function Hero({ productCount, recipeCount }: { productCount: number; recipeCount
             <ButtonLink href="/kategorie/raeucherhaken" size="lg">
               Räucherhaken ansehen
             </ButtonLink>
-            <ButtonLink href="/konfigurator" variant="outline" size="lg">
+            <ButtonLink
+              href="/konfigurator"
+              variant="outline"
+              size="lg"
+              className="border-white/20 bg-white/5 text-steel-50 hover:border-white/35 hover:bg-white/10"
+            >
               <Sparkles className="size-4.5" aria-hidden="true" />
               Haken konfigurieren
             </ButtonLink>
           </div>
 
-          <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-4 border-t border-[var(--border-subtle)] pt-6">
+          <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/12 pt-6">
             <Stat value={formatNumber(productCount)} label="Artikel im Sortiment" />
             <Stat value="V2A · V4A" label="Werkstoffe je Artikel ausgewiesen" />
             <Stat value={formatNumber(recipeCount)} label="Rezepte mit Zeiten und Mengen" />
@@ -296,7 +329,7 @@ function Hero({ productCount, recipeCount }: { productCount: number; recipeCount
               width={520}
               height={520}
               priority
-              className="aspect-square rounded-xl border border-[var(--border-subtle)] object-cover shadow-[var(--shadow-card)]"
+              className="aspect-square rounded-xl border border-white/10 object-cover shadow-[var(--shadow-overlay)]"
             />
             <Image
               src="/produkte/muster-hook-four.svg"
@@ -304,25 +337,27 @@ function Hero({ productCount, recipeCount }: { productCount: number; recipeCount
               width={520}
               height={520}
               priority
-              className="mt-8 aspect-square rounded-xl border border-[var(--border-subtle)] object-cover shadow-[var(--shadow-card)]"
+              className="mt-10 aspect-square rounded-xl border border-white/10 object-cover shadow-[var(--shadow-overlay)]"
             />
             <Image
               src="/produkte/muster-meal.svg"
               alt=""
               width={520}
               height={520}
-              className="-mt-4 aspect-square rounded-xl border border-[var(--border-subtle)] object-cover shadow-[var(--shadow-card)]"
+              className="-mt-4 aspect-square rounded-xl border border-white/10 object-cover shadow-[var(--shadow-overlay)]"
             />
             <Image
               src="/produkte/muster-spice-whole.svg"
               alt=""
               width={520}
               height={520}
-              className="mt-4 aspect-square rounded-xl border border-[var(--border-subtle)] object-cover shadow-[var(--shadow-card)]"
+              className="mt-6 aspect-square rounded-xl border border-white/10 object-cover shadow-[var(--shadow-overlay)]"
             />
           </div>
         </div>
       </div>
+
+      <span className="scale-divider relative block" aria-hidden="true" />
     </section>
   )
 }
@@ -332,8 +367,8 @@ function Stat({ value, label }: { value: string; label: string }) {
     <div>
       <dt className="sr-only">{label}</dt>
       <dd>
-        <span className="tabular block font-display text-2xl font-semibold">{value}</span>
-        <span className="mt-0.5 block max-w-[14rem] text-xs leading-relaxed text-ink-muted">{label}</span>
+        <span className="tabular block font-display text-2xl font-semibold text-steel-50">{value}</span>
+        <span className="mt-0.5 block max-w-[14rem] text-xs leading-relaxed text-steel-400">{label}</span>
       </dd>
     </div>
   )

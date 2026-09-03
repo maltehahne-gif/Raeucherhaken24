@@ -13,7 +13,9 @@ export function Logo({ className }: { className?: string }) {
       aria-label="Räucherhaken24"
       className={cn('text-ink', className)}
     >
-      {/* Haken: senkrechter Schaft mit Oese oben und gebogener Spitze unten */}
+      {/* Haken: senkrechter Schaft mit Oese oben und gebogener Spitze unten,
+          darueber ein Glutfunke — die Wiederkehr des Rauchhaus-Motivs. */}
+      <circle cx="16.5" cy="2.4" r="1.15" className="text-[var(--color-ember-400)]" fill="currentColor" />
       <g fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round">
         <path d="M11 5.5a3.2 3.2 0 1 1 0 6.4" className="text-[var(--accent)]" stroke="currentColor" />
         <path d="M11 11.9v9.4" />
